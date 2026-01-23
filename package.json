@@ -1,0 +1,6 @@
+{
+   "license": "GPL-3.0-or-later",
+   "devDependencies": {
+      "tailwindcss": "^4.1.18"
+   }
+}

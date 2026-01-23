@@ -1,0 +1,14 @@
+LICENSES
+========
+
+All files in this directory are NOT covered by GPL-3.0-or-later.
+
+miku_headpat.png and miku_working.png are derived from ASCII art obtained from
+anime.ja.utf8art.com, which allows free reuse and modification in the spirit of
+ASCII art culture, but without an explicit license. No copyright claim is made
+over these png images.
+
+frown.png, love.png, and smile.png are exported from frown.aseprite. See
+image-src/README for their credits.
+
+All other PNG files in this directory are licensed under LicenseRef-MDM-2.1.
