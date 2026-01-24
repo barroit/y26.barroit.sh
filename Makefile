@@ -7,13 +7,14 @@ m4 += -DJSX_BEGIN='return (' -DJSX_END=')'
 esbuild ?= esbuild
 esbuild += --bundle --format=esm \
 	   --jsx-factory=init_tag --jsx-fragment='"fragment"'
+esbuild-css := $(esbuild) --external:/fonts/* --minify
 
 terser ?= terser
 terser += --module --ecma 2020 --mangle --comments false \
 	  --compress 'passes=3,pure_getters=true,unsafe=true'
 
 tailwindcss ?= tailwindcss
-tailwindcss += --minify
+tailwindcss += --optimize
 
 onchange ?= onchange
 browser-sync ?= browser-sync
@@ -27,7 +28,9 @@ prefix := build
 m4-prefix := $(prefix)/m4
 static-prefix := $(prefix)/static
 image-prefix := $(prefix)/image
+fonts-prefix := $(prefix)/fonts
 static-image-prefix := $(static-prefix)/image
+static-fonts-prefix := $(static-prefix)/fonts
 
 define def-target
 	$1-glob := $2 $4
@@ -41,7 +44,6 @@ ifneq ($(minimize),)
 endif
 
 asmap-in :=
-image-asmap-in :=
 onchange-in :=
 
 bundle-y :=
@@ -53,31 +55,38 @@ build-static:
 $(prefix):
 	mkdir $@
 
-$(m4-prefix): | $(prefix)
+$(m4-prefix) $(static-prefix) $(image-prefix) $(fonts-prefix): | $(prefix)
 	mkdir $@
 
-$(static-prefix): | $(prefix)
+$(static-image-prefix) $(static-fonts-prefix): | $(static-prefix)
 	mkdir $@
 
-$(image-prefix): | $(prefix)
-	mkdir $@
+fonts-in := $(filter-out fonts/README,$(wildcard fonts/*))
+fonts-y  := $(addprefix $(prefix)/,$(fonts-in))
 
-$(static-image-prefix): | $(static-prefix)
-	mkdir $@
+onchange-in += fonts/*
+
+$(fonts-y): $(prefix)/%: % | $(fonts-prefix) $(static-fonts-prefix)
+	ln -f $< $@
+	$(ln-unique) $@ $(static-fonts-prefix)
+
+fonts-asmap-y := $(prefix)/fonts_asmap.m4
+
+$(fonts-asmap-y): $(fonts-y)
+	$(gen-asmap) $(static-fonts-prefix) /fonts/ $@
 
 image-in := $(filter-out image/README,$(wildcard image/*))
 image-y  := $(addprefix $(prefix)/,$(image-in))
 
-image-asmap-in += $(image-y)
-onchange-in += $(image-glob)
+onchange-in += image/*
 
 $(image-y): $(prefix)/%: % | $(image-prefix) $(static-image-prefix)
 	ln -f $< $@
 	$(ln-unique) $@ $(static-image-prefix)
 
-image-asmap-y  := $(prefix)/image_asmap.m4
+image-asmap-y := $(prefix)/image_asmap.m4
 
-$(image-asmap-y): $(image-asmap-in)
+$(image-asmap-y): $(image-y)
 	$(gen-asmap) $(static-image-prefix) /image/ $@
 
 $(eval $(call def-target,page,index.jsx,index.js,page/*.jsx page/*.js))
@@ -90,7 +99,7 @@ $(page-m4-y): $(m4-prefix)/%: $(image-asmap-y) %
 	mkdir -p $(@D)
 	$(m4) $^ >$@
 
-$(page-y)1: $(page-m4-y) $(image-asmap-y) | $(prefix)
+$(page-y)1: $(page-m4-y) | $(prefix)
 	$(esbuild) --sourcemap=inline --outfile=$@ $<
 
 $(page-y): %: %1$(minimize) | $(static-prefix)
@@ -113,15 +122,21 @@ terser-y := $(addsuffix 1-terser,$(terser-in))
 $(terser-y): %1-terser: %1
 	$(terser) <$< >$@
 
-$(eval $(call def-target,css,,index.css,index.html index.jsx page/*.jsx))
+css-in := index.html index.jsx page/*.jsx styles/*.css
+$(eval $(call def-target,css,index.css,index.css,$(css-in)))
+css-m4-y := $(m4-prefix)/index.css
 
 asmap-in += $(css-y)
 
 $(css-y)1: $(css-in) | $(prefix)
-	$(tailwindcss) --cwd . >$@
+	$(tailwindcss) --cwd . --input $< >$@
 
-$(css-y): %: %1 | $(static-prefix)
-	ln -f $< $@
+$(css-m4-y): $(m4-prefix)/%: $(fonts-asmap-y) $(prefix)/%1
+	mkdir -p $(@D)
+	$(m4) $^ >$@
+
+$(css-y): $(css-m4-y) | $(static-prefix)
+	$(esbuild-css) $< --outfile=$@
 	$(ln-unique) $@ $(static-prefix)
 
 asmap-y := $(prefix)/asmap.m4
@@ -150,10 +165,12 @@ build-static: $(page-y) $(css-y) $(html-y) $(worker-y) $(headers-y)
 clean:
 	rm -f $(page-m4-y)
 	rm -f $(page-y)* $(worker-y)*
-	rm -f $(asmap-y) $(image-asmap-y) $(html-y)
+	rm -f $(asmap-y) $(image-asmap-y) $(fonts-asmap-y) $(html-y)
 	rm -f $(css-y)*
-	rm -f $(image-y)
-	find $(static-prefix) -type f -exec rm {} +
+	rm -f $(image-y) $(fonts-y)
+
+	test -d $(static-prefix) && \
+	find $(static-prefix) -type f -exec rm {} + || true
 
 .PHONY: hot-build-static host-build hot-dev
 
