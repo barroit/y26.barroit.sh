@@ -69,7 +69,7 @@ image-in := $(filter-out image/README,$(wildcard image/*))
 image-y  := $(addprefix $(prefix)/,$(image-in))
 
 image-asmap-in += $(image-y)
-onchange-in += $(image-in)
+onchange-in += $(image-glob)
 
 $(image-y): $(prefix)/%: % | $(image-prefix) $(static-image-prefix)
 	ln -f $< $@
@@ -84,7 +84,7 @@ $(eval $(call def-target,page,index.jsx,index.js,page/*.jsx page/*.js))
 
 asmap-in += $(page-y)
 terser-in += $(page-y)
-onchange-in += $(page-in)
+onchange-in += $(page-glob)
 
 $(page-m4-y): $(m4-prefix)/%: $(image-asmap-y) %
 	mkdir -p $(@D)
@@ -100,7 +100,7 @@ $(page-y): %: %1$(minimize) | $(static-prefix)
 $(eval $(call def-target,worker,worker.js,worker.js,worker/*.js))
 
 terser-in += $(worker-y)
-onchange-in += $(worker-in)
+onchange-in += $(worker-glob)
 
 $(worker-y)1: $(worker-in) | $(prefix)
 	$(esbuild) --sourcemap=inline --outfile=$@ $<
@@ -131,7 +131,7 @@ $(asmap-y): $(asmap-in)
 
 $(eval $(call def-target,html,index.html,index.html))
 
-onchange-in += $(html-in)
+onchange-in += $(html-glob)
 
 $(html-y): $(prefix)/%: $(asmap-y) $(image-asmap-y) $(html-in)
 	$(m4) $^ >$@
