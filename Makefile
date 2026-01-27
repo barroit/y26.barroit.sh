@@ -5,8 +5,7 @@ m4 := printf 'changequote(`[\043\047, `\043]\047)' | $(m4) -
 m4 += -DRETURN_JSX_BEGIN='return (' -DRETURN_JSX_END=')'
 
 esbuild ?= esbuild
-esbuild += --bundle --format=esm \
-	   --jsx-factory=globalThis.init_tag --jsx-fragment='"fragment"'
+esbuild += --bundle --format=esm
 esbuild-css := $(esbuild) --external:/fonts/* --minify
 
 terser ?= terser

@@ -6,6 +6,7 @@ css-m4-y := $(m4-prefix)/index.css
 
 asmap-in += $(css-y)
 build-static-y += $(css-y)
+onchange-in += index.css styles/*.css
 
 $(css-y)1: $(css-in) | $(prefix)
 	$(tailwindcss) --cwd . --input $< >$@

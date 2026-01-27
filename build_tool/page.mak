@@ -12,7 +12,8 @@ $(page-m4-y): $(m4-prefix)/%: $(image-asmap-y) %
 	$(m4) $^ >$@
 
 $(page-y)1: $(page-m4-y) | $(prefix)
-	$(esbuild) --sourcemap=inline --outfile=$@ $<
+	$(esbuild) --jsx-import-source=preact --jsx=automatic \
+		   --sourcemap=inline --outfile=$@ $<
 
 $(page-y): %: %1$(minimize) | $(static-prefix)
 	ln -f $< $@
