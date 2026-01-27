@@ -2,11 +2,11 @@
 
 m4 ?= m4
 m4 := printf 'changequote(`[\043\047, `\043]\047)' | $(m4) -
-m4 += -DJSX_BEGIN='return (' -DJSX_END=')'
+m4 += -DRETURN_JSX_BEGIN='return (' -DRETURN_JSX_END=')'
 
 esbuild ?= esbuild
 esbuild += --bundle --format=esm \
-	   --jsx-factory=init_tag --jsx-fragment='"fragment"'
+	   --jsx-factory=globalThis.init_tag --jsx-fragment='"fragment"'
 esbuild-css := $(esbuild) --external:/fonts/* --minify
 
 terser ?= terser
@@ -98,7 +98,7 @@ clean: $(clean-y)
 .PHONY: hot-build-static host-build hot-dev
 
 hot-build-static: build-static
-	$(onchange) $(onchange-in) -- $(MAKE) -j build-static
+	$(onchange) $(patsubst %,'%',$(onchange-in)) -- $(MAKE) -j build-static
 
 host-build:
 	cd $(static-prefix) && \
