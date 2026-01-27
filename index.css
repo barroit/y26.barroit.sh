@@ -5,4 +5,33 @@
 
 @import 'tailwindcss';
 
+@import './styles/focus.css';
 @import './styles/fonts.css';
+
+:root {
+	--pastel-pink: #fff5f5;
+	--pastel-lavender: #faf5ff;
+	--pastel-cyan: #f0f9fa;
+}
+
+@theme {
+	--font-jetbrans_mono: 'JetBrains Mono';
+	--font-x14y20px_score_dozer: 'x14y20pxScoreDozer';
+	--font-x16y32px_grid_gazer: 'x16y32pxGridGazer';
+
+	--color-miku-cyan: #5bb8c4;
+
+	--text-h1: clamp(1.8rem,   1.5300rem + 1.2000vw, 2.49rem);
+	--text-h2: clamp(1.6rem,   1.4161rem + 0.8173vw, 2.07rem);
+	--text-h3: clamp(1.42rem,  1.2987rem + 0.5391vw, 1.73rem);
+	--text-h4: clamp(1.27rem,  1.2034rem + 0.2956vw, 1.44rem);
+	--text-h5: clamp(1.125rem, 1.0956rem + 0.1304vw, 1.2rem);
+	--text-h6: 1rem;
+}
+
+@utility bg-miku {
+	background-image: linear-gradient(var(--angle),
+					  var(--pastel-pink) 20%,
+					  var(--pastel-lavender) 50%,
+					  var(--pastel-cyan) 80%);
+}
