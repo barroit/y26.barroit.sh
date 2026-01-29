@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 m4 ?= m4
-m4 := printf 'changequote(`[\043\047, `\043]\047)' | $(m4) -
-m4 += -DRETURN_JSX_BEGIN='return (' -DRETURN_JSX_END=')'
+m4 := printf 'changequote([[, ]])' | $(m4) -
+m4 += -DRETURN_JSX_BEGIN='return (' -DRETURN_JSX_END=')' -Uformat
 
 esbuild ?= esbuild
 esbuild += --bundle --format=esm

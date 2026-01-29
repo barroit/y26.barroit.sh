@@ -2,11 +2,11 @@
 
 a {
 	@variant hover {
-		text-decoration: underline;
+		text-decoration-line: underline;
 	}
 
 	@variant group-hover/shell {
-		text-decoration: underline;
+		text-decoration-line: underline;
 	}
 }
 

@@ -3,6 +3,7 @@
  * Copyright 2026 Jiamu Sun <barroit@linux.com>
  */
 
+import { forwardRef } from 'preact/compat'
 import { useContext, useEffect, useRef } from 'preact/hooks'
 
 import { ShellContext } from './shell.jsx'
@@ -22,10 +23,13 @@ function drop_effect(shell, key)
 	shell.current.click.delete(key)
 }
 
-export function LinkIntern({ children, ...props })
+function LinkInternFn({ children, ...props }, ref)
 {
 	const shell = useContext(ShellContext)
-	const link = useRef()
+	let link = useRef()
+
+	if (ref)
+		link = ref
 
 	useEffect(() =>
 	{
@@ -45,6 +49,8 @@ RETURN_JSX_BEGIN
 </a>
 RETURN_JSX_END
 }
+
+export const LinkIntern = forwardRef(LinkInternFn)
 
 export function LinkExtern({ children, ...props })
 {

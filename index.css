@@ -19,7 +19,10 @@
 	--font-x14y20px_score_dozer: 'x14y20pxScoreDozer';
 	--font-x16y32px_grid_gazer: 'x16y32pxGridGazer';
 
+	--font-mono: var(--font-jetbrans_mono);
+
 	--color-miku-cyan: #5bb8c4;
+	--color-miku-pink: #ed59a9;
 
 	--text-h1: clamp(1.8rem,   1.5300rem + 1.2000vw, 2.49rem);
 	--text-h2: clamp(1.6rem,   1.4161rem + 0.8173vw, 2.07rem);

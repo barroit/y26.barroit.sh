@@ -21,7 +21,7 @@ function on_event(handler_map, event)
 		fn(event)
 }
 
-export default function Shell({ children, color = '#e8558c',
+export default function Shell({ children, color = '#ed59a9',
 				left = '[', right = ']', move = 5 })
 {
 	const handler_map = useRef()

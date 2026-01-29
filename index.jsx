@@ -11,11 +11,11 @@ function Root()
 {
 
 RETURN_JSX_BEGIN
-<div class='flex justify-center drop-shadow-xl
-            font-jetbrans_mono text-neutral-900 
-            *:px-5 md:*:px-10 *:w-sm *:md:w-3xl *:xl:w-7xl *:xl'>
+<main class='font-jetbrans_mono text-neutral-900 
+             md:flex md:justify-center md:drop-shadow-xl
+             *:px-5 md:*:px-10 *:md:w-192 *:xl:w-384'>
   <Intro/>
-</div>
+</main>
 RETURN_JSX_END
 }
 
