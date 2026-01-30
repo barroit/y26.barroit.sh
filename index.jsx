@@ -19,14 +19,14 @@ function Root()
 RETURN_JSX_BEGIN
 <main class='font-jetbrans_mono text-neutral-900 
              md:flex flex-col items-center md:drop-shadow-xl
-             *:px-5 md:*:px-10 *:md:w-192 *:xl:w-384'>
+             *:px-5 md:*:px-10 md:*:w-192 xl:*:w-320 2xl:*:w-384 *:pb-40'>
   <Hero/>
-  <Intro/>
-  <Log/>
+  {/* <Intro/> */}
+  {/* <Log/>
   <Gallery/>
   <Highlight/>
   <Commits/>
-  <Credit/>
+  <Credit/> */}
 </main>
 RETURN_JSX_END
 }
