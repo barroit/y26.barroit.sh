@@ -5,7 +5,7 @@
 
 import { render } from 'preact'
 
-import Intro from './page/intro.jsx'
+import Hero from './page/hero.jsx'
 
 function Root()
 {
@@ -14,7 +14,7 @@ RETURN_JSX_BEGIN
 <main class='font-jetbrans_mono text-neutral-900 
              md:flex md:justify-center md:drop-shadow-xl
              *:px-5 md:*:px-10 *:md:w-192 *:xl:w-384'>
-  <Intro/>
+  <Hero/>
 </main>
 RETURN_JSX_END
 }
