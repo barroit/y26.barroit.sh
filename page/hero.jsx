@@ -5,9 +5,9 @@
 
 import { useRef } from 'preact/hooks'
 
-import Flick from './flick.jsx'
-import { LinkExtern, LinkIntern, ExternMark } from './link.jsx'
-import Shell from './shell.jsx'
+import Flick from '../lib/flick.jsx'
+import { LinkExtern, LinkIntern, ExternMark } from '../lib/link.jsx'
+import Shell from '../lib/shell.jsx'
 
 const nav_urls = [
 	[ 'GitHub', 'https://github.com/barroit' ],
@@ -20,6 +20,7 @@ const page_anchors = [
 	[ 'gallery',        LinkIntern, '#gallery'               ],
 	[ 'highlight',      LinkIntern, '#highlight'             ],
 	[ 'commits',        LinkIntern, '#commits'               ],
+	[ 'credit',         LinkIntern, '#credit'                ],
 	[ 'y25.barroit.sh', LinkExtern, 'https://y25.barroit.sh' ],
 ]
 
@@ -176,9 +177,9 @@ export default function Hero()
 {
 
 RETURN_JSX_BEGIN
-<div class='bg-miku [--angle:135deg] pb-10'>
+<section class='bg-miku [--angle:135deg] pb-10'>
   <Banner/>
   <Body/>
-</div>
+</section>
 RETURN_JSX_END
 }

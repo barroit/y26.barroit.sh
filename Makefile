@@ -58,6 +58,8 @@ include build_tool/image.mak
 
 include build_tool/fonts.mak
 
+include build_tool/lib.mak
+
 include build_tool/page.mak
 
 include build_tool/worker.mak
