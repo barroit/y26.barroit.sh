@@ -61,3 +61,19 @@ RETURN_JSX_BEGIN
 </LinkIntern>
 RETURN_JSX_END
 }
+
+export function ExternMark({ children, ...props })
+{
+	const style = 'after:content-["_↗"] after:font-bold'
+
+	if (props.class)
+		props.class += ` ${style}`
+	else
+		props.class = style
+
+RETURN_JSX_BEGIN
+<span { ...props }>
+  { children }
+</span>
+RETURN_JSX_END
+}
