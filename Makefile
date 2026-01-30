@@ -88,12 +88,17 @@ $(asmap-y): $(asmap-in)
 
 build-static: $(build-static-y)
 
-.PHONY: clean
+.PHONY: clean distclean
 
 clean: $(clean-y)
 	rm -f $(asmap-y)
 	test -d $(static-prefix) && \
 	find $(static-prefix) -type f -exec rm {} + || true
+
+distclean: clean
+	test -d node_modules && find node_modules -exec rm -rf {} + || true
+	test -d .wrangler && find .wrangler -exec rm -rf {} + || true
+	test -d build && find build -exec rm -rf {} + || true
 
 .PHONY: hot-build-static host-build hot-dev
 
