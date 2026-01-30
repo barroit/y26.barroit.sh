@@ -30,6 +30,17 @@
 	--text-h4: clamp(1.27rem,  1.2034rem + 0.2956vw, 1.44rem);
 	--text-h5: clamp(1.125rem, 1.0956rem + 0.1304vw, 1.2rem);
 	--text-h6: 1rem;
+
+	@keyframes shift-star {
+	from {
+		transform: translate(0, 0);
+	}
+	to {
+		transform: translate(5vmax, -5vmax);
+	}
+	} /* @keyframes scroll-stars */
+
+	--animate-shift-star: shift-star 5s linear infinite;
 }
 
 @utility bg-miku {

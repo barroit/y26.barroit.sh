@@ -11,12 +11,13 @@ onchange-in += index.css styles/*.css
 $(css-y)1: $(css-in) | $(prefix)
 	$(tailwindcss) --cwd . --input $< >$@
 
-$(css-m4-y): $(m4-prefix)/%: $(fonts-asmap-y) $(prefix)/%1
+$(css-m4-y): $(m4-prefix)/%: $(fonts-asmap-y) $(image-asmap-y) $(prefix)/%1
 	mkdir -p $(@D)
 	$(m4) $^ >$@
 
 $(css-y): $(css-m4-y) | $(static-prefix)
-	$(esbuild-css) $< --outfile=$@
+	$(esbuild) --external:/fonts/* --external:/image/* \
+		   --minify $< --outfile=$@
 	$(ln-unique) $@ $(static-prefix)
 
 clean-y += clean-css

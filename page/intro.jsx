@@ -7,7 +7,7 @@ export default function Intro()
 {
 
 RETURN_JSX_BEGIN
-<section class='bg-miku [--angle:45deg]'>
+<section class='bg-miku [--angle:45deg] h-screen'>
   <div id='intro'></div>
 </section>
 RETURN_JSX_END

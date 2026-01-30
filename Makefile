@@ -6,7 +6,6 @@ m4 += -DRETURN_JSX_BEGIN='return (' -DRETURN_JSX_END=')' -Uformat
 
 esbuild ?= esbuild
 esbuild += --bundle --format=esm
-esbuild-css := $(esbuild) --external:/fonts/* --minify
 
 terser ?= terser
 terser += --module --ecma 2020 --mangle --comments false \
