@@ -5,7 +5,7 @@
 
 export default function Bar({ vertical, ...props })
 {
-	const style = vertical ? 'w-1' : 'h-1' 
+	const style = vertical ? 'w-1' : 'h-1'
 
 	if (props.class)
 		props.class += ` ${style}`

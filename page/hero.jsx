@@ -68,20 +68,21 @@ function Masthead()
 {
 
 RETURN_JSX_BEGIN
-<div class='select-none font-x14y20px_score_dozer uppercase'>
-  <div class='mx-auto w-fit leading-none text-[13.5vw]
-              text-shadow-[-.65vw_0_#ed59a9,.65vw_0_#5bb8c4]'>	    
-    <span class='tracking-[4vw]'>barroi</span>
+<div class='xl:w-133 2xl:w-158
+            @container select-none font-x14y20px_score_dozer uppercase'>
+  <div class='mx-auto w-fit leading-none text-[14.85cqw]
+              text-shadow-[-.715cqw_0_#ed59a9,.715cqw_0_#5bb8c4]'>
+    <span class='tracking-[4.4cqw]'>barroi</span>
     <span>t</span>
   </div>
-  <div class='mt-[1vw] font-x16y32px_grid_gazer font-bold'>  
+  <div class='mt-[1.1cqw] font-x16y32px_grid_gazer font-bold'>
     <div class='w-fit'>
       <Bar/>
-      <p class='mt-[2vw] pl-1 text-[3vw] tracking-[.4vw]'>
+      <p class='mt-[2.2cqw] pl-1 text-[3.3cqw] tracking-[.44cqw]'>
         fast / scalable / no-bullshit engineering
       </p>
     </div>
-    <p class='ml-auto w-fit italic text-[2.7vw] tracking-[.4vw]'>
+    <p class='ml-auto w-fit italic text-[2.97cqw] tracking-[.44cqw]'>
       powered by hatsune miku
     </p>
   </div>
@@ -101,15 +102,15 @@ function Anchor({ name, url })
 
 RETURN_JSX_BEGIN
 <LinkIntern ref={ link } href={ url }
-      class='group flex items-center gap-x-1
-             cursor-pointer motion-safe:*:transition
-             GROUP_HOT_CHILD(text-miku-pink)'>
+      class='group p-2 flex items-center gap-x-1 cursor-pointer
+             transition HOT(-translate-y-px) active:translate-y-0
+             motion-safe:*:transition GROUP_HOT_CHILD(text-miku-pink)'>
   <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'
        onclick={ on_click_arrow_fn } fill='currentColor'
        class='h-[1.1rem] rotate-90 GROUP_HOT(rotate-0)'>
     <path d='M640-480 400-720l-80 80 160 160-160 160 80 80 240-240Z'/>
   </svg>
-  <p class='text-lg font-bold'>
+  <p class='text-md font-bold'>
     { name }
   </p>
 </LinkIntern>
@@ -130,17 +131,24 @@ function Menu()
 
 RETURN_JSX_BEGIN
 <div class='relative'>
-  <div class='w-full flex items-center gap-x-[1rem]'>
+  <div class='absolute top-0 left-1 w-full md:h-1
+              flex items-center gap-x-[1rem]'>
     <Bar class='flex-1'/>
     <p class='pl-[.5ch] text-xs tracking-[.3rem]
               font-bold text-gray-700 uppercase'>
       sections
     </p>
-    <Bar class='flex-1 xl:flex-3'/>
+    <Bar class='flex-1'/>
   </div>
-  <Bar class='absolute top-2 bottom-0 hidden xl:block' vertical/>
-  <div class='absolute top-0 left-0 size-1 hidden xl:block bg-miku-cyan'></div>
-  <nav class='p-15 space-y-15'>
+  <div class='hidden md:block'>
+    <Bar class='absolute top-1 bottom-0' vertical/>
+    <Bar class='absolute -top-5 left-0 h-5' vertical/>
+    <Bar class='absolute top-0 -left-5 w-5'/>
+    <Bar class='absolute top-1 bottom-0' vertical/>
+    <div class='absolute top-0 left-0 size-1 bg-miku-cyan'/>
+  </div>
+  <nav class='px-15 py-13 xl:py-10 2xl:py-13
+              space-y-11 xl:space-y-5 2xl:space-y-11'>
     { anchors }
   </nav>
 </div>
@@ -151,11 +159,12 @@ function Body()
 {
 
 RETURN_JSX_BEGIN
-<div class='grid md:grid-cols-[2fr_3fr] gap-y-10 md:gap-y-15'>
-  <div class='md:col-span-2'>
+<div class='grid md:grid-cols-[2fr_3fr]
+            xl:grid-rows-[auto_1fr] gap-y-10 md:gap-y-15 xl:gap-y-0'>
+  <div class='md:col-span-2 xl:col-span-1 xl:w-108 2xl:w-128'>
     <Masthead/>
   </div>
-  <div class='select-none'>
+  <div class='select-none xl:row-span-2'>
     <img src='AS_MIKU_NT_PNG' class='drop-shadow-[0_4px_4px_#0000003f]'/>
   </div>
   <div class='md:row-start-2 justify-self-center md:self-center
@@ -175,7 +184,7 @@ RETURN_JSX_BEGIN
     <Banner/>
     <Bar class='mt-3'/>
   </div>
-  <div class='mt-5 md:mt-15'>
+  <div class='mt-5 md:mt-15 xl:mt-10'>
     <Body/>
   </div>
 </section>
