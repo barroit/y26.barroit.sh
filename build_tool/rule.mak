@@ -5,7 +5,7 @@ rule-y  := $(static-prefix)/$(rule-in)
 
 build-static-y += $(rule-y)
 
-$(rule-y): $(rule-in)
+$(rule-y): $(rule-in) | $(static-prefix)
 	cp $< $@
 
 clean-y += clean-rule

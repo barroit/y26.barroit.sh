@@ -5,7 +5,6 @@
 
 @import 'tailwindcss';
 
-@import './styles/focus.css';
 @import './styles/fonts.css';
 
 :root {
@@ -44,7 +43,7 @@
 }
 
 @utility bg-miku {
-	background-image: linear-gradient(var(--angle),
+	background-image: linear-gradient(var(--direction),
 					  var(--pastel-pink) 20%,
 					  var(--pastel-lavender) 50%,
 					  var(--pastel-cyan) 80%);

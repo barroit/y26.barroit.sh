@@ -2,6 +2,13 @@
 /*
  * Copyright 2026 Jiamu Sun <barroit@linux.com>
  */
+divert(-1)
+
+define(HOT, $2hover:$1 $2focus-visible:$1)
+define(GROUP_HOT, HOT($1, group-))
+define(GROUP_HOT_CHILD, HOT($1, *:group-))
+
+divert(0)dnl
 
 import { useRef } from 'preact/hooks'
 
@@ -12,7 +19,7 @@ import Shell from '../lib/shell.jsx'
 
 const nav_urls = [
 	[ 'GitHub', 'https://github.com/barroit' ],
-	[ 'Crap',   'https://crap.barroit.sh'    ],
+	[ 'Blog',   'https://crap.barroit.sh'    ],
 ]
 
 const page_anchors = [
@@ -29,7 +36,7 @@ function fmt_link([ name, url ])
 
 RETURN_JSX_BEGIN
 <Shell>
-  <LinkExtern href={ url }>
+  <LinkExtern href={ url } class='p-2'>
     <Flick>{ name }</Flick>
   </LinkExtern>
 </Shell>
@@ -41,57 +48,19 @@ function Banner()
 	const links = nav_urls.map(fmt_link)
 
 RETURN_JSX_BEGIN
-<div class='pt-5'>
-  <header class='px-2 md:flex justify-between text-h2 md:text-2xl font-bold'>
-    <div class='hidden md:block'>
-      <pre class='hidden xl:block'>
-        <code>let skyColor = memory.get("last_seen_sky");</code>
-      </pre>
-      <pre class='xl:hidden'>
-        <code>memory.get("last_seen_sky");</code>
-      </pre>
-    </div>
-    <nav class='px-3 flex justify-between
-                md:justify-normal md:gap-x-12 uppercase'>
-      { links }
-    </nav>
-  </header>
-  <Bar class='mt-3'/>
-</div>
-RETURN_JSX_END
-}
-
-function Brand()
-{
-RETURN_JSX_BEGIN
-<div class='pt-[8cqw] md:pt-12 xl:pt-0 max-w-max mx-auto xl:mx-0
-            drop-shadow-sm leading-none text-[15cqw] md:text-[6.2rem]
-            text-shadow-[-0.6cqw_0_#ed59a9,0.6cqw_0_#5bb8c4]
-            md:text-shadow-[-0.3rem_0_#ed59a9,0.3rem_0_#5bb8c4]'>
-  <span class='xl:pl-2 tracking-[4cqw] md:tracking-[2rem]'>
-    barroi
-  </span>
-  <span>t</span>
-</div>
-RETURN_JSX_END
-}
-
-function Motto()
-{
-RETURN_JSX_BEGIN
-<p class='text-[4cqw] md:text-[1.6rem] tracking-[0.39cqw] md:tracking-[0.2rem]'>
-  fast / scalable / no-bullshit engineering
-</p>
-RETURN_JSX_END
-}
-
-function Signature()
-{
-RETURN_JSX_BEGIN
-<p class='ml-auto w-max text-[3.7cqw] md:text-[1.5rem]
-          tracking-[0.3cqw] md:tracking-[0.15rem] italic'>
-  powered by hatsune miku
-</p>
+<header class='px-2 md:flex justify-between text-sm font-bold'>
+  <div class='hidden md:block'>
+    <pre class='hidden xl:block'>
+      <code>let skyColor = memory.get("last_seen_sky");</code>
+    </pre>
+    <pre class='xl:hidden'>
+      <code>memory.get("last_seen_sky");</code>
+    </pre>
+  </div>
+  <nav class='pr-2 flex justify-between gap-x-12 uppercase'>
+    { links }
+  </nav>
+</header>
 RETURN_JSX_END
 }
 
@@ -99,47 +68,30 @@ function Masthead()
 {
 
 RETURN_JSX_BEGIN
-<div class='xl:min-w-max @container md:[container-type:normal] select-none
-            font-x14y20px_score_dozer uppercase space-y-[3cqw]
-            md:space-y-5 xl:space-y-2 2xl:space-y-5'>
-  <Brand/>
-  <Bar/>
-  <div class='pl-1 font-x16y32px_grid_gazer font-bold text-zinc-800'>
-    <Motto/>
-    <Signature/>
+<div class='select-none font-x14y20px_score_dozer uppercase'>
+  <div class='mx-auto w-fit leading-none text-[13.5vw]
+              text-shadow-[-.65vw_0_#ed59a9,.65vw_0_#5bb8c4]'>	    
+    <span class='tracking-[4vw]'>barroi</span>
+    <span>t</span>
+  </div>
+  <div class='mt-[1vw] font-x16y32px_grid_gazer font-bold'>  
+    <div class='w-fit'>
+      <Bar/>
+      <p class='mt-[2vw] pl-1 text-[3vw] tracking-[.4vw]'>
+        fast / scalable / no-bullshit engineering
+      </p>
+    </div>
+    <p class='ml-auto w-fit italic text-[2.7vw] tracking-[.4vw]'>
+      powered by hatsune miku
+    </p>
   </div>
 </div>
-RETURN_JSX_END
-}
-
-function MenuFrame()
-{
-
-RETURN_JSX_BEGIN
-<>
-  <div class='xl:absolute top-0 left-0 h-2 w-full
-              flex items-center justify-between gap-x-[4vw] md:gap-x-7'>
-    <Bar class='flex-1'/>
-    <p class='text-h2 md:text-4xl font-bold capitalize'>sections</p>
-    <Bar class='flex-1 xl:flex-3'/>
-  </div>
-  <Bar class='absolute top-2 bottom-0 hidden xl:block' vertical/>
-  <div class='absolute top-0 left-0 size-2 hidden xl:block bg-miku-cyan'></div>
-</>
 RETURN_JSX_END
 }
 
 function on_click_arrow(link)
 {
 	link.current.click()
-}
-
-function EmptyAnchor()
-{
-
-RETURN_JSX_BEGIN
-<div class='md:hidden'></div>
-RETURN_JSX_END
 }
 
 function Anchor({ name, url })
@@ -149,58 +101,66 @@ function Anchor({ name, url })
 
 RETURN_JSX_BEGIN
 <LinkIntern ref={ link } href={ url }
-      class='group p-2 max-w-max flex items-center gap-x-1
-             text-black! no-underline! cursor-pointer'>
+      class='group flex items-center gap-x-1
+             cursor-pointer motion-safe:*:transition
+             GROUP_HOT_CHILD(text-miku-pink)'>
   <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'
        onclick={ on_click_arrow_fn } fill='currentColor'
-       class='h-8 rotate-90 transition
-              group-hover:rotate-0 group-focus-visible:rotate-0
-              group-hover:text-miku-pink group-focus-visible:text-miku-pink'>
+       class='h-[1.1rem] rotate-90 GROUP_HOT(rotate-0)'>
     <path d='M640-480 400-720l-80 80 160 160-160 160 80 80 240-240Z'/>
   </svg>
-  <div class='min-w-max text-h3 md:text-3xl font-bold transition
-              group-hover:text-miku-pink group-focus-visible:rotate-0'>
+  <p class='text-lg font-bold'>
     { name }
-  </div>
+  </p>
 </LinkIntern>
 RETURN_JSX_END
 }
 
 function fmt_anchor([ name, url ])
 {
-	if (!name)
-		return <EmptyAnchor/>
-	else
-		return <Anchor name={ name } url={ url }/>
+
+RETURN_JSX_BEGIN
+<Anchor name={ name } url={ url }/>
+RETURN_JSX_END
 }
 
-function Body()
+function Menu()
 {
 	const anchors = page_anchors.map(fmt_anchor)
 
 RETURN_JSX_BEGIN
-<div class='xl:mt-10 2xl:mt-10 xl:grid grid-cols-[1fr_auto] grid-rows-[auto_1fr]
-            gap-10 2xl:gap-y-20 space-y-15 xl:space-y-0'>
-  <div class='2xl:pt-10 xl:min-w-164 2xl:min-w-130 max-h-min'>
+<div class='relative'>
+  <div class='w-full flex items-center gap-x-[1rem]'>
+    <Bar class='flex-1'/>
+    <p class='pl-[.5ch] text-xs tracking-[.3rem]
+              font-bold text-gray-700 uppercase'>
+      sections
+    </p>
+    <Bar class='flex-1 xl:flex-3'/>
+  </div>
+  <Bar class='absolute top-2 bottom-0 hidden xl:block' vertical/>
+  <div class='absolute top-0 left-0 size-1 hidden xl:block bg-miku-cyan'></div>
+  <nav class='p-15 space-y-15'>
+    { anchors }
+  </nav>
+</div>
+RETURN_JSX_END
+}
 
+function Body()
+{
+
+RETURN_JSX_BEGIN
+<div class='grid md:grid-cols-[2fr_3fr] gap-y-10 md:gap-y-15'>
+  <div class='md:col-span-2'>
     <Masthead/>
   </div>
-  <div class='row-span-2 select-none'>
+  <div class='select-none'>
     <img src='AS_MIKU_NT_PNG' class='drop-shadow-[0_4px_4px_#0000003f]'/>
   </div>
-  <div class='row-start-2 relative 2xl:ml-20 xl:mt-10
-              xl:max-w-max xl:max-h-max'>
-    <MenuFrame/>
-    <div class='mx-auto pt-15 2xl:pt-20 xl:pl-15 2xl:pl-20 max-w-max'>
-      <nav class='grid 2xl:block grid-cols-2 md:gap-x-20 xl:gap-x-8
-                  gap-y-8 *:odd:col-span-2 xl:*:odd:col-span-1
-                  *:even:col-start-2 2xl:space-y-12'>
-        { anchors }
-        <div class='hidden xl:block invisible'>
-          393939393939393939393939393939393939
-        </div>
-      </nav>
-    </div>
+  <div class='md:row-start-2 justify-self-center md:self-center
+              mt-15 md:mt-0 w-fit'>
+    <Menu/>
   </div>
 </div>
 RETURN_JSX_END
@@ -210,9 +170,14 @@ export default function Hero()
 {
 
 RETURN_JSX_BEGIN
-<section class='bg-miku [--angle:135deg]'>
-  <Banner/>
-  <Body/>
+<section class='bg-miku [--direction:to_bottom_right]'>
+  <div class='pt-5'>
+    <Banner/>
+    <Bar class='mt-3'/>
+  </div>
+  <div class='mt-5 md:mt-15'>
+    <Body/>
+  </div>
 </section>
 RETURN_JSX_END
 }

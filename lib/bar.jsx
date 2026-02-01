@@ -5,17 +5,14 @@
 
 export default function Bar({ vertical, ...props })
 {
-	let style = 'bg-miku-cyan drop-shadow-sm '
-
-	if (vertical)
-		style += 'w-[1vw] md:w-2'
-	else
-		style += 'h-[1vw] md:h-2'
+	const style = vertical ? 'w-1' : 'h-1' 
 
 	if (props.class)
-		props.class = `${style} ${props.class}`
+		props.class += ` ${style}`
 	else
 		props.class = style
+
+	props.class += ' bg-miku-cyan drop-shadow-sm'
 
 RETURN_JSX_BEGIN
 <div { ...props }></div>
