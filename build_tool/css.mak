@@ -8,7 +8,7 @@ asmap-in += $(css-y)
 build-static-y += $(css-y)
 onchange-in += index.css styles/*.css
 
-$(css-y)1: $(css-in) $(page-m4-y) | $(prefix)
+$(css-y)1: $(css-in) $(page-m4-y) $(html-m4-y) | $(prefix)
 	$(tailwindcss) --cwd $(m4-prefix) --input $< >$@
 
 $(css-m4-y): $(m4-prefix)/%: $(fonts-asmap-y) $(image-asmap-y) $(prefix)/%1

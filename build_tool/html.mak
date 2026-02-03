@@ -1,11 +1,9 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-$(eval $(call def-target,html,index.html,index.html))
-
 onchange-in += $(html-glob)
 build-static-y += $(html-y)
 
-$(html-y): $(prefix)/%: $(asmap-y) $(image-asmap-y) $(html-in)
+$(html-y): $(prefix)/%: $(asmap-y) $(html-m4-y)
 	$(m4) $^ >$@
 	ln -f $@ $(static-prefix)/$*
 

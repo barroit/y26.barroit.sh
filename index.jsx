@@ -18,9 +18,11 @@ function Root()
 
 RETURN_JSX_BEGIN
 <main class='xl:drop-shadow-xl font-jetbrans_mono text-neutral-900
-             xl:*:mx-auto *:px-5 md:*:px-10 xl:*:w-5xl 2xl:*:w-7xl'>
+             *:pb-20 xl:*:mx-auto *:px-5 md:*:px-10 xl:*:w-5xl 2xl:*:w-7xl
+             *:bg-miku *:odd:[--direction:to_bottom_right]
+             *:even:[--direction:to_top_right]'>
   <Hero/>
-  {/* <Intro/> */}
+  <Intro/>
   {/* <Log/>
   <Gallery/>
   <Highlight/>

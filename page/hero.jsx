@@ -179,7 +179,7 @@ export default function Hero()
 {
 
 RETURN_JSX_BEGIN
-<section class='bg-miku [--direction:to_bottom_right]'>
+<section id='hero'>
   <div class='pt-5'>
     <Banner/>
     <Bar class='mt-3'/>

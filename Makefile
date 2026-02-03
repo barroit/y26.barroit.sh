@@ -63,6 +63,8 @@ include build_tool/page.mak
 
 include build_tool/worker.mak
 
+include build_tool/html_m4.mak
+
 include build_tool/css.mak
 
 include build_tool/html.mak
