@@ -3,7 +3,8 @@
  * Copyright 2026 Jiamu Sun <barroit@linux.com>
  */
 
-export default function Bar({ vertical, ...props })
+export default function Bar({ vertical, color = 'bg-miku-cyan',
+			      shadow = 'drop-shadow-sm', ...props })
 {
 	const style = vertical ? 'w-1' : 'h-1'
 
@@ -12,7 +13,7 @@ export default function Bar({ vertical, ...props })
 	else
 		props.class = style
 
-	props.class += ' bg-miku-cyan drop-shadow-sm'
+	props.class += ` ${color} ${shadow}`
 
 RETURN_JSX_BEGIN
 <div { ...props }></div>

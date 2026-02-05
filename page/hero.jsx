@@ -4,6 +4,9 @@
  */
 divert(-1)
 
+define(MIKU_PINK, var(--color-miku-pink))
+define(MIKU_CYAN, var(--color-miku-cyan))
+
 define(HOT, $2hover:$1 $2focus-visible:$1)
 define(GROUP_HOT, HOT($1, group-))
 define(GROUP_HOT_CHILD, HOT($1, *:group-))
@@ -71,7 +74,7 @@ RETURN_JSX_BEGIN
 <div class='xl:w-133 2xl:w-158
             @container select-none font-x14y20px_score_dozer uppercase'>
   <div class='mx-auto w-fit leading-none text-[14.85cqw]
-              text-shadow-[-.715cqw_0_#ed59a9,.715cqw_0_#5bb8c4]'>
+              text-shadow-[[[-.715cqw_0_]]MIKU_PINK,[[.715cqw_0_]]MIKU_CYAN]'>
     <span class='tracking-[4.4cqw]'>barroi</span>
     <span>t</span>
   </div>
@@ -164,8 +167,9 @@ RETURN_JSX_BEGIN
   <div class='md:col-span-2 xl:col-span-1 xl:w-108 2xl:w-128'>
     <Masthead/>
   </div>
-  <div class='select-none xl:row-span-2'>
-    <img src='AS_MIKU_NT_PNG' class='drop-shadow-[0_4px_4px_#0000003f]'/>
+  <div class='xl:row-span-2'>
+    <img src='AS_MIKU_NT_PNG' draggable={ false }
+         class='drop-shadow-[0_4px_4px_#0000003f] select-none'/>
   </div>
   <div class='md:row-start-2 justify-self-center md:self-center
               mt-15 md:mt-0 w-fit'>

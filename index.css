@@ -20,8 +20,8 @@
 
 	--font-mono: var(--font-jetbrans_mono);
 
-	--color-miku-cyan: #5bb8c4;
-	--color-miku-pink: #ed59a9;
+	--color-miku-cyan: oklch(0.75 0.11 206.57);
+	--color-miku-pink: oklch(0.6805 0.1986 350.19);
 
 	--text-h1: clamp(1.8rem,   1.5300rem + 1.2000vw, 2.49rem);
 	--text-h2: clamp(1.6rem,   1.4161rem + 0.8173vw, 2.07rem);
