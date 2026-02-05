@@ -131,6 +131,81 @@ RETURN_JSX_BEGIN
 RETURN_JSX_END
 }
 
+function Song()
+{
+
+RETURN_JSX_BEGIN
+<div class='flex items-center'>
+  <img src='AS_METEOR_JPEG' draggable={ false }
+       class='-mx-1 h-8 rounded-md drop-shadow-xs'/>
+  <div class='ml-4 select-text'>
+    <p class='font-bold'>METEOR</p>
+    <p class='text-sm text-zinc-600'>DIVELA</p>
+  </div>
+  <div class='ml-auto flex items-center gap-1
+              drop-shadow-xl *:bg-zinc-500 *:w-[2px]'>
+    <div class='h-1'></div>
+      <div class='h-5'></div>
+      <div class='h-3'></div>
+      <div class='h-7'></div>
+      <div class='h-2'></div>
+      <div class='h-4'></div>
+  </div>
+</div>
+RETURN_JSX_END
+}
+
+function Progress()
+{
+RETURN_JSX_BEGIN
+<div class='relative -mx-1'>
+  <Bar class='rounded-full' shadow='drop-shadow-xs'/>
+  <Bar class='absolute top-0 left-0 right-11/20 rounded-full'
+       shadow='drop-shadow-none'
+       color='bg-gradient-to-r from-rose-500 to-miku-pink'/>
+  <div class='absolute -top-[calc(var(--spacing)*.5)] right-11/20
+              size-2 rounded-full bg-rose-500'></div>
+  <div class='mt-1 flex justify-between font-bold text-xs text-zinc-500'>
+    <p>2:01</p>
+    <p>4:31</p>
+  </div>
+</div>
+RETURN_JSX_END
+}
+
+function Toolkit()
+{
+
+RETURN_JSX_BEGIN
+<div class='flex justify-between items-center drop-shadow-sm opacity-80'>
+  <img src='AS_SHUFFLE_SVG' draggable={ false } class='h-4'/>
+  <div class='flex items-center gap-x-5'>
+    <img src='AS_SKIP_PREVIOUS_SVG' draggable={ false } class='h-6'/>
+    <LinkExtern href='https://youtu.be/2kZVEUGLgy4?t=121'>
+      <img src='AS_PLAY_ARROW_SVG' draggable={ false }
+           class='h-8 rounded-full motion-safe:transition
+                  hover:bg-zinc-400 active:scale-80'/>
+    </LinkExtern>
+    <img src='AS_SKIP_NEXT_SVG' draggable={ false } class='h-6'/>
+  </div>
+  <img src='AS_REPEAT_ONE_SVG' draggable={ false } class='h-4'/>
+</div>
+RETURN_JSX_END
+}
+
+function Player()
+{
+
+RETURN_JSX_BEGIN
+<div aria-hidden={ true }
+     class='mx-2 px-5 py-2 select-none bg-zinc-200/50 rounded-xl space-y-2'>
+  <Song/>
+  <Progress/>
+  <Toolkit/>
+</div>
+RETURN_JSX_END
+}
+
 export default function Intro()
 {
 
@@ -140,6 +215,7 @@ RETURN_JSX_BEGIN
     <Identity/>
     <Status/>
   </div>
+  <Player/>
 </section>
 RETURN_JSX_END
 }
