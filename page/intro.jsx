@@ -177,10 +177,10 @@ RETURN_JSX_BEGIN
   <img src='AS_SHUFFLE_SVG' draggable={ false } class='h-4'/>
   <div class='flex items-center gap-x-5'>
     <img src='AS_SKIP_PREVIOUS_SVG' draggable={ false } class='h-6'/>
-    <LinkExtern href='https://youtu.be/2kZVEUGLgy4?t=121'>
-      <img src='AS_PLAY_ARROW_SVG' draggable={ false }
-           class='h-8 rounded-full motion-safe:transition
-                  hover:bg-zinc-400 active:scale-80'/>
+    <LinkExtern href='https://youtu.be/2kZVEUGLgy4?t=121'
+                class='p-1 rounded-full motion-safe:transition
+                       hover:bg-zinc-400 active:scale-80'>
+      <img src='AS_PLAY_ARROW_SVG' draggable={ false } class='h-8'/>
     </LinkExtern>
     <img src='AS_SKIP_NEXT_SVG' draggable={ false } class='h-6'/>
   </div>
@@ -206,7 +206,8 @@ RETURN_JSX_END
 function Quote({ children, ...props })
 {
 	APPEND_CLASS(props, '-translate-y-1')
-	props.class += ' text-6xl font-serif text-zinc-300 drop-shadow-xs'
+	props.class += ' text-6xl font-serif text-zinc-300'
+	props.class += ' select-none drop-shadow-xs'
 
 RETURN_JSX_BEGIN
 <div { ...props }>
@@ -238,20 +239,27 @@ export default function Intro()
 {
 
 RETURN_JSX_BEGIN
-<section id='intro' class='*:mx-auto space-y-10'>
-  <div class='flex flex-col items-center gap-y-8'>
+<section id='intro' class='lg:flex justify-center gap-x-10 2xl:gap-x-5'>
+  <div class='lg:p-5 *:mx-auto'>
     <div class='w-fit'>
       <Identity/>
     </div>
-    <div class='w-fit'>
+    <div class='mt-8 w-fit'>
       <Status/>
     </div>
   </div>
-  <div class='w-xs'>
-    <Bio/>
-  </div>
-  <div class='px-2 w-sm'>
-    <Player/>
+  <div class='lg:p-5 lg:relative mt-10 lg:mt-0
+              2xl:origin-top-left 2xl:skew-x-12'>
+    <Bar vertical
+         class='absolute top-0 bottom-0 hidden lg:block 2xl:rounded-full'/>
+    <div class='lg:pl-15 *:mx-auto lg:*:mx-0 2xl:*:-skew-x-12'>
+      <div class='w-xs lg:w-md'>
+        <Bio/>
+      </div>
+      <div class='mt-10 2xl:pl-15 px-2 max-w-sm lg:max-w-none 2xl:w-lg'>
+        <Player/>
+      </div>
+    </div>
   </div>
 </section>
 RETURN_JSX_END

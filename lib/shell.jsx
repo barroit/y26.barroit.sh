@@ -21,7 +21,7 @@ function on_event(handler_map, event)
 		fn(event)
 }
 
-export default function Shell({ children, color = 'var(--color-miku-pink)',
+export default function Shell({ children, color = 'MIKU_PINK',
 				left = '[', right = ']', move = 5, ...props })
 {
 	const handler_map = useRef()
