@@ -7,9 +7,9 @@ terser-in += $(page-y)
 onchange-in += $(page-glob)
 build-static-y += $(page-y)
 
-$(page-m4-y): $(m4-prefix)/%: % $(image-asmap-y) $(lib-m4-y)
+$(page-m4-y): $(m4-prefix)/%: % $(image-asmap-y) $(lib-m4-y) $(jsx-helper-y)
 	mkdir -p $(@D)
-	$(m4) $(image-asmap-y) $< >$@
+	$(m4) $(image-asmap-y) $(jsx-helper-y) $< >$@
 
 $(page-y)1: $(page-m4-y) | $(prefix)
 	$(esbuild) --jsx-import-source=preact --jsx=automatic \

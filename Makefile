@@ -2,7 +2,7 @@
 
 m4 ?= m4
 m4 := printf 'changequote([[, ]])' | $(m4) -
-m4 += -DRETURN_JSX_BEGIN='return (' -DRETURN_JSX_END=')' -Uformat
+m4 += -Uformat
 
 esbuild ?= esbuild
 esbuild += --bundle --format=esm
@@ -46,7 +46,7 @@ bundle-y :=
 clean-y :=
 build-static-y :=
 
-prefix-y := $(prefix)/m4 $(prefix)/static
+prefix-y := $(m4-prefix) $(static-prefix)
 static-prefix-y :=
 
 .PHONY: build-static
@@ -78,7 +78,7 @@ $(prefix-y): | $(prefix)
 	mkdir $@
 
 $(static-prefix-y): | $(static-prefix)
-	mkdir $@
+	mkdir -p $@
 
 terser-y := $(addsuffix 1-terser,$(terser-in))
 
@@ -107,12 +107,12 @@ distclean: clean
 hot-build-static: build-static
 	$(onchange) $(patsubst %,'%',$(onchange-in)) -- $(MAKE) -j build-static
 
-host-build:
+host:
 	cd $(static-prefix) && \
 	$(browser-sync) start --server --no-open --files '**/*'
 
-hot-dev:
-	$(concurrently) '$(MAKE) hot-build-static' '$(MAKE) host-build'
+hot-dev: build-static
+	$(concurrently) '$(MAKE) hot-build-static' '$(MAKE) host'
 
 .PHONY: preview
 

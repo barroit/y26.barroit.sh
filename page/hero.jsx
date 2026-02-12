@@ -2,16 +2,6 @@
 /*
  * Copyright 2026 Jiamu Sun <barroit@linux.com>
  */
-divert(-1)
-
-define(MIKU_PINK, var(--color-miku-pink))
-define(MIKU_CYAN, var(--color-miku-cyan))
-
-define(HOT, $2hover:$1 $2focus-visible:$1)
-define(GROUP_HOT, HOT($1, group-))
-define(GROUP_HOT_CHILD, HOT($1, *:group-))
-
-divert(0)dnl
 
 import { useRef } from 'preact/hooks'
 

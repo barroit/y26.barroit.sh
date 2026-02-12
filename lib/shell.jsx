@@ -26,15 +26,11 @@ export default function Shell({ children, color = 'var(--color-miku-pink)',
 {
 	const handler_map = useRef()
 	const on_event_fn = on_event.bind(undefined, handler_map)
-	const style = 'group/shell relative cursor-pointer'
 
 	if (!handler_map.current)
 		handler_map.current = structuredClone(handler_init)
 
-	if (props.class)
-		props.class += ` ${style}`
-	else
-		props.class = style
+	APPEND_CLASS(props, 'group/shell relative cursor-pointer')
 
 RETURN_JSX_BEGIN
 <div onclick={ on_event_fn } onpointerenter={ on_event_fn } { ...props }>

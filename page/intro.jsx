@@ -12,12 +12,7 @@ import { LinkExtern } from '../lib/link.jsx'
 
 function Label({ children, src, ...props })
 {
-	const style = 'flex items-center gap-x-2'
-
-	if (props.class)
-		props.class += ` ${style}`
-	else
-		props.class = style
+	APPEND_CLASS(props, 'flex items-center gap-x-2')
 
 RETURN_JSX_BEGIN
 <div { ...props }>
@@ -89,7 +84,7 @@ function Identity()
 RETURN_JSX_BEGIN
 <div class='flex items-center gap-x-10'>
   <img src='AS_AVATAR_SQUARE_JPG' draggable={ false }
-       class='w-20 rounded-full drop-shadow-md select-none'/>
+       class='w-20 rounded-full shadow-md select-none'/>
   <div>
     <p class='text-2xl font-bold'>
       Jiamu Sun
@@ -137,7 +132,7 @@ function Song()
 RETURN_JSX_BEGIN
 <div class='flex items-center'>
   <img src='AS_METEOR_JPEG' draggable={ false }
-       class='-mx-1 h-8 rounded-md drop-shadow-xs'/>
+       class='-mx-1 h-8 rounded-md shadow-sm'/>
   <div class='ml-4 select-text'>
     <p class='font-bold'>METEOR</p>
     <p class='text-sm text-zinc-600'>DIVELA</p>
@@ -157,14 +152,15 @@ RETURN_JSX_END
 
 function Progress()
 {
+
 RETURN_JSX_BEGIN
 <div class='relative -mx-1'>
-  <Bar class='rounded-full' shadow='drop-shadow-xs'/>
+  <Bar class='rounded-full' shadow='shadow-sm'/>
   <Bar class='absolute top-0 left-0 right-11/20 rounded-full'
        shadow='drop-shadow-none'
        color='bg-gradient-to-r from-rose-500 to-miku-pink'/>
   <div class='absolute -top-[calc(var(--spacing)*.5)] right-11/20
-              size-2 rounded-full bg-rose-500'></div>
+              size-2 rounded-full bg-rose-500 shadow-sm'></div>
   <div class='mt-1 flex justify-between font-bold text-xs text-zinc-500'>
     <p>2:01</p>
     <p>4:31</p>
@@ -177,7 +173,7 @@ function Toolkit()
 {
 
 RETURN_JSX_BEGIN
-<div class='flex justify-between items-center drop-shadow-sm opacity-80'>
+<div class='flex justify-between items-center opacity-80 drop-shadow-sm'>
   <img src='AS_SHUFFLE_SVG' draggable={ false } class='h-4'/>
   <div class='flex items-center gap-x-5'>
     <img src='AS_SKIP_PREVIOUS_SVG' draggable={ false } class='h-6'/>
@@ -198,10 +194,42 @@ function Player()
 
 RETURN_JSX_BEGIN
 <div aria-hidden={ true }
-     class='mx-2 px-5 py-2 select-none bg-zinc-200/50 rounded-xl space-y-2'>
+     class='px-5 py-2 select-none rounded-xl
+            bg-zinc-200/50 shadow-sm space-y-2'>
   <Song/>
   <Progress/>
   <Toolkit/>
+</div>
+RETURN_JSX_END
+}
+
+function Quote({ children, ...props })
+{
+	APPEND_CLASS(props, '-translate-y-1')
+	props.class += ' text-6xl font-serif text-zinc-300 drop-shadow-xs'
+
+RETURN_JSX_BEGIN
+<div { ...props }>
+  { children }
+</div>
+RETURN_JSX_END
+}
+
+function Bio()
+{
+
+RETURN_JSX_BEGIN
+<div class='flex gap-x-1'>
+  <Quote>“</Quote>
+  <div class='relative'>
+    <span class='leading-7 italic'>
+      Building efficient tools and exploring new fields is my default state. I
+      prefer the virtual over the real, and minimalist design over clutter. I
+      write precise code to keep things quiet. When I'm not coding, I escape to
+      Hatsune Miku events.
+    </span>
+    <Quote class='absolute inline-block'>”</Quote>
+  </div>
 </div>
 RETURN_JSX_END
 }
@@ -210,12 +238,21 @@ export default function Intro()
 {
 
 RETURN_JSX_BEGIN
-<section id='intro' class='space-y-15'>
-  <div class='mx-auto w-fit space-y-10'>
-    <Identity/>
-    <Status/>
+<section id='intro' class='*:mx-auto space-y-10'>
+  <div class='flex flex-col items-center gap-y-8'>
+    <div class='w-fit'>
+      <Identity/>
+    </div>
+    <div class='w-fit'>
+      <Status/>
+    </div>
   </div>
-  <Player/>
+  <div class='w-xs'>
+    <Bio/>
+  </div>
+  <div class='px-2 w-sm'>
+    <Player/>
+  </div>
 </section>
 RETURN_JSX_END
 }
