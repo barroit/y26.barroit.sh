@@ -159,8 +159,8 @@ RETURN_JSX_BEGIN
   <Bar class='absolute top-0 left-0 right-11/20 rounded-full'
        shadow='drop-shadow-none'
        color='bg-gradient-to-r from-rose-500 to-miku-pink'/>
-  <div class='absolute -top-[calc(var(--spacing)*.5)] right-11/20
-              size-2 rounded-full bg-rose-500 shadow-sm'></div>
+  <div class='absolute -top-0.5 right-11/20 size-2
+              rounded-full bg-rose-500 shadow-sm'></div>
   <div class='mt-1 flex justify-between font-bold text-xs text-zinc-500'>
     <p>2:01</p>
     <p>4:31</p>

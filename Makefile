@@ -19,8 +19,9 @@ browser-sync ?= browser-sync
 concurrently ?= concurrently
 wrangler ?= wrangler
 
-ln-unique := ./scripts/ln-unique.sh
-gen-asmap := ./scripts/gen-asmap.sh
+ln-unique    := ./scripts/ln-unique.sh
+gen-asmap    := ./scripts/gen-asmap.sh
+parse-resume := ./scripts/parse-resume.py
 
 prefix := build
 m4-prefix := $(prefix)/m4

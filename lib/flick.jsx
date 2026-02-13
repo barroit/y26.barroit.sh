@@ -84,7 +84,7 @@ function fmt_token(chr)
 {
 
 RETURN_JSX_BEGIN
-  <span class='duration-120'>{ chr }</span>
+<span class='duration-120'>{ chr }</span>
 RETURN_JSX_END
 }
 

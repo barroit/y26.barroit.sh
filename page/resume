@@ -1,0 +1,68 @@
+[[2021]]
+Headless commerce
+Vuejs, Spring Boot, Tailwind CSS
+
+[[2022]]
+Minecraft plugin
+Paper API, Maven
+
+[[2023]]
+Personal website
+Remix, Tailwind CSS
+
+Discord bot
+discord.js
+
+[[2024]]
+Keystroke monitor
+Win32 API
+
+Git patching
+Git internals, parse-options API
+
+Password manager
+POSIX API, Win32 API
+
+Light & AC scheduler
+ESP32, esp-idf
+
+Linux kernel patching
+Kernel internals, linux-mm, linux-doc
+
+System setup framework
+POSIX Shell
+
+Corekeeper mod
+Unity editor, Unity ECS
+
+File backup tool
+CMake, POSIX API, Win32 API, io_uring
+
+[[2025]]
+CLI framework
+CMake, POSIX API, Win32 API
+
+Personal website
+React Router, Tailwind CSS, Cloudflare Workers
+
+Documentation website
+Sphinx, GitHub Pages
+
+OAuth2 helper for Mutt
+POSIX Shell
+
+Printable model
+FreeCAD, Bambu Studio
+
+LaTeX startup tool
+GNU Make, LuaLaTeX
+
+SPDX header tool for Vscode
+GNU Make, Vscode API
+
+[[2026]]
+Code snapping tool for Vscode
+GNU Make, Node.js, Vscode API
+
+Personal website
+GNU Make, GNU M4, Preact, Tailwind CSS, Cloudflare Workers
