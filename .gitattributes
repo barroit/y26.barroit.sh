@@ -1,0 +1,4 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+photos/** filter=lfs diff=lfs merge=lfs -text
+photos/README !filter !diff !merge text
