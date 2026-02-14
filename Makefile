@@ -1,8 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 m4 ?= m4
-m4 := printf 'changequote([[, ]])' | $(m4) -
-m4 += -Uformat
+m4 := printf 'changequote([[, ]])' | $(m4) - -Uformat
 
 esbuild ?= esbuild
 esbuild += --bundle --format=esm
@@ -14,6 +13,11 @@ terser += --module --ecma 2020 --mangle --comments false \
 tailwindcss ?= tailwindcss
 tailwindcss += --optimize
 
+magick ?= magick
+
+ffmpeg ?= ffmpeg
+ffmpeg += -v error
+
 onchange ?= onchange
 browser-sync ?= browser-sync
 concurrently ?= concurrently
@@ -21,6 +25,7 @@ wrangler ?= wrangler
 
 ln-unique    := ./scripts/ln-unique.sh
 gen-asmap    := ./scripts/gen-asmap.sh
+map-asmap    := ./scripts/map-asmap.py
 parse-resume := ./scripts/parse-resume.py
 
 prefix := build
@@ -48,11 +53,12 @@ clean-y :=
 build-static-y :=
 
 prefix-y := $(m4-prefix) $(static-prefix)
-static-prefix-y :=
 
 .PHONY: build-static
 
 build-static:
+
+include build_tool/photos.mak
 
 include build_tool/image.mak
 
@@ -72,13 +78,7 @@ include build_tool/html.mak
 
 include build_tool/rule.mak
 
-$(prefix):
-	mkdir $@
-
-$(prefix-y): | $(prefix)
-	mkdir $@
-
-$(static-prefix-y): | $(static-prefix)
+$(prefix-y):
 	mkdir -p $@
 
 terser-y := $(addsuffix 1-terser,$(terser-in))
@@ -106,7 +106,7 @@ distclean: clean
 .PHONY: hot-build-static host-build hot-dev
 
 hot-build-static: build-static
-	$(onchange) $(patsubst %,'%',$(onchange-in)) -- $(MAKE) -j build-static
+	$(onchange) $(patsubst %,'%',$(onchange-in)) -- $(MAKE) build-static
 
 host:
 	cd $(static-prefix) && \

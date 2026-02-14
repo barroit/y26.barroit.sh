@@ -7,7 +7,7 @@ exec >$1
 
 shift
 
-subst=$1
+drop=$1
 
 shift
 
@@ -24,7 +24,7 @@ find $@ -maxdepth 1 -type f | sort | while read fullname; do
 	ext=$(printf $name | cut -d. -f2)
 
 	var_name=$(printf as_%s_%s $stem $ext | tr [[:lower:]] [[:upper:]])
-	var_val=${fullname#$subst}
+	var_val=${fullname#$drop}
 
 	printf "define(%s, %s%s)\n\n" $var_name $var_val
 done

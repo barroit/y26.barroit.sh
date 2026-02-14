@@ -4,8 +4,7 @@ image-dir           := $(shell find image -type d)
 image-prefix        := $(addprefix $(prefix)/,$(image-dir))
 static-image-prefix := $(addprefix $(static-prefix)/,$(image-dir))
 
-prefix-y += $(image-prefix)
-static-prefix-y += $(static-image-prefix)
+prefix-y += $(image-prefix) $(static-image-prefix)
 
 image-glob     := $(addsuffix /*,$(image-dir))
 image-in-dirty := $(shell find $(image-dir) -maxdepth 1 -type f)
