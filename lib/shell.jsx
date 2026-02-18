@@ -4,7 +4,7 @@
  */
 
 import { createContext } from 'preact'
-import { useContext, useRef } from 'preact/hooks'
+import { useRef } from 'preact/hooks'
 
 export const ShellContext = createContext(undefined)
 const handler_init = {
@@ -30,20 +30,18 @@ export default function Shell({ children, color = 'MIKU_PINK',
 	if (!handler_map.current)
 		handler_map.current = structuredClone(handler_init)
 
-	APPEND_CLASS(props, 'group/shell relative cursor-pointer')
+	APPEND_CLASS(props, 'group/shell relative')
 
 RETURN_JSX_BEGIN
 <div onclick={ on_event_fn } onpointerenter={ on_event_fn } { ...props }>
-  <div class='before:absolute after:absolute
-              before:right-full after:left-full
-              before:content-[attr(data-left)]
-              after:content-[attr(data-right)]
-              before:text-(--color) after:text-(--color)
+  <div class='before:absolute before:right-full before:content-[attr(data-left)]
+              before:text-(--color) before:transition-[padding]
               group-hover/shell:before:pr-[calc(var(--spacing)*var(--move))]
-              group-hover/shell:after:pl-[calc(var(--spacing)*var(--move))]
-              before:transition-[padding] after:transition-[padding]'
+              after:absolute after:left-full after:content-[attr(data-right)]
+              after:text-(--color) after:transition-[padding]
+              group-hover/shell:after:pl-[calc(var(--spacing)*var(--move))]'
        data-left={ left } data-right={ right }
-       style={{ '--move': move, '--color': color }}>
+       style={ { '--move': move, '--color': color } }>
     <ShellContext value={ handler_map }>
       { children }
     </ShellContext>

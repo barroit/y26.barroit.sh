@@ -15,8 +15,8 @@ photos-y-in   := $(addprefix $(prefix)/,$(photos-in))
 photos-avif-y := $(patsubst %.jpeg,%.avif,$(filter %.jpeg,$(photos-y-in)))
 photos-webm-y := $(patsubst %.mov,%.webm,$(filter %.mov,$(photos-y-in)))
 
-photos-avif-thumb-y := $(patsubst %.avif,%_thumbnail.avif,$(photos-avif-y))
-photos-webm-thumb-y := $(patsubst %.webm,%_thumbnail.avif,$(photos-webm-y))
+photos-avif-thumb-y := $(patsubst %.avif,%_xthumb.avif,$(photos-avif-y))
+photos-webm-thumb-y := $(patsubst %.webm,%_xthumb.avif,$(photos-webm-y))
 
 photos-readme-in := photos/README
 photos-readme-y  := $(prefix)/$(photos-readme-in)
@@ -33,7 +33,7 @@ $(photos-avif-y): $(prefix)/%.avif: \
 	$(magick) $< -auto-orient -strip -quality 60 $@
 	$(deploy-photo)
 
-$(photos-avif-thumb-y): $(prefix)/%_thumbnail.avif: \
+$(photos-avif-thumb-y): $(prefix)/%_xthumb.avif: \
 			%.jpeg | $(photos-prefix) $(static-photos-prefix)
 	$(magick) $< -auto-orient -strip -resize 390x -quality 39 $@
 	$(deploy-photo)
@@ -43,7 +43,7 @@ $(photos-webm-y): $(prefix)/%.webm: \
 	$(ffmpeg) -i $< -c:v av1_nvenc -preset p7 -cq 30 -b:v 0 -c:a libopus $@
 	$(deploy-photo)
 
-$(photos-webm-thumb-y): $(prefix)/%_thumbnail.avif: \
+$(photos-webm-thumb-y): $(prefix)/%_xthumb.avif: \
 			%.mov | $(photos-prefix) $(static-photos-prefix)
 	$(magick) $<[0] -auto-orient -strip -resize 390x -quality 39 $@
 	$(deploy-photo)
@@ -59,8 +59,8 @@ photos-map-y := $(prefix)/photos.js
 $(photos-map-y): $(photos-asmap-y)
 	trap 'rm -f $(prefix)/.tmp-$$$$' EXIT && \
 	printf 'dumpdef\n' >$(prefix)/.tmp-$$$$ && \
-	$(m4) $< $(prefix)/.tmp-$$$$ 2>&1 | \
-	grep ^AS_ | $(map-asmap) photos_map >$@
+	$(m4) $< $(prefix)/.tmp-$$$$ 2>&1 | grep ^AS_ | \
+	sort -t_ -k2,2 -k3,3n -k4,4 | $(map-asmap) photos_map >$@
 
 clean-y += clean-photos
 

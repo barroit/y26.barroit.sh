@@ -5,7 +5,9 @@
 
 <!doctype html>
 <!-- <html lang='en' class='scroll-smooth'> -->
-<html lang='en'>
+<html lang='en'
+      class='data-dialog:overflow-hidden
+             data-scrollbar:[scrollbar-gutter:stable]'>
 
 <head>
   <meta charset='utf-8'/>
@@ -28,8 +30,8 @@
 </head>
 
 <body>
-  <div class='hidden motion-safe:xl:block
-              fixed inset-0 -left-[5vmax] w-[110vmax] h-[110%] -z-39
+  <div class='fixed inset-0 -left-[5vmax] -z-39
+              w-[110vmax] h-[110%]  hidden xl:block
               bg-(image:--shift-star) bg-size-[10vmax_auto] invert-10
               animate-shift-star will-change-transform'
        style='--shift-star: url(AS_SHIFT_STAR_PNG)'></div>

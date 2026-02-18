@@ -5,7 +5,7 @@
 
 import Bar from '../lib/bar.jsx'
 
-include(build/resume.m4)dnl
+include(build/resume.js)dnl
 
 function Work({ name, skill })
 {
@@ -71,8 +71,8 @@ export default function Log()
 
 RETURN_JSX_BEGIN
 <section id='log'>
-  <div class='mx-auto pl-5 lg:px-5 lg:columns-2 max-w-sm lg:max-w-4xl'>
-    <div class='relative pt-1 pb-6'>
+  <div class='mx-auto pl-5 lg:px-5 lg:columns-2 max-w-sm lg:max-w-4xl gap-50'>
+    <div class='relative pb-6'>
       <Bar class='w-5 -translate-x-2'/>
       <Bar class='absolute top-1 bottom-0' vertical/>
     </div>

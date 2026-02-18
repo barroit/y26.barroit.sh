@@ -30,7 +30,7 @@ function fmt_link([ name, url ])
 RETURN_JSX_BEGIN
 <Shell>
   <LinkExtern href={ url } class='p-2'>
-    <Flick>{ name }</Flick>
+    <Flick class='uppercase'>{ name }</Flick>
   </LinkExtern>
 </Shell>
 RETURN_JSX_END
@@ -50,7 +50,7 @@ RETURN_JSX_BEGIN
       <code>memory.get("last_seen_sky");</code>
     </pre>
   </div>
-  <nav class='pr-2 flex justify-between gap-x-12 uppercase'>
+  <nav class='pr-2 flex justify-between gap-x-12'>
     { links }
   </nav>
 </header>
@@ -95,9 +95,9 @@ function Anchor({ name, url })
 
 RETURN_JSX_BEGIN
 <LinkIntern ref={ link } href={ url }
-      class='group p-2 flex items-center gap-x-1 cursor-pointer
-             transition HOT(-translate-y-px) active:translate-y-0
-             motion-safe:*:transition GROUP_HOT_CHILD(text-miku-pink)'>
+      class='group p-2 flex items-center gap-x-1 transition
+             HOT(-translate-y-px) ACTIVE(translate-y-0)
+             *:transition GROUP_HOT_CHILD(text-miku-pink)'>
   <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'
        onclick={ on_click_arrow_fn } fill='currentColor'
        class='h-[1.1rem] rotate-90 GROUP_HOT(rotate-0)'>

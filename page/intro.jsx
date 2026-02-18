@@ -113,12 +113,12 @@ RETURN_JSX_BEGIN
   <Label src='AS_LOCATION_ON_SVG'>Chiba Chuo</Label>
   <ClockLabel/>
   <Label src='AS_MAIL_SVG'>
-    <LinkExtern href='mailto:barroit@linux.com' class='hover:underline'>
+    <LinkExtern href='mailto:barroit@linux.com' class='HOT(underline)'>
       <Flick>barroit@linux.com</Flick>
     </LinkExtern>
   </Label>
   <Label src='AS_SMS_SVG'>
-    <LinkExtern href='https://x.com/barro1t' class='hover:underline'>
+    <LinkExtern href='https://x.com/barro1t' class='HOT(underline)'>
       <Flick>https://x.com/barro1t</Flick>
     </LinkExtern>
   </Label>
@@ -178,8 +178,8 @@ RETURN_JSX_BEGIN
   <div class='flex items-center gap-x-5'>
     <img src='AS_SKIP_PREVIOUS_SVG' draggable={ false } class='h-6'/>
     <LinkExtern href='https://youtu.be/2kZVEUGLgy4?t=121'
-                class='p-1 rounded-full motion-safe:transition
-                       hover:bg-zinc-400 active:scale-80'>
+                class='p-1 rounded-full transition
+                       HOT(bg-zinc-400) ACTIVE(scale-80)'>
       <img src='AS_PLAY_ARROW_SVG' draggable={ false } class='h-8'/>
     </LinkExtern>
     <img src='AS_SKIP_NEXT_SVG' draggable={ false } class='h-6'/>
@@ -193,8 +193,7 @@ function Player()
 {
 
 RETURN_JSX_BEGIN
-<div aria-hidden={ true }
-     class='px-5 py-2 select-none rounded-xl
+<div class='px-5 py-2 select-none rounded-xl
             bg-zinc-200/50 shadow-sm space-y-2'>
   <Song/>
   <Progress/>
@@ -256,7 +255,7 @@ RETURN_JSX_BEGIN
       <div class='w-xs lg:w-md'>
         <Bio/>
       </div>
-      <div class='mt-10 2xl:pl-15 px-2 max-w-sm lg:max-w-none 2xl:w-lg'>
+      <div class='mt-10 2xl:pl-10 px-2 max-w-sm lg:max-w-none 2xl:w-lg'>
         <Player/>
       </div>
     </div>
