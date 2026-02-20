@@ -1,23 +1,32 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+#
+# https://developer.mozilla.org/en-US/observatory
+#
+divert(-1)
 
-/
-  Cache-Control: public, max-age=3939, must-revalidate
+define(SECURITY_HEADER,
+  Cross-Origin-Resource-Policy: cross-origin
+  Referrer-Policy: strict-origin-when-cross-origin
 
-  Cross-Origin-Resource-Policy: same-site
-  X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
-  Referrer-Policy: no-referrer
   Strict-Transport-Security: max-age=31536000; includeSubDomains
 
-  Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; base-uri 'self'; form-action 'self';
+  Content-Security-Policy: default-src 'none'; dnl
+			   script-src 'self' ifdef(`HOT_DEV',
+						   'unsafe-inline'); dnl
+			   style-src 'self'; img-src 'self'; dnl
+			   connect-src 'self'; font-src 'self'; dnl
+			   media-src 'self'; frame-ancestors 'none'; dnl
+)
+
+divert(0)dnl
+
+/
+  Cache-Control: no-cache
+
+  SECURITY_HEADER
 
 /*
   Cache-Control: public, max-age=31536000, immutable
 
-  Cross-Origin-Resource-Policy: same-site
-  X-Frame-Options: DENY
-  X-Content-Type-Options: nosniff
-  Referrer-Policy: no-referrer
-  Strict-Transport-Security: max-age=31536000; includeSubDomains
-
-  Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; base-uri 'self'; form-action 'self';
+  SECURITY_HEADER

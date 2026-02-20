@@ -114,4 +114,4 @@ host:
 	$(wrangler) dev --live-reload --ip=$(shell $(lan-ip))
 
 hot-dev: deploy-ready
-	$(concurrently) '$(MAKE) hot-build' '$(MAKE) host'
+	HOT_DEV=1 $(concurrently) '$(MAKE) hot-build' '$(MAKE) host'

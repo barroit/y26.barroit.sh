@@ -7,7 +7,7 @@ onchange-in += $(rule-in)
 deploy-ready-y += $(rule-y)
 
 $(rule-y): $(rule-in) | $(static-prefix)
-	m4 $< >$@
+	m4 $${HOT_DEV:+-DHOT_DEV} $< >$@
 
 clean-y += clean-rule
 
