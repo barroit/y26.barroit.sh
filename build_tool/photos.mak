@@ -68,5 +68,6 @@ clean-y += clean-photos
 .PHONY: clean-photos
 
 clean-photos:
-	test -d $(prefix)/photos && find $(prefix)/photos -type f -exec rm {} +
+	test -d $(prefix)/photos && \
+	find $(prefix)/photos -type f -exec rm {} + || true
 	rm -f $(photos-readme-y) $(photos-asmap-y)

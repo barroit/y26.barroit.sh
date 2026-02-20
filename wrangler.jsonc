@@ -8,6 +8,7 @@
    "assets": {
       "directory": "build/static",
       "html_handling": "drop-trailing-slash",
+      "run_worker_first": [ "/q/*" ],
    },
    "observability": {
       "enabled": true,
