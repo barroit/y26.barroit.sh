@@ -265,7 +265,7 @@ RETURN_JSX_BEGIN
 RETURN_JSX_END
 }
 
-function LoopControl({ loop, set_loop, year_idx, next })
+function LoopControl({ loop, set_loop, year_idx, photo_knob })
 {
 	const toggle_fn = prev => prev ^ 1
 	const disable_fn = set_loop.bind(undefined, toggle_fn)
@@ -275,7 +275,8 @@ function LoopControl({ loop, set_loop, year_idx, next })
 		if (!loop)
 			return
 
-		const timer = setInterval(() => next.current.click(), 3939)
+		const btn = LAST_CHILD_OF(photo_knob.current)
+		const timer = setInterval(() => btn.click(), 3939)
 
 		return () => clearInterval(timer)
 	}, [ year_idx, loop ])
@@ -405,6 +406,19 @@ RETURN_JSX_BEGIN
 RETURN_JSX_END
 }
 
+function Prefetch({ src, ...props })
+{
+	const ref = useRef()
+
+	useEffect(() => {fetch(src); console.log(src)}, [])
+
+	props.ref = ref
+
+RETURN_JSX_BEGIN
+<div { ...props }></div>
+RETURN_JSX_END
+}
+
 function on_thumb_click(new_pos, year_idx, set_loop, set_pos_tab, event)
 {
 	const map_fn = (val, idx) => idx != year_idx ? val : new_pos
@@ -426,7 +440,7 @@ define(PHOTO_ARROW, [[__PHOTO_ARROW($1, $2, substr($2, 0, 1))]])
 
 divert(0)dnl
 dnl
-function PhotoKnob({ year_idx, pos, loop, set_loop, set_pos_tab, next })
+function PhotoKnob({ year_idx, pos, loop, set_loop, set_pos_tab, photo_knob })
 {
 	const photos = photos_map[year_idx]
 	const l_pos = photos[pos - 1] ? pos - 1 : photos.length - 1
@@ -455,16 +469,18 @@ function PhotoKnob({ year_idx, pos, loop, set_loop, set_pos_tab, next })
 		APPEND_CLASS(r_style, 'translate-x-1 -translate-y-1 scale-110')
 
 RETURN_JSX_BEGIN
-<div class='w-fit flex items-end gap-x-2 select-none'>
+<div ref={ photo_knob } class='w-fit flex items-end gap-x-2 select-none'>
   <Thumbnail src={ photos[l_pos][1] } onclick={ l_fn } { ...l_style }>
-    <div class='absolute inset-0 m-[2px] bg-zinc-800/70'></div>
+    <link inert rel='prefetch' href={ photos[l_pos][0] } onclick={ () => {} }
+          class='block absolute inset-0 m-[2px] bg-zinc-800/70'/>
   </Thumbnail>
   <div inert class='h-12 lg:h-24 **:size-full'>
     <Thumbnail src={ photos[pos][1] }></Thumbnail>
   </div>
   <Thumbnail src={ photos[r_pos][1] }
              onclick={ r_fn } { ...r_style }>
-    <div class='absolute inset-0 m-[2px] bg-zinc-800/70' ref={ next }></div>
+    <link inert rel='prefetch' href={ photos[l_pos][0] } onclick={ () => {} }
+          class='block absolute inset-0 m-[2px] bg-zinc-800/70'/>
   </Thumbnail>
 </div>
 RETURN_JSX_END
@@ -488,7 +504,7 @@ export default function Gallery()
 	DEF_CACHED_STATE(loop)dnl
 
 	const [ visible, set_visible ] = useState(1)
-	const next = useRef()
+	const photo_knob = useRef()
 	const dialog = useRef()
 
 	const pos = pos_tab[year_idx]
@@ -498,7 +514,11 @@ export default function Gallery()
 	const video = +photo[0].endsWith('.webm')
 
 RETURN_JSX_BEGIN
-<section id='gallery' class='space-y-5 *:mx-auto *:max-w-lg lg:*:max-w-5xl'>
+<section id='gallery'
+         class='space-y-5 *:mx-auto *:max-w-lg lg:*:max-w-5xl
+                [--pastel-left:var(--pastel-green)]
+                [--pastel-mid:var(--pastel-lavender)]
+                [--pastel-right:var(--pastel-orange)]'>
   <div>
     <YearKnob { ...{ year_idx, set_year_idx } }/>
   </div>
@@ -521,9 +541,9 @@ RETURN_JSX_BEGIN
                 flex items-center justify-between rounded-full
                 bg-zinc-200/50 shadow-sm'>
       <LoopControl loop={ loop && visible }
-                   { ...{ year_idx, set_loop, next } }/>
+                   { ...{ year_idx, set_loop, photo_knob } }/>
       <OpenControl { ...{ dialog, video } }/>
-      <ExplandControl { ...{ year_idx, set_visible, set_pos_tab, set_loop } } />
+      <ExplandControl { ...{ year_idx, set_visible, set_pos_tab, set_loop } }/>
     </div>
   </div>
   <div>
@@ -531,7 +551,7 @@ RETURN_JSX_BEGIN
     <div class='mx-auto mt-5 translate-y-0.5 CANVAS_ARROW_HEAD'></div>
     <Bar class='mx-auto h-15' vertical/>
   </div>
-  <PhotoKnob { ...{ year_idx, pos, loop, set_loop, set_pos_tab, next } }/>
+  <PhotoKnob { ...{ year_idx, pos, loop, set_loop, set_pos_tab, photo_knob } }/>
 </section>
 RETURN_JSX_END
 }

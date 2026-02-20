@@ -56,7 +56,7 @@ export function LinkExtern({ children, ...props })
 {
 
 RETURN_JSX_BEGIN
-<LinkIntern target='_blank' rel='noopener noreferrer' { ...props }>
+<LinkIntern target='_blank' { ...props }>
   {children}
 </LinkIntern>
 RETURN_JSX_END

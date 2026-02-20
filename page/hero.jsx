@@ -173,7 +173,10 @@ export default function Hero()
 {
 
 RETURN_JSX_BEGIN
-<section id='hero'>
+<section id='hero'
+         class='[--pastel-left:var(--pastel-pink)]
+                [--pastel-mid:var(--pastel-lavender)]
+                [--pastel-right:var(--pastel-cyan)]'>
   <div class='pt-5'>
     <Banner/>
     <Bar class='mt-3'/>

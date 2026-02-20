@@ -70,7 +70,10 @@ export default function Log()
 	const groups = history.map(fmt_group)
 
 RETURN_JSX_BEGIN
-<section id='log'>
+<section id='log'
+         class='[--pastel-left:var(--pastel-pink)]
+                [--pastel-mid:var(--pastel-lavender)]
+                [--pastel-right:var(--pastel-green)]'>
   <div class='mx-auto pl-5 lg:px-5 lg:columns-2 max-w-sm lg:max-w-4xl gap-50'>
     <div class='relative pb-6'>
       <Bar class='w-5 -translate-x-2'/>

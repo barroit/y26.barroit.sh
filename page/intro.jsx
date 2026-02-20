@@ -238,7 +238,11 @@ export default function Intro()
 {
 
 RETURN_JSX_BEGIN
-<section id='intro' class='lg:flex justify-center gap-x-10 2xl:gap-x-5'>
+<section id='intro'
+         class='lg:flex justify-center gap-x-10 2xl:gap-x-5
+                [--pastel-left:var(--pastel-cyan)]
+                [--pastel-mid:var(--pastel-lavender)]
+                [--pastel-right:var(--pastel-pink)]'>
   <div class='lg:p-5 *:mx-auto'>
     <div class='w-fit'>
       <Identity/>

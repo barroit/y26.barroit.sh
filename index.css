@@ -8,11 +8,14 @@
 @import './styles/fonts.css';
 
 :root {
-	--pastel-pink: #fff5f5;
-	--pastel-lavender: #faf5ff;
-	--pastel-cyan: #f0f9fa;
+	--pastel-pink: oklch(0.9779 0.0107 17.34);
+	--pastel-lavender: oklch(0.9768 0.0142 308.3);
+	--pastel-cyan: oklch(0.9757 0.0096 204.92);
+	--pastel-orange: oklch(0.9755 0.01 55.2);
+	--pastel-green: oklch(0.9755 0.0090 148.5);
+	--pastel-blue: oklch(0.9765 0.0115 255.0);
 
-	/* --default-transition-duration: 100ms; */
+	--shift-star: url(AS_SHIFT_STAR_PNG);
 }
 
 @theme {
@@ -49,11 +52,11 @@
 	--animate-shift-star: shift-star 5s linear infinite;
 }
 
-@utility bg-miku {
+@utility bg-pastel {
 	background-image: linear-gradient(var(--direction),
-					  var(--pastel-pink) 20%,
-					  var(--pastel-lavender) 50%,
-					  var(--pastel-cyan) 80%);
+					  var(--pastel-left) 20%,
+					  var(--pastel-mid) 50%,
+					  var(--pastel-right) 80%);
 }
 
 @utility mask-fade-edge {

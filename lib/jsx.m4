@@ -22,6 +22,7 @@ define(APPEND_CLASS, if ($1.class) $1.class += ` ${$2}`; else $1.class = $2;)
 define(PARENT_OF, $1.parentElement)
 
 define(CHILD_OF, $1.firstChild)
+define(LAST_CHILD_OF, $1.firstChild)
 define(CHILD_TEXT_OF, CHILD_OF($1).textContent)
 
 define(NEXT_SIBLING_OF, $1.nextSibling)
