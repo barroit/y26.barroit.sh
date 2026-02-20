@@ -5,7 +5,7 @@ $(eval $(call def-target,css,$(realpath index.css),index.css,$(css-in)))
 css-m4-y := $(m4-prefix)/index.css
 
 asmap-in += $(css-y)
-build-static-y += $(css-y)
+deploy-ready-y += $(css-y)
 onchange-in += index.css styles/*.css
 
 $(css-y)1: $(css-in) $(page-m4-y) $(html-m4-y) | $(prefix)

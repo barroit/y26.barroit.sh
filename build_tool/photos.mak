@@ -40,7 +40,8 @@ $(photos-avif-thumb-y): $(prefix)/%_xthumb.avif: \
 
 $(photos-webm-y): $(prefix)/%.webm: \
 		  %.mov | $(photos-prefix) $(static-photos-prefix)
-	$(ffmpeg) -i $< -c:v av1_nvenc -preset p7 -cq 30 -b:v 0 -c:a libopus $@
+	$(ffmpeg) -y -i $< -c:v av1_nvenc \
+		  -preset p7 -cq 30 -b:v 0 -c:a libopus $@
 	$(deploy-photo)
 
 $(photos-webm-thumb-y): $(prefix)/%_xthumb.avif: \

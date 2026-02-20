@@ -23,8 +23,9 @@ browser-sync ?= browser-sync
 concurrently ?= concurrently
 wrangler ?= wrangler
 
-ln-unique    := ./scripts/ln-unique.sh
 gen-asmap    := ./scripts/gen-asmap.sh
+lan-ip       := ./scripts/lan-ip.py
+ln-unique    := ./scripts/ln-unique.sh
 map-asmap    := ./scripts/map-asmap.py
 parse-resume := ./scripts/parse-resume.py
 
@@ -50,13 +51,13 @@ onchange-in :=
 
 bundle-y :=
 clean-y :=
-build-static-y :=
+deploy-ready-y :=
 
 prefix-y := $(m4-prefix) $(static-prefix)
 
-.PHONY: build-static
+.PHONY: deploy-ready
 
-build-static:
+deploy-ready:
 
 include build_tool/photos.mak
 
@@ -89,7 +90,7 @@ $(terser-y): %1-terser: %1
 $(asmap-y): $(asmap-in)
 	$(gen-asmap) $@ $(static-prefix) $(static-prefix)
 
-build-static: $(build-static-y)
+deploy-ready: $(deploy-ready-y)
 
 .PHONY: clean distclean
 
@@ -103,19 +104,14 @@ distclean: clean
 	test -d .wrangler && find .wrangler -exec rm -rf {} + || true
 	test -d build && find build -exec rm -rf {} + || true
 
-.PHONY: hot-build-static host-build hot-dev
+.PHONY: hot-build host hot-dev
 
-hot-build-static: build-static
-	$(onchange) $(patsubst %,'%',$(onchange-in)) -- $(MAKE) build-static
+hot-build: deploy-ready
+	$(onchange) $(patsubst %,'%',$(onchange-in)) -- $(MAKE) deploy-ready
 
 host:
 	cd $(static-prefix) && \
-	$(browser-sync) start --server --no-open --files '**/*'
+	$(wrangler) dev --live-reload --ip=$(shell $(lan-ip))
 
-hot-dev: build-static
-	$(concurrently) '$(MAKE) hot-build-static' '$(MAKE) host'
-
-.PHONY: preview
-
-preview:
-	$(wrangler) dev --no-bundle
+hot-dev: deploy-ready
+	$(concurrently) '$(MAKE) hot-build' '$(MAKE) host'

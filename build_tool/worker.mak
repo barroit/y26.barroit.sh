@@ -4,7 +4,7 @@ $(eval $(call def-target,worker,worker.js,worker.js,worker/*.js))
 
 terser-in += $(worker-y)
 onchange-in += $(worker-glob)
-build-static-y += $(worker-y)
+deploy-ready-y += $(worker-y)
 
 $(worker-y)1: $(worker-in) | $(prefix)
 	$(esbuild) --sourcemap=inline --outfile=$@ $<

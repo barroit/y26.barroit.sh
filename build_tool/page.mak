@@ -8,7 +8,7 @@ resume-y  := $(prefix)/resume.js
 asmap-in += $(page-y)
 terser-in += $(page-y)
 onchange-in += $(page-glob) $(resume-in)
-build-static-y += $(page-y)
+deploy-ready-y += $(page-y)
 
 $(resume-y): $(resume-in)
 	$(parse-resume) <$< >$@

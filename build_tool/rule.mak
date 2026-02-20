@@ -3,10 +3,11 @@
 rule-in := _headers
 rule-y  := $(static-prefix)/$(rule-in)
 
-build-static-y += $(rule-y)
+onchange-in += $(rule-in)
+deploy-ready-y += $(rule-y)
 
 $(rule-y): $(rule-in) | $(static-prefix)
-	cp $< $@
+	m4 $< >$@
 
 clean-y += clean-rule
 

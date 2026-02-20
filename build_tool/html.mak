@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 onchange-in += $(html-glob)
-build-static-y += $(html-y)
+deploy-ready-y += $(html-y)
 
 $(html-y): $(prefix)/%: $(asmap-y) $(html-m4-y)
 	$(m4) $^ >$@
