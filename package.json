@@ -4,7 +4,6 @@
       "tailwindcss": "^4.1.18"
    },
    "dependencies": {
-      "preact": "^10.28.2",
-      "temporal-polyfill": "^0.3.0"
+      "preact": "^10.28.2"
    }
 }

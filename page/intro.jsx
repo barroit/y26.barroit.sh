@@ -4,11 +4,11 @@
  */
 
 import { useEffect, useState } from 'preact/hooks'
-import { Temporal } from 'temporal-polyfill'
 
 import Bar from '../lib/bar.jsx'
 import Flick from '../lib/flick.jsx'
 import { LinkExtern } from '../lib/link.jsx'
+import { time_span_now, time_to_str } from '../lib/time.js'
 
 function Label({ children, src, ...props })
 {
@@ -26,27 +26,12 @@ RETURN_JSX_END
 
 function BirthdayLabel()
 {
-	const birth_date = { year: 2005, month: 4, day: 6 }
-	const birth = Temporal.PlainDateTime.from(birth_date)
-
-	const now = Temporal.Now.plainDateTimeISO()
-	const age = birth.until(now, { largestUnit: 'years' })
-
-	const age_label = { years: 'year', months: 'month', days: 'day' }
-
-	if (age.years > 1)
-		age_label.years += 's'
-	if (age.months > 1)
-		age_label.months += 's'
-	if (age.days > 1)
-		age_label.days += 's'
+	const birth_date = new Date(1112739393939)
+	const birth = time_span_now(birth_date)
+	const birth_str = time_to_str(birth, 'hr')
 
 RETURN_JSX_BEGIN
-<Label src='AS_CAKE_SVG'>
-    { age.years } { age_label.years }, {}
-    { age.months } { age_label.months }, {}
-    { age.days } { age_label.days }
-</Label>
+<Label src='AS_CAKE_SVG'>{ birth_str }</Label>
 RETURN_JSX_END
 }
 
