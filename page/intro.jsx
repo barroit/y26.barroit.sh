@@ -7,8 +7,8 @@ import { useEffect, useState } from 'preact/hooks'
 
 import Bar from '../lib/bar.jsx'
 import Flick from '../lib/flick.jsx'
-import { LinkExtern } from '../lib/link.jsx'
-import { time_span_now, time_to_str } from '../lib/time.js'
+import { LinkExtern, ExternMark } from '../lib/link.jsx'
+import { time_span_now, time_to_str, time_to_clock } from '../lib/time.js'
 
 function Label({ children, src, ...props })
 {
@@ -35,29 +35,28 @@ RETURN_JSX_BEGIN
 RETURN_JSX_END
 }
 
+function clock_now()
+{
+	const now = new Date()
+	
+	return time_to_clock(now)
+}
+
 function ClockLabel()
 {
-	const now_ref = Temporal.Now.zonedDateTimeISO
-	const now_fn = now_ref.bind(undefined, 'Asia/Tokyo')
-	const [ now, next ] = useState(now_fn)
+	const [ now, next ] = useState(clock_now)
 
 	useEffect(() =>
 	{
-		const next_fn = next.bind(undefined, now_fn)
+		const next_fn = next.bind(undefined, clock_now)
 		const timer = setInterval(next_fn, 1000)
 
 		return () => clearInterval(timer)
 	}, [])
 
-	const hour_str = now.hour + ''
-	const minute_str = now.minute + ''
-
-	const hour = hour_str.padStart(2, '0')
-	const minute = minute_str.padStart(2, '0')
-
 RETURN_JSX_BEGIN
 <Label src='AS_SCHEDULE_SVG'>
-  <span>{ hour }:{ minute } </span>
+  <span>{ now.hr }:{ now.m } </span>
   <span class='text-zinc-500'>(UTC { now.offset })</span>
 </Label>
 RETURN_JSX_END
