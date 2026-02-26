@@ -7,7 +7,9 @@ export default function Bar({ vertical, color = 'bg-miku-cyan',
 			      shadow = 'shadow-sm', ...props })
 {
 	APPEND_CLASS(props, vertical ? 'w-1' : 'h-1')
-	props.class += ` ${color} ${shadow}`
+	APPEND_CLASS(props, color)
+	APPEND_CLASS(props, shadow)
+	APPEND_CLASS(props, 'select-none')
 
 RETURN_JSX_BEGIN
 <div { ...props }></div>

@@ -5,7 +5,7 @@
 
 export default function SVGIcon({ src, ...props })
 {
-	APPEND_CLASS(props, 'rounded-full')
+	APPEND_CLASS(props, 'rounded-full drop-shadow-sm select-none')
 
 RETURN_JSX_BEGIN
 <div { ...props }>

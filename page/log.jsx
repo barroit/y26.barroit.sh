@@ -16,7 +16,7 @@ RETURN_JSX_BEGIN
     <Bar class='absolute left-1 w-7'/>
     <Bar class='absolute left-0 w-1' shadow=''/>
     <div class='absolute left-7.5 size-2 rounded-full
-                border-2 border-miku-pink'></div>
+                border-2 border-miku-pink select-none'></div>
     <div>{ name }</div>
   </div>
   <div class='relative mt-1'>
@@ -36,7 +36,8 @@ RETURN_JSX_BEGIN
 <div class='relative pb-12'>
   <Bar class='absolute top-0 bottom-0' vertical/>
   <div class='ml-7 mb-6 flex items-center'>
-    <div class='absolute -left-0.5 size-2 rounded-full bg-miku-pink'></div>
+    <div class='absolute -left-0.5 size-2
+                rounded-full bg-miku-pink select-none'></div>
     <div class='font-bold'>{ year }</div>
   </div>
   <div class='space-y-6'>

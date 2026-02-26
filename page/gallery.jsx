@@ -304,7 +304,7 @@ function OpenControl({ dialog, video })
 
 RETURN_JSX_BEGIN
 <>
-  <div inert={ !!video } class='hidden pointer-coarse:flex'>
+  <div inert={ video } class='hidden pointer-coarse:flex'>
     <Control src='AS_OPEN_IN_FULL_SVG' { ...props }/>
   </div>
   <div class='pointer-coarse:hidden flex gap-x-8
@@ -495,7 +495,7 @@ const [ $1, set_$1 ] = useCachedState(init_$1, 'photo_$1')
 ]])
 
 define(CANVAS_ARROW_HEAD,
-       size-3 rounded-full border-3 border-miku-pink)
+       size-3 rounded-full border-3 border-miku-pink select-none)
 
 divert(0)dnl
 dnl
