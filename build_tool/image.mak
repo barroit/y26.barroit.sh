@@ -19,11 +19,11 @@ asmap-in += $(image-y)
 onchange-in += $(image-glob)
 
 $(image-readme-y): $(prefix)/%: % | $(image-prefix) $(static-image-prefix)
-	ln -f $< $@
+	cp $< $@
 	ln -f $@ $(subst $(prefix),$(static-prefix),$(@D))
 
 $(image-y): $(prefix)/%: % | $(image-prefix) $(static-image-prefix)
-	ln -f $< $@
+	cp $< $@
 	$(ln-unique) $@ $(subst $(prefix),$(static-prefix),$(@D))
 
 image-asmap-y := $(prefix)/image_asmap.m4

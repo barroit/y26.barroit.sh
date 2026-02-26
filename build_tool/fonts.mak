@@ -19,11 +19,11 @@ asmap-in += $(fonts-y)
 onchange-in += $(fonts-glob)
 
 $(fonts-readme-y): $(prefix)/%: % | $(fonts-prefix) $(static-fonts-prefix)
-	ln -f $< $@
+	cp $< $@
 	ln -f $@ $(subst $(prefix),$(static-prefix),$(@D))
 
 $(fonts-y): $(prefix)/%: % | $(fonts-prefix) $(static-fonts-prefix)
-	ln -f $< $@
+	cp $< $@
 	$(ln-unique) $@ $(subst $(prefix),$(static-prefix),$(@D))
 
 fonts-asmap-y := $(prefix)/fonts_asmap.m4

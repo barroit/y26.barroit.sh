@@ -16,7 +16,7 @@ $(worker-y)1: $(m4-prefix)/$(worker-entry-in) $(worker-m4-y)
 	$(esbuild) --sourcemap=inline --outfile=$@ $<
 
 $(worker-y): %: %1$(minimize)
-	ln -f $< $@
+	cp $< $@
 
 clean-y += clean-worker
 

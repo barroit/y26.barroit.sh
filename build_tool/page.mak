@@ -23,7 +23,7 @@ $(page-y)1: $(page-m4-y) | $(prefix)
 		   --sourcemap=inline --outfile=$@ $<
 
 $(page-y): %: %1$(minimize) | $(static-prefix)
-	ln -f $< $@
+	cp $< $@
 	$(ln-unique) $@ $(static-prefix)
 
 clean-y += clean-page

@@ -25,7 +25,7 @@ deploy-photo = ln -f $@ $(@D)_$(@F) && \
 	       $(ln-unique) $(@D)_$(@F) $(static-photos-prefix)
 
 $(photos-readme-y): $(prefix)/%: % | $(photos-prefix) $(static-photos-prefix)
-	ln -f $< $@
+	cp $< $@
 	ln -f $@ $(subst $(prefix),$(static-prefix),$(@D))
 
 $(photos-avif-y): $(prefix)/%.avif: \
