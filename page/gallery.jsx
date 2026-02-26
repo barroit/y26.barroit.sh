@@ -241,9 +241,8 @@ RETURN_JSX_BEGIN
     <Preview { ...{ src, set_visible } }/>
     <PreviewMask>
       <SVGIcon src='AS_OPEN_IN_FULL_SVG'
-               class='m-auto p-2 bg-gray-200 opacity-0
-                      GROUP_HOT(opacity-100) GROUP_ACTIVE(scale-80)
-                      *:size-6 *:bg-gray-700'/>
+               class='m-auto p-2 bg-gray-200 opacity-0 transition
+                      GROUP_HOT(opacity-100) *:size-6 *:bg-gray-700'/>
     </PreviewMask>
   </button>
   <Showcase onclick={ close } { ...{ dialog } }>
@@ -265,7 +264,7 @@ RETURN_JSX_BEGIN
 RETURN_JSX_END
 }
 
-function LoopControl({ loop, set_loop, year_idx, photo_knob })
+function LoopControl({ loop, set_loop, year_idx, photo_knob, ...props })
 {
 	const toggle_fn = prev => prev ^ 1
 	const disable_fn = set_loop.bind(undefined, toggle_fn)
@@ -281,15 +280,13 @@ function LoopControl({ loop, set_loop, year_idx, photo_knob })
 		return () => clearInterval(timer)
 	}, [ year_idx, loop ])
 
-	const style = {}
-
 	if (loop)
-		APPEND_CLASS(style, '*:bg-meiko-red *:duration-0')
+		APPEND_CLASS(props, '*:bg-meiko-red *:duration-0')
 	else
-		APPEND_CLASS(style, '*:bg-black')
+		APPEND_CLASS(props, '*:bg-black')
 
 RETURN_JSX_BEGIN
-<Control src='AS_AUTOPLAY_SVG' onclick={ disable_fn } { ...style }/>
+<Control src='AS_AUTOPLAY_SVG' onclick={ disable_fn } { ...props }/>
 RETURN_JSX_END
 }
 
@@ -443,8 +440,11 @@ dnl
 function PhotoKnob({ year_idx, pos, loop, set_loop, set_pos_tab, photo_knob })
 {
 	const photos = photos_map[year_idx]
-	const l_pos = photos[pos - 1] ? pos - 1 : photos.length - 1
-	const r_pos = photos[pos + 1] ? pos + 1 : 1
+	const idx = pos - 1
+	const len = (photos.length - 1)
+
+	const l_pos = (idx + len - 1) % len + 1
+	const r_pos = (idx + 1) % len + 1
 
 	const args = [ year_idx, set_loop, set_pos_tab ]
 	const l_args = [ undefined, l_pos, ...args ]

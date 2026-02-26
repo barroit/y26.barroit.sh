@@ -5,14 +5,12 @@
 
 export default function SVGIcon({ src, ...props })
 {
-	APPEND_CLASS(props, 'rounded-full drop-shadow-sm transition')
-
-	APPEND_CLASS(props, '*:mask-no-repeat *:mask-cover \
-			     *:mask-(--mask) *:transition')
+	APPEND_CLASS(props, 'rounded-full')
 
 RETURN_JSX_BEGIN
 <div { ...props }>
-  <div style={ { '--mask': `url(${src})` } }></div>
+  <div class='mask-no-repeat mask-cover mask-(--mask)'
+       style={ { '--mask': `url(${src})` } }></div>
 </div>
 RETURN_JSX_END
 }
