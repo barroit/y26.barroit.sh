@@ -6,8 +6,9 @@
 import { useRef } from 'preact/hooks'
 
 import Bar from '../lib/bar.jsx'
+import useMobile from '../lib/device.js'
 import Flick from '../lib/flick.jsx'
-import { LinkExtern, LinkIntern, ExternMark } from '../lib/link.jsx'
+import { LinkExtern, LinkIntern } from '../lib/link.jsx'
 import Shell from '../lib/shell.jsx'
 
 const nav_urls = [
@@ -26,11 +27,16 @@ const page_anchors = [
 
 function fmt_link([ name, url ])
 {
+	const mobile = useMobile()
 
 RETURN_JSX_BEGIN
 <Shell>
   <LinkExtern href={ url } class='p-2'>
+  { mobile ? (
+    <span>{ name }</span>
+  ) : (
     <Flick class='uppercase'>{ name }</Flick>
+  ) }
   </LinkExtern>
 </Shell>
 RETURN_JSX_END
@@ -94,10 +100,11 @@ function Anchor({ name, url })
 	const on_click_arrow_fn = on_click_arrow.bind(undefined, link)
 
 RETURN_JSX_BEGIN
-<LinkIntern ref={ link } href={ url }
+<LinkIntern node={ link } href={ url }
       class='group p-2 flex items-center gap-x-1 transition
              HOT(-translate-y-px) ACTIVE(translate-y-0)
-             *:transition GROUP_HOT_CHILD(text-miku-pink)'>
+             *:transition GROUP_HOT(text-miku-pink, *:)
+             ACTIVE(scale-90, pointer-coarse:)'>
   <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'
        onclick={ on_click_arrow_fn } fill='currentColor'
        class='h-[1.1rem] rotate-90 GROUP_HOT(rotate-0)'>

@@ -37,9 +37,11 @@ RETURN_JSX_BEGIN
   <div class='before:absolute before:right-full before:content-[attr(data-left)]
               before:text-(--color) before:transition-[padding]
               group-hover/shell:before:pr-[calc(var(--spacing)*var(--move))]
+              group-active/shell:before:pr-[calc(var(--spacing)*var(--move))]
               after:absolute after:left-full after:content-[attr(data-right)]
               after:text-(--color) after:transition-[padding]
-              group-hover/shell:after:pl-[calc(var(--spacing)*var(--move))]'
+              group-hover/shell:after:pl-[calc(var(--spacing)*var(--move))]
+              group-active/shell:after:pl-[calc(var(--spacing)*var(--move))]'
        data-left={ left } data-right={ right }
        style={ { '--move': move, '--color': color } }>
     <ShellContext value={ handler_map }>

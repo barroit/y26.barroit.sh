@@ -76,6 +76,6 @@
 	@apply motion-reduce:duration-0! motion-reduce:animate-none!;
 }
 
-button, a {
+button, a, .group\/shell {
 	@apply *:cursor-pointer;
 }

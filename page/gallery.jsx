@@ -92,7 +92,8 @@ function Year({ children, onclick, ...props })
 {
 	APPEND_CLASS(props, 'p-2 font-bold transition duration-100 \
 			     HOT(text-[MIKU_PINK]) HOT(-translate-y-1) \
-			     ACTIVE(translate-y-0)')
+			     ACTIVE(translate-y-0) \
+			     ACTIVE(scale-90, pointer-coarse:)')
 
 RETURN_JSX_BEGIN
 <button inert={ !children } onclick={ onclick }>
@@ -389,7 +390,8 @@ function Thumbnail({ src, onclick, children, ...props })
 {
 	APPEND_CLASS(props, 'relative aspect-video transition duration-100 \
 			     GROUP_HOT(-translate-y-2) \
-			     GROUP_ACTIVE(translate-0)')
+			     GROUP_ACTIVE(translate-0) \
+			     GROUP_ACTIVE(scale-90, pointer-coarse:)')
 
 RETURN_JSX_BEGIN
 <button { ...{ onclick } } class='group outline-none'>

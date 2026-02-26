@@ -6,6 +6,7 @@
 import { useEffect, useState } from 'preact/hooks'
 
 import Bar from '../lib/bar.jsx'
+import useMobile from '../lib/device.js'
 import Flick from '../lib/flick.jsx'
 import { LinkExtern, ExternMark } from '../lib/link.jsx'
 import { time_span_now, time_to_str, time_to_clock } from '../lib/time.js'
@@ -16,7 +17,7 @@ function Label({ children, src, ...props })
 
 RETURN_JSX_BEGIN
 <div { ...props }>
-  <img class='h-5 select-none drop-shadow-sm' src={ src } draggable={ false }/>
+  <img class='select-none' src={ src } draggable={ false }/>
   <p class='text-sm'>
     { children }
   </p>
@@ -89,6 +90,7 @@ RETURN_JSX_END
 
 function Status()
 {
+	const mobile = useMobile()
 
 RETURN_JSX_BEGIN
 <div class='space-y-5'>
@@ -97,13 +99,25 @@ RETURN_JSX_BEGIN
   <Label src='AS_LOCATION_ON_SVG'>Chiba Chuo</Label>
   <ClockLabel/>
   <Label src='AS_MAIL_SVG'>
-    <LinkExtern href='mailto:barroit@linux.com' class='HOT(underline)'>
-      <Flick>barroit@linux.com</Flick>
+    <LinkExtern href='mailto:barroit@linux.com' class='text-indigo-700'>
+      <ExternMark>
+      { mobile ? (
+        <span>barroit@linux.com</span>
+      ) : (
+        <Flick>barroit@linux.com</Flick>
+      ) }
+      </ExternMark>
     </LinkExtern>
   </Label>
   <Label src='AS_SMS_SVG'>
-    <LinkExtern href='https://x.com/barro1t' class='HOT(underline)'>
-      <Flick>https://x.com/barro1t</Flick>
+    <LinkExtern href='https://x.com/barro1t' class='text-indigo-700'>
+      <ExternMark>
+      { mobile ? (
+        <span>https://x.com/barro1t</span>
+      ) : (
+        <Flick>https://x.com/barro1t</Flick>
+      ) }
+      </ExternMark>
     </LinkExtern>
   </Label>
 </div>
@@ -157,13 +171,13 @@ function Toolkit()
 {
 
 RETURN_JSX_BEGIN
-<div class='flex justify-between items-center opacity-80 drop-shadow-sm'>
+<div class='flex justify-between items-center opacity-80'>
   <img src='AS_SHUFFLE_SVG' draggable={ false } class='h-4'/>
   <div class='flex items-center gap-x-5'>
     <img src='AS_SKIP_PREVIOUS_SVG' draggable={ false } class='h-6'/>
     <LinkExtern href='https://youtu.be/2kZVEUGLgy4?t=121'
                 class='p-1 rounded-full transition
-                       HOT(bg-zinc-400) ACTIVE(scale-80)'>
+                       ACTIVE(scale-80) HOT(bg-zinc-400) HOT(drop-shadow-sm)'>
       <img src='AS_PLAY_ARROW_SVG' draggable={ false } class='h-8'/>
     </LinkExtern>
     <img src='AS_SKIP_NEXT_SVG' draggable={ false } class='h-6'/>
@@ -209,7 +223,7 @@ RETURN_JSX_BEGIN
     <span class='leading-7 italic'>
       Building efficient tools and exploring new fields is my default state. I
       prefer the virtual over the real, and minimalist design over clutter. I
-      write precise code to keep things quiet. When I'm not coding, I escape to
+      write lean code to keep things clear. When I'm not coding, I escape to
       Hatsune Miku events.
     </span>
     <Quote class='absolute inline-block'>”</Quote>

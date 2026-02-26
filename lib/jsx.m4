@@ -11,11 +11,8 @@ define(MIKU_CYAN, var(--color-miku-cyan))
 define(HOT, $2hover:$1 $2focus-visible:$1)
 define(ACTIVE, $2active:$1)
 
-define(GROUP_HOT, HOT($1, group-))
-define(GROUP_ACTIVE, ACTIVE($1, group-))
-
-define(GROUP_HOT_CHILD, HOT($1, *:group-))
-define(GROUP_ACTIVE_CHILD, ACTIVE($1, *:group-))
+define(GROUP_HOT, HOT($1, $2group-))
+define(GROUP_ACTIVE, ACTIVE($1, $2group-))
 
 define(APPEND_CLASS, if ($1.class) $1.class += ` ${$2}`; else $1.class = $2;)
 
