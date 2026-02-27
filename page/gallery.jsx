@@ -164,7 +164,7 @@ function Preview({ poster, set_visible, ...props })
 	}, [])
 
 	APPEND_CLASS(props, 'max-h-full border-4 border-miku-pink/50 \
-			     [--span:4px] mask-fade-edge')
+			     rounded-md [--span:4px] mask-fade-edge')
 
 RETURN_JSX_BEGIN !poster ? (
 <img ref={ node } { ...props } decoding='async' draggable={ 0 }/>
@@ -399,7 +399,7 @@ RETURN_JSX_BEGIN
 <button { ...{ onclick } } class='group outline-none'>
   <div { ...props }>
     <img { ...{ src } } decoding='async' draggable={ 0 }
-         class='size-full object-cover
+         class='size-full object-cover rounded-md
                 border-2 border-rin-orange [--span:2px] mask-fade-edge'/>
     { children }
   </div>
