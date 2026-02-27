@@ -376,8 +376,10 @@ RETURN_JSX_BEGIN
                      nth-last-1:*:origin-bottom-right!'>
         <img src={ url[1] } data-idx={ idx } draggable={ 0 }
              class='aspect-square object-cover select-none
-                    transition-all GROUP_HOT(scale-120)
-                    GROUP_HOT(outline-2) GROUP_HOT(outline-miku-cyan)'/>
+                    transition-all outline-miku-cyan
+                    GROUP_HOT(scale-120) GROUP_HOT(outline-2)
+                    GROUP_ACTIVE(scale-none)
+                    GROUP_ACTIVE(scale-80, pointer-coarse:)'/>
       </button>
     )) }
     </div>
