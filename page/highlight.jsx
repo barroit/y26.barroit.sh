@@ -255,7 +255,7 @@ RETURN_JSX_END
 
 function Card({ url, name, desc, lang, topic, docs, history, pushed, ...props })
 {
-	APPEND_CLASS(props, 'p-4 rounded-md shadow-sm bg-zinc-200/39')
+	APPEND_CLASS(props, 'p-4 shadow-sm bg-zinc-200/39')
 
 RETURN_JSX_BEGIN
 <div { ...props }>
@@ -296,7 +296,7 @@ function CardMask({ children })
 {
 
 RETURN_JSX_BEGIN
-<div class='absolute inset-0 flex rounded-md shadow-md bg-zinc-200/80'>
+<div class='absolute inset-0 flex shadow-md bg-zinc-200/80'>
   { children }
 </div>
 RETURN_JSX_END
@@ -304,7 +304,9 @@ RETURN_JSX_END
 
 function CardBtn({ children, ...props })
 {
-	APPEND_CLASS(props, 'group outline-none flex items-center \
+	APPEND_CLASS(props, 'group flex items-center outline-none \
+			     rounded-md border-4 border-miku-cyan \
+			     [--span:4px] mask-fade-edge \
 			     transition ACTIVE(translate-0)')
 
 RETURN_JSX_BEGIN
@@ -345,8 +347,8 @@ function Cards({ pinned, mid, set_mid })
 
 RETURN_JSX_BEGIN
 <div>
-  <div class='lg:grid grid-rows-3 gap-y-15 *:w-full lg:*:w-xl
-              *:odd:scale-55 *:odd:hidden lg:*:odd:block'>
+  <div class='lg:grid grid-rows-3 gap-y-15
+              *:w-full lg:*:w-xl *:odd:scale-55 *:odd:hidden lg:*:odd:block'>
     <CardBtn onclick={ to_left } class='HOT(-translate-2)'>
       <Card inert { ...pinned[left] } class='masking'/>
       <CardMask>
@@ -354,7 +356,7 @@ RETURN_JSX_BEGIN
       </CardMask>
     </CardBtn>
     <div class='place-self-center h-75 md:h-auto'>
-      <Card { ...pinned[mid] }/>
+      <Card class='rounded-md' { ...pinned[mid] }/>
     </div>
     <CardBtn onclick={ to_right } class='place-self-end HOT(translate-2)'>
       <Card inert { ...pinned[right] } class='masking'/>
@@ -386,7 +388,7 @@ RETURN_JSX_END
 
 function FakeCard(props)
 {
-	APPEND_CLASS(props, 'p-4 rounded-md shadow-sm bg-zinc-200/39')
+	APPEND_CLASS(props, 'p-4 shadow-sm bg-zinc-200/39')
 
 RETURN_JSX_BEGIN
 <div { ...props }>
@@ -418,7 +420,7 @@ RETURN_JSX_BEGIN
       <CardMask/>
     </div>
     <div class='place-self-center h-75 md:h-auto'>
-      <FakeCard/>
+      <FakeCard class='rounded-md'/>
     </div>
     <div class='place-self-end relative'>
       <FakeCard class='masking'/>
