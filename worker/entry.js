@@ -65,7 +65,7 @@ async function on_fetch(req, env)
 	let locked
 
 	let status = 200
-	let str = '[]'
+	let str
 
 	try {
 		if (state == ST_RETRY) {

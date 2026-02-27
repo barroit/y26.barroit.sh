@@ -79,3 +79,7 @@
 button, a, .group\/shell {
 	@apply *:cursor-pointer;
 }
+
+button {
+	@apply text-left;
+}

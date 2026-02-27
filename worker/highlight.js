@@ -10,6 +10,7 @@ query {
       pinnedItems(first: 6, types: [REPOSITORY]) {
         nodes {
           ... on Repository {
+            url
             name
             description
             homepageUrl
@@ -124,6 +125,7 @@ export async function query(req, env, prev = [])
 
 	if (!cached) {
 		highlights = repos.map((repo, idx) => ({
+			url: repo.url,
 			name: repo.name,
 			lang: repo.primaryLanguage,
 			desc: repo.description,

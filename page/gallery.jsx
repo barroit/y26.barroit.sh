@@ -255,8 +255,8 @@ RETURN_JSX_END
 
 function Control({ onclick, ...props })
 {
-	APPEND_CLASS(props, 'p-2 duration-100 GROUP_HOT(bg-zinc-400) \
-			     GROUP_ACTIVE(scale-80) *:size-6')
+	APPEND_CLASS(props, 'p-1 lg:p-2 duration-100 GROUP_HOT(bg-zinc-400) \
+			     GROUP_ACTIVE(scale-80) *:size-4 md:*:size-6')
 
 RETURN_JSX_BEGIN
 <button onclick={ onclick } class='group outline-none'>
@@ -539,9 +539,10 @@ RETURN_JSX_BEGIN
     </div>
   </div>
   <div>
-    <div class='mx-auto mb-10 mt-15 lg:mt-20 p-2 max-w-xs lg:max-w-none lg:w-lg
-                flex items-center justify-between rounded-full
-                bg-zinc-200/50 shadow-sm'>
+    <div class='mx-auto mb-10 mt-15 lg:mt-20 p-1 lg:p-2
+                max-w-xs lg:max-w-none lg:w-lg
+                flex items-center justify-between
+                rounded-full bg-zinc-200/50 shadow-sm'>
       <LoopControl loop={ loop && visible }
                    { ...{ year_idx, set_loop, photo_knob } }/>
       <OpenControl { ...{ dialog, video } }/>
