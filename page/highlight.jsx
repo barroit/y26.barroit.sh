@@ -6,6 +6,7 @@
 import { useEffect, useState } from 'preact/hooks'
 
 import Bar from '../lib/bar.jsx'
+import Dead from '../lib/dead.jsx'
 import useMobile from '../lib/device.js'
 import Flick from '../lib/flick.jsx'
 import { LinkExtern, ExternMark } from '../lib/link.jsx'
@@ -305,8 +306,8 @@ RETURN_JSX_END
 function CardBtn({ children, ...props })
 {
 	APPEND_CLASS(props, 'group flex items-center outline-none \
-			     rounded-md border-4 border-miku-cyan \
-			     [--span:4px] mask-fade-edge \
+			     rounded-md border-2 border-len-yellow \
+			     [--span:2px] mask-fade-edge \
 			     transition ACTIVE(translate-0)')
 
 RETURN_JSX_BEGIN
@@ -337,6 +338,34 @@ RETURN_JSX_BEGIN
 RETURN_JSX_END
 }
 
+function CardBtnBox({ children, direct })
+{
+
+RETURN_JSX_BEGIN
+<div class='hidden lg:flex gap-x-20'>
+{ direct == 'right' && (
+  <div class='relative flex-1 *:absolute *:bottom-1/2 *:left-1/8'>
+    <Bar class='-translate-y-0.5 h-39' vertical/>
+    <div class='-translate-y-39 -translate-x-1 size-3
+                rounded-full border-3 border-miku-pink select-none'></div>
+    <Bar class='right-0 -translate-y-1/2'/>
+  </div>
+) }
+  <div class='self-center relative [zoom:50%]'>
+    { children }
+  </div>
+{ direct == 'left' && (
+  <div class='relative flex-1 *:absolute *:top-1/2 *:right-1/8'>
+    <Bar class='left-0 -translate-y-1/2'/>
+    <Bar class='translate-y-0.5 h-39' vertical/>
+    <div class='translate-y-39 translate-x-1 size-3
+                rounded-full border-3 border-miku-pink select-none'></div>
+  </div>
+) }
+</div>
+RETURN_JSX_END
+}
+
 function Cards({ pinned, mid, set_mid })
 {
 	const left = (mid + pinned.length - 1) % pinned.length
@@ -346,29 +375,35 @@ function Cards({ pinned, mid, set_mid })
 	const to_right = () => set_mid(right)
 
 RETURN_JSX_BEGIN
-<div>
-  <div class='lg:grid grid-rows-3 gap-y-15
-              *:w-full lg:*:w-xl *:odd:scale-55 *:odd:hidden lg:*:odd:block'>
-    <CardBtn onclick={ to_left } class='HOT(-translate-2)'>
-      <Card inert { ...pinned[left] } class='masking'/>
-      <CardMask>
-        <CardMaskIcon src='AS_KEYBOARD_ARROW_UP_SVG'/>
-      </CardMask>
-    </CardBtn>
-    <div class='place-self-center h-75 md:h-auto'>
-      <Card class='rounded-md' { ...pinned[mid] }/>
+<>
+  <div class='lg:grid grid-rows-3'>
+    <CardBtnBox direct='left'>
+      <CardBtn onclick={ to_left } class='w-xl HOT(-translate-2)'>
+        <Card inert { ...pinned[left] } class='masking'/>
+        <CardMask>
+          <CardMaskIcon src='AS_KEYBOARD_ARROW_UP_SVG'/>
+        </CardMask>
+      </CardBtn>
+    </CardBtnBox>
+    <div class='place-self-center w-full lg:w-xl h-75 lg:h-auto
+                flex flex-col justify-end'>
+      <Card { ...pinned[mid] }
+            class='rounded-md border-4 border-luka-pink
+                   [--span:4px] mask-fade-edge'/>
     </div>
-    <CardBtn onclick={ to_right } class='place-self-end HOT(translate-2)'>
-      <Card inert { ...pinned[right] } class='masking'/>
-      <CardMask>
-        <CardMaskIcon src='AS_KEYBOARD_ARROW_DOWN_SVG'/>
-      </CardMask>
-    </CardBtn>
+    <CardBtnBox direct='right'>
+      <CardBtn onclick={ to_right } class='w-xl HOT(translate-2)'>
+        <Card inert { ...pinned[right] } class='masking'/>
+        <CardMask>
+          <CardMaskIcon src='AS_KEYBOARD_ARROW_DOWN_SVG'/>
+        </CardMask>
+      </CardBtn>
+    </CardBtnBox>
   </div>
   <div class='mt-10 px-5 lg:hidden'>
     <CardControl { ...{ to_left, to_right } }/>
   </div>
-</div>
+</>
 RETURN_JSX_END
 }
 
@@ -412,43 +447,27 @@ function FakeCards()
 {
 
 RETURN_JSX_BEGIN
-<div inert>
-  <div class='lg:grid grid-rows-3 gap-y-15 *:w-full lg:*:w-xl
-              *:odd:scale-55 *:odd:hidden lg:*:odd:block'>
-    <div class='relative'>
-      <FakeCard class='masking'/>
+<>
+
+  <div class='lg:grid grid-rows-3'>
+    <CardBtnBox direct='left' class='relative'>
+      <FakeCard class='masking w-xl'/>
       <CardMask/>
+    </CardBtnBox>
+    <div class='place-self-center w-full lg:w-xl h-75 lg:h-auto
+                flex flex-col justify-end'>
+      <FakeCard class='rounded-md border-4 border-luka-pink
+                       [--span:4px] mask-fade-edge'/>
     </div>
-    <div class='place-self-center h-75 md:h-auto'>
-      <FakeCard class='rounded-md'/>
-    </div>
-    <div class='place-self-end relative'>
-      <FakeCard class='masking'/>
+    <CardBtnBox direct='right' class='relative'>
+      <FakeCard class='masking w-xl'/>
       <CardMask/>
-    </div>
+    </CardBtnBox>
   </div>
   <div class='mt-10 px-5 lg:hidden'>
     <CardControl/>
   </div>
-</div>
-RETURN_JSX_END
-}
-
-function DeadCards()
-{
-
-RETURN_JSX_BEGIN
-<div class='flex p-20'>
-  <div class='m-auto px-6 py-4 flex items-center gap-x-6
-              rounded-md bg-zinc-200/39 shadow-md'>
-    <img src='AS_FROWN_PNG' draggable={ 0 }
-         class='size-16 drop-shadow-md select-none'/>
-    <div>
-      <p class='text-xl'>Sorry, but</p>
-      <p>Highlight is broken</p>
-    </div>
-  </div>
-</div>
+</>
 RETURN_JSX_END
 }
 
@@ -462,7 +481,7 @@ export default function Highlight()
 		const res = await fetch('/q/highlight')
 		let data
 
-		if (res.status != 500)
+		if (res.ok)
 			data = await res.json()
 
 		set_pinned(data)
@@ -473,9 +492,9 @@ RETURN_JSX_BEGIN
          class='[--pastel-left:var(--pastel-pink)]
                 [--pastel-mid:var(--pastel-lavender)]
                 [--pastel-right:var(--pastel-green)]'>
-  <div class='mx-auto px-4 md:px-0 max-w-md lg:max-w-none'>
+  <div class='mx-auto px-4 lg:px-10 max-w-md lg:max-w-5xl'>
   { !pinned ? (
-    <DeadCards/>
+    <Dead>Highlight is broken</Dead>
   ) : pinned.length ? (
     <Cards { ...{ pinned, mid, set_mid } }/>
   ) : (
