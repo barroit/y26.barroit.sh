@@ -27,7 +27,7 @@ RETURN_JSX_BEGIN
   <Log/>
   <Gallery/>
   <Highlight/>
-  {/* <Commits/> */}
+  <Commits/>
   {/* <Credit/> */}
 </main>
 RETURN_JSX_END
