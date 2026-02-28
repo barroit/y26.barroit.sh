@@ -79,7 +79,7 @@ function LinkLabel({ url, name, ...props })
 
 RETURN_JSX_BEGIN
 <IconLabelFrame { ...props }>
-  <LinkExtern href={ url } class='text-indigo-700'>
+  <LinkExtern href={ url } class='text-indigo-700 w-fit'>
     <ExternMark>
     { mobile ? (
       <span>{ name }</span>
