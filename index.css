@@ -72,11 +72,6 @@
 				    #fff calc(100% - var(--span)), transparent);
 }
 
-@utility text-vertical {
-	writing-mode: vertical-lr;
-	text-orientation: upright;
-}
-
 *, ::before, ::after {
 	@apply motion-reduce:duration-0! motion-reduce:animate-none!;
 }

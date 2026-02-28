@@ -6,9 +6,8 @@
 import { lock_acquire, lock_release } from './lock.js'
 
 import * as highlight from './highlight.js'
-import * as commits from './commits.js'
 
-const queries = [ highlight, commits ]
+const queries = [ highlight ]
 const cache = {}
 
 for (const { pathname, retry_cd_ms, cache_ttl_ms } of queries) {
@@ -56,10 +55,6 @@ async function on_fetch(req, env)
 	switch (url.pathname) {
 	case highlight.pathname:
 		handler = highlight.query
-		break
-
-	case commits.pathname:
-		handler = commits.query
 		break
 
 	default:

@@ -10,7 +10,6 @@ import Intro from './page/intro.jsx'
 import Log from './page/log.jsx'
 import Gallery from './page/gallery.jsx'
 import Highlight from './page/highlight.jsx'
-import Commits from './page/commits.jsx'
 import Credit from './page/credit.jsx'
 
 function Root()
@@ -27,8 +26,7 @@ RETURN_JSX_BEGIN
   <Log/>
   <Gallery/>
   <Highlight/>
-  <Commits/>
-  {/* <Credit/> */}
+  <Credit/>
 </main>
 RETURN_JSX_END
 }

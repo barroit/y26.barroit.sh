@@ -21,7 +21,6 @@ const page_anchors = [
 	[ 'log',       '#log'       ],
 	[ 'gallery',   '#gallery'   ],
 	[ 'highlight', '#highlight' ],
-	[ 'commits',   '#commits'   ],
 	[ 'credit',    '#credit'    ],
 ]
 
@@ -147,8 +146,8 @@ RETURN_JSX_BEGIN
     <Bar class='absolute top-1 bottom-0' vertical/>
     <div class='absolute top-0 left-0 size-1 bg-miku-cyan'/>
   </div>
-  <nav class='px-15 py-13 xl:py-10 2xl:py-13
-              space-y-11 xl:space-y-5 2xl:space-y-11'>
+  <nav class='p-15 md:p-10 lg:p-15 xl:p-10 2xl:p-15 space-y-15
+              md:space-y-10 lg:space-y-15 xl:space-y-8 2xl:space-y-15'>
     { anchors }
   </nav>
 </div>
@@ -160,7 +159,7 @@ function Body()
 
 RETURN_JSX_BEGIN
 <div class='grid md:grid-cols-[2fr_3fr]
-            xl:grid-rows-[auto_1fr] gap-y-10 md:gap-y-15 xl:gap-y-0'>
+            xl:grid-rows-[auto_1fr] gap-y-10 md:gap-y-15'>
   <div class='md:col-span-2 xl:col-span-1 xl:w-108 2xl:w-128'>
     <Masthead/>
   </div>
