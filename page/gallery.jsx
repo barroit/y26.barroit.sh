@@ -193,23 +193,25 @@ function dialog_show(dialog, set_visible, keep_scroll_bar)
 	dialog.current.showModal()
 }
 
-function dialog_hide(dialog, set_visible, keep_scroll_bar)
+function dialog_hide(dialog)
+{
+	dialog.current.close()
+}
+
+function dialog_onclose(set_visible, keep_scroll_bar)
 {
 	if (keep_scroll_bar)
 		delete document.documentElement.dataset.scrollbar
 
 	delete document.documentElement.dataset.dialog
 	set_visible(1)
-
-	dialog.current.close()
-	
 }
 
-function Showcase({ dialog, onclick, children })
+function Showcase({ dialog, children, ...props })
 {
 
 RETURN_JSX_BEGIN
-<dialog ref={ dialog } { ...{ onclick } }
+<dialog ref={ dialog } { ...props }
         class='p-10 max-w-none max-h-none w-screen h-screen open:flex
                bg-miku [--direction:to_bottom_right] select-none
                *:max-h-full *:m-auto *:object-contain *:drop-shadow-lg
@@ -232,7 +234,8 @@ RETURN_JSX_END
 function Photo({ src, dialog, set_visible })
 {
 	const open = dialog_show.bind(undefined, dialog, set_visible, 0)
-	const close = dialog_hide.bind(undefined, dialog, set_visible, 0)
+	const close = dialog_hide.bind(undefined, dialog)
+	const onclose = dialog_onclose.bind(undefined, set_visible, 0)
 
 RETURN_JSX_BEGIN
 <div>
@@ -244,7 +247,7 @@ RETURN_JSX_BEGIN
                       GROUP_HOT(opacity-100) *:size-6 *:bg-gray-700'/>
     </PreviewMask>
   </button>
-  <Showcase onclick={ close } { ...{ dialog } }>
+  <Showcase onclick={ close } { ...{ dialog, onclose } }>
     <img { ...{ src } } decoding='async' draggable={ 0 }/>
   </Showcase>
 </div>
@@ -316,7 +319,7 @@ RETURN_JSX_BEGIN
 RETURN_JSX_END
 }
 
-function on_img_click(dialog, set_visible, set_pos_tab, set_loop, event)
+function on_img_click(dialog, set_pos_tab, set_loop, event)
 {
 	const img = CHILD_OF(event.currentTarget)
 	const box = PARENT_OF(event.currentTarget)
@@ -328,7 +331,7 @@ function on_img_click(dialog, set_visible, set_pos_tab, set_loop, event)
 	const bump_pos_tab_fn = prev => [ ...prev ].map(map_fn)
 
 	set_pos_tab(bump_pos_tab_fn)
-	dialog_hide(dialog, set_visible, 1)
+	dialog_hide(dialog)
 	set_loop(0)
 }
 
@@ -336,10 +339,10 @@ function ExplandControl({ year_idx, set_visible, set_pos_tab, set_loop })
 {
 	const dialog = useRef()
 	const open = dialog_show.bind(undefined, dialog, set_visible, 1)
-	const close = dialog_hide.bind(undefined, dialog, set_visible, 1)
+	const close = dialog_hide.bind(undefined, dialog)
+	const onclose = dialog_onclose.bind(undefined, set_visible, 1)
 
-	const jump = on_img_click.bind(undefined, dialog,
-				       set_visible, set_pos_tab, set_loop)
+	const jump = on_img_click.bind(undefined, dialog, set_pos_tab, set_loop)
 
 	let photos = photos_map[year_idx]
 	const pad_size = (3 - (photos.length - 1) % 3) % 3
@@ -355,7 +358,7 @@ RETURN_JSX_BEGIN
 <div class='flex items-center'>
   <Control src='IMAGES_GOOGLE_EXPAND_ALL_SVG'
            class='*:bg-black' onclick={ open }/>
-  <dialog ref={ dialog } onclick={ close }
+  <dialog ref={ dialog } onclick={ close } { ...{ onclose } }
           class='m-auto max-w-xl max-h-none h-screen md:h-[95vh] bg-miku
                  md:border-4 border-luka-pink md:mask-fade-edge [--span:4px]'>
     <div data-idx={ year_idx }
