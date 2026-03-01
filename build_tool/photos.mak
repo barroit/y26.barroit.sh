@@ -58,6 +58,6 @@ distclean-y += distclean-photos
 clean-photos:
 	rm -f $(photos-asmap-y)
 
-distclean-photos:
+distclean-photos: clean-photos
 	find $(photos-prefix) $(static-photos-prefix) \
 	     -exec rm {} + 2>/dev/null || true

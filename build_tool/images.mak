@@ -28,6 +28,6 @@ distclean-y += distclean-images
 clean-images:
 	rm -f $(images-asmap-y)
 
-distclean-images:
+distclean-images: clean-images
 	find $(images-prefix) $(static-images-prefix) \
 	     -exec rm {} + 2>/dev/null || true

@@ -28,6 +28,6 @@ distclean-y += distclean-fonts
 clean-fonts:
 	rm -f $(fonts-asmap-y)
 
-distclean-fonts:
+distclean-fonts: clean-fonts
 	find $(fonts-prefix) $(static-fonts-prefix) \
 	     -exec rm {} + 2>/dev/null || true
