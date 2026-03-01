@@ -7,8 +7,11 @@ export default function Credit()
 {
 
 RETURN_JSX_BEGIN
-<section class='bg-miku [--angle:135deg]'>
-  <div id='credit'></div>
+<section id='credit'
+         class='[--pastel-left:var(--pastel-green)]
+                [--pastel-mid:var(--pastel-lavender)]
+                [--pastel-right:var(--pastel-cyan)]'>
+  <div></div>
 </section>
 RETURN_JSX_END
 }

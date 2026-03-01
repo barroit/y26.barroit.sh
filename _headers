@@ -12,8 +12,7 @@ define(SECURITY_HEADER,
   Strict-Transport-Security: max-age=31536000; includeSubDomains
 
   Content-Security-Policy: default-src 'none'; dnl
-			   script-src 'self' ifdef(`HOT_DEV',
-						   'unsafe-inline'); dnl
+			   script-src 'self' ifdef(`DEV', 'unsafe-inline'); dnl
 			   style-src 'self'; img-src 'self'; dnl
 			   connect-src 'self'; font-src 'self'; dnl
 			   media-src 'self'; frame-ancestors 'none'; dnl

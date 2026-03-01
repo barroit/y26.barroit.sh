@@ -16,7 +16,7 @@ $(css-m4-y): $(m4-prefix)/%: $(fonts-asmap-y) $(images-asmap-y) $(prefix)/%1
 	$(m4) $^ >$@
 
 $(css-y): $(css-m4-y) | $(static-prefix)
-	$(esbuild) --external:/fonts/* --external:/image/* \
+	$(esbuild) --external:/fonts/* --external:/images/* \
 		   --minify $< --outfile=$@
 	$(ln-unique) $@ $(static-prefix)
 

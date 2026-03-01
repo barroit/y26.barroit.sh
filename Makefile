@@ -61,7 +61,7 @@ deploy-ready:
 
 include build_tool/photos.mak
 
-include build_tool/image.mak
+include build_tool/images.mak
 
 include build_tool/fonts.mak
 
@@ -115,4 +115,4 @@ host:
 	$(wrangler) dev --live-reload --ip=$(shell $(lan-ip))
 
 hot-dev: deploy-ready
-	HOT_DEV=1 $(concurrently) '$(MAKE) hot-build' '$(MAKE) host'
+	$(concurrently) '$(MAKE) hot-build' '$(MAKE) host'
