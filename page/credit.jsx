@@ -16,7 +16,7 @@ function Field({ icon, children })
 RETURN_JSX_BEGIN
 <div class='flex items-center gap-x-3'>
   <SVGIcon src={ icon } class='*:size-6 *:bg-zinc-800'/>
-  <p class='text-zinc-700'>{ children }</p>
+  <p>{ children }</p>
 </div>
 RETURN_JSX_END
 }
@@ -27,7 +27,7 @@ function List({ title, children, ...props })
 RETURN_JSX_BEGIN
 <div { ...props }>
   <p>{ title }</p>
-  <div class='ml-1.5 mt-3 flex gap-x-2 text-sm text-zinc-700'>
+  <div class='ml-1.5 mt-3 flex gap-x-2 text-sm'>
     <Bar color='bg-zinc-200' vertical/>
     { children }
   </div>
@@ -96,8 +96,8 @@ RETURN_JSX_BEGIN
                 [--pastel-mid:var(--pastel-lavender)]
                 [--pastel-right:var(--pastel-cyan)]'>
   <Bar/>
-  <div class='mt-10 mx-auto p-5 w-fit flex flex-col
-              lg:flex-row items-center lg:items-start gap-y-10 gap-x-20'>
+  <div class='mt-10 mx-auto p-5 w-fit flex flex-col lg:flex-row
+              items-center lg:items-start gap-y-10 gap-x-20 text-zinc-700'>
     <div class='space-y-5'>
       <FieldList>
         <Field icon='IMAGES_GOOGLE_LICENSE_SVG'>GPL-3.0-or-later</Field>
