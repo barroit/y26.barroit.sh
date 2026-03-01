@@ -2,21 +2,43 @@
 
 $(eval $(call def-target,page,index.jsx,index.js,page/*.jsx))
 
+page-generic-m4-y := $(filter-out %/gallery.jsx %/log.jsx, $(page-m4-y))
+page-photos-m4-y  := $(filter %/gallery.jsx, $(page-m4-y))
+page-resume-m4-y  := $(filter %/log.jsx, $(page-m4-y))
+
+page-m4-prefix := $(m4-prefix)/page
+
 resume-in := page/resume
 resume-y  := $(prefix)/resume.js
 
-asmap-in += $(page-y)
+photos-map-y := $(prefix)/photos.js
+
+prefix-y += $(page-m4-prefix)
 terser-in += $(page-y)
 onchange-in += $(page-glob) $(resume-in)
-deploy-ready-y += $(page-y)
 
 $(resume-y): $(resume-in)
 	$(parse-resume) <$< >$@
 
-$(page-m4-y): $(m4-prefix)/%: % $(images-asmap-y) $(lib-m4-y) \
-			      $(jsx-helper-y) $(resume-y) $(photos-map-y)
-	mkdir -p $(@D)
-	$(m4) $(photos-asmap-y) $(images-asmap-y) $(jsx-helper-y) $< >$@
+$(photos-map-y): $(photos-asmap-y)
+	trap 'rm -f $(prefix)/.tmp-$$$$' EXIT && \
+	printf 'dumpdef\n' >$(prefix)/.tmp-$$$$ && \
+	$(m4) $< $(prefix)/.tmp-$$$$ 2>&1 | grep ^PHOTOS_ | \
+	sort -t_ -k2,2 -k3,3n -k4,4 | $(map-photos) photos_map >$@
+
+$(page-resume-m4-y): $(m4-prefix)/%: % $(images-asmap-y) $(jsx-helper-y) \
+				     $(lib-m4-y) $(resume-y) | $(page-m4-prefix)
+	$(m4) $(resume-y) $(images-asmap-y) $(jsx-helper-y) $< >$@
+
+$(page-photos-m4-y): $(m4-prefix)/%: % $(photos-asmap-y) $(images-asmap-y) \
+				     $(lib-m4-y) $(jsx-helper-y) \
+				     $(photos-map-y) | $(page-m4-prefix)
+	$(m4) $(photos-asmap-y) $(images-asmap-y) \
+	      $(jsx-helper-y) $(photos-map-y) $< >$@
+
+$(page-generic-m4-y): $(m4-prefix)/%: % $(images-asmap-y) $(jsx-helper-y) \
+				      $(lib-m4-y) | $(page-m4-prefix)
+	$(m4) $(images-asmap-y) $(jsx-helper-y) $< >$@
 
 $(page-y)1: $(page-m4-y) | $(prefix)
 	$(esbuild) --jsx-import-source=preact --jsx=automatic \

@@ -50,14 +50,6 @@ $(photos-asmap-y): $(photos-avif-y) $(photos-avif-thumb-y) \
 	find $(static-photos-prefix) -maxdepth 1 -type f | \
 	sed s,$(static-prefix),, | $(gen-asmap) s,^/photos/,, PHOTOS >$@
 
-photos-map-y := $(prefix)/photos.js
-
-$(photos-map-y): $(photos-asmap-y)
-	trap 'rm -f $(prefix)/.tmp-$$$$' EXIT && \
-	printf 'dumpdef\n' >$(prefix)/.tmp-$$$$ && \
-	$(m4) $< $(prefix)/.tmp-$$$$ 2>&1 | grep ^PHOTOS_ | \
-	sort -t_ -k2,2 -k3,3n -k4,4 | $(map-photos) photos_map >$@
-
 clean-y += clean-photos
 
 .PHONY: clean-photos

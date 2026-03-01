@@ -9,7 +9,6 @@ static-fonts-prefix := $(addprefix $(static-prefix)/,$(fonts-dir))
 
 prefix-y += $(fonts-prefix) $(static-fonts-prefix)
 onchange-in += fonts/**/*
-asmap-in += $(fonts-y)
 
 $(fonts-y): $(prefix)/%: % | $(fonts-prefix) $(static-fonts-prefix)
 	cp $< $@

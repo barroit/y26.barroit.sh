@@ -4,15 +4,11 @@ images-in  := $(shell find images -type f | grep -vE '\.aseprite$$')
 images-dir := $(sort $(dir $(images-in)))
 images-y   := $(addprefix $(prefix)/,$(images-in))
 
-test:
-	@ls -l $(images-in)
-
 images-prefix := $(addprefix $(prefix)/,$(images-dir))
 static-images-prefix := $(addprefix $(static-prefix)/,$(images-dir))
 
 prefix-y += $(images-prefix) $(static-images-prefix)
 onchange-in += images/**/*
-asmap-in += $(images-y)
 
 $(images-y): $(prefix)/%: % | $(images-prefix) $(static-images-prefix)
 	cp $< $@

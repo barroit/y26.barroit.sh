@@ -5,8 +5,6 @@
 
 import Bar from '../lib/bar.jsx'
 
-include(build/resume.js)dnl
-
 function Work({ name, skill })
 {
 

@@ -19,7 +19,6 @@ ffmpeg ?= ffmpeg
 ffmpeg += -v error
 
 onchange ?= onchange
-browser-sync ?= browser-sync
 concurrently ?= concurrently
 wrangler ?= wrangler
 
@@ -44,12 +43,7 @@ ifneq ($(minimize),)
 	minimize := -terser
 endif
 
-asmap-in :=
-asmap-y  := $(prefix)/asmap.m4
-
 onchange-in :=
-
-bundle-y :=
 clean-y :=
 deploy-ready-y :=
 
@@ -71,8 +65,6 @@ include build_tool/page.mak
 
 include build_tool/worker.mak
 
-include build_tool/html_m4.mak
-
 include build_tool/css.mak
 
 include build_tool/html.mak
@@ -87,16 +79,11 @@ terser-y := $(addsuffix 1-terser,$(terser-in))
 $(terser-y): %1-terser: %1
 	$(terser) <$< >$@
 
-$(asmap-y): $(asmap-in)
-	ls $(static-prefix)/index-* | grep -E '\.(css|js)$$' | \
-	sed s,$(static-prefix),, | $(gen-asmap) s,/,, AS >$@
-
 deploy-ready: $(deploy-ready-y)
 
 .PHONY: clean distclean
 
 clean: $(clean-y)
-	rm -f $(asmap-y)
 	test -d $(static-prefix) && \
 	find $(static-prefix) -type f -exec rm {} + || true
 

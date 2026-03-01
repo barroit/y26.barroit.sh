@@ -9,8 +9,6 @@ import useCachedState from '../lib/state.js'
 import Bar from '../lib/bar.jsx'
 import SVGIcon from '../lib/svg.jsx'
 
-include(build/photos.js)dnl
-
 const year_offset = photos_map[0][0]
 const year_tab = photos_map.map(([ year ]) => year)
 
