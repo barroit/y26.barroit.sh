@@ -11,11 +11,11 @@ define(SECURITY_HEADER,
   X-Content-Type-Options: nosniff
   Strict-Transport-Security: max-age=31536000; includeSubDomains
 
-  Content-Security-Policy: default-src 'none'; dnl
-			   script-src 'self' ifdef(`DEV', 'unsafe-inline'); dnl
-			   style-src 'self'; img-src 'self'; dnl
-			   connect-src 'self'; font-src 'self'; dnl
-			   media-src 'self'; frame-ancestors 'none'; dnl
+  Content-Security-Policy: dnl
+    default-src 'none'; frame-ancestors 'none'; connect-src 'self'; dnl
+    script-src-elem 'self' ifdef(`DEV', 'unsafe-inline') dnl
+                    static.cloudflareinsights.com; dnl
+    font-src 'self'; style-src 'self'; img-src 'self'; media-src 'self'
 )
 
 divert(0)dnl
@@ -23,12 +23,12 @@ divert(0)dnl
 /
   Cache-Control: no-cache
 
-  SECURITY_HEADER
+  SECURITY_HEADER()dnl
 
 /LICENSES/*
   Cache-Control: public, max-age=31536000, immutable
 
-  SECURITY_HEADER
+  SECURITY_HEADER()dnl
 
   Content-Type: text/plain; charset=utf-8
 
