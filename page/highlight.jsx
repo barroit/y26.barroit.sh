@@ -353,7 +353,8 @@ RETURN_JSX_BEGIN
     <Bar class='right-0 -translate-y-1/2'/>
   </div>
 ) }
-  <div class='self-center relative [zoom:50%]'>
+  <div class='self-center relative w-2xs h-full
+              *:absolute *:w-xl *:origin-left *:scale-50'>
     { children }
   </div>
 { direct == 'left' && (
@@ -380,7 +381,7 @@ RETURN_JSX_BEGIN
 <>
   <div class='lg:grid grid-rows-3'>
     <CardBtnBox direct='left'>
-      <CardBtn onclick={ to_left } class='w-xl HOT(-translate-2)'>
+      <CardBtn onclick={ to_left } class='HOT(-translate-2)'>
         <Card inert { ...pinned[left] } class='masking'/>
         <CardMask>
           <CardMaskIcon src='IMAGES_GOOGLE_KEYBOARD_ARROW_UP_SVG'/>
@@ -394,7 +395,7 @@ RETURN_JSX_BEGIN
                    [--span:4px] mask-fade-edge'/>
     </div>
     <CardBtnBox direct='right'>
-      <CardBtn onclick={ to_right } class='w-xl HOT(translate-2)'>
+      <CardBtn onclick={ to_right } class='HOT(translate-2)'>
         <Card inert { ...pinned[right] } class='masking'/>
         <CardMask>
           <CardMaskIcon src='IMAGES_GOOGLE_KEYBOARD_ARROW_DOWN_SVG'/>
@@ -451,10 +452,9 @@ function FakeCards()
 
 RETURN_JSX_BEGIN
 <>
-
   <div class='lg:grid grid-rows-3'>
     <CardBtnBox direct='left' class='relative'>
-      <FakeCard class='masking w-xl'/>
+      <FakeCard class='masking'/>
       <CardMask/>
     </CardBtnBox>
     <div class='place-self-center w-full lg:w-xl h-75 lg:h-auto
@@ -463,7 +463,7 @@ RETURN_JSX_BEGIN
                        [--span:4px] mask-fade-edge'/>
     </div>
     <CardBtnBox direct='right' class='relative'>
-      <FakeCard class='masking w-xl'/>
+      <FakeCard class='masking'/>
       <CardMask/>
     </CardBtnBox>
   </div>
