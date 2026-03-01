@@ -358,7 +358,7 @@ RETURN_JSX_BEGIN
 <div class='flex items-center'>
   <Control src='IMAGES_GOOGLE_EXPAND_ALL_SVG'
            class='*:bg-black' onclick={ open }/>
-  <dialog ref={ dialog } onclick={ close } { ...{ onclose } }
+  <dialog ref={ dialog } autofocus onclick={ close } { ...{ onclose } }
           class='m-auto max-w-xl max-h-none h-[100dvh] md:h-[95dvh] bg-miku
                  md:border-4 border-luka-pink md:mask-fade-edge [--span:4px]'>
     <div data-idx={ year_idx }
