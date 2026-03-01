@@ -1,26 +1,15 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-fonts-dir           := $(shell find fonts -type d)
-fonts-prefix        := $(addprefix $(prefix)/,$(fonts-dir))
+fonts-in  := $(shell find fonts -type f)
+fonts-dir := $(sort $(dir $(fonts-in)))
+fonts-y   := $(addprefix $(prefix)/,$(fonts-in))
+
+fonts-prefix := $(addprefix $(prefix)/,$(fonts-dir))
 static-fonts-prefix := $(addprefix $(static-prefix)/,$(fonts-dir))
 
 prefix-y += $(fonts-prefix) $(static-fonts-prefix)
-
-fonts-glob     := $(addsuffix /*,$(fonts-dir))
-fonts-in-dirty := $(shell find $(fonts-dir) -maxdepth 1 -type f)
-
-fonts-in := $(filter-out %/README,$(fonts-in-dirty))
-fonts-y  := $(addprefix $(prefix)/,$(fonts-in))
-
-fonts-readme-in := $(filter %/README,$(fonts-in-dirty))
-fonts-readme-y  := $(addprefix $(prefix)/,$(fonts-readme-in))
-
+onchange-in += fonts/**/*
 asmap-in += $(fonts-y)
-onchange-in += $(fonts-glob)
-
-$(fonts-readme-y): $(prefix)/%: % | $(fonts-prefix) $(static-fonts-prefix)
-	cp $< $@
-	ln -f $@ $(subst $(prefix),$(static-prefix),$(@D))
 
 $(fonts-y): $(prefix)/%: % | $(fonts-prefix) $(static-fonts-prefix)
 	cp $< $@
@@ -28,12 +17,13 @@ $(fonts-y): $(prefix)/%: % | $(fonts-prefix) $(static-fonts-prefix)
 
 fonts-asmap-y := $(prefix)/fonts_asmap.m4
 
-$(fonts-asmap-y): $(fonts-y) $(fonts-readme-y)
-	$(gen-asmap) $@ $(static-prefix) $(static-fonts-prefix)
+$(fonts-asmap-y): $(fonts-y)
+	find $(static-fonts-prefix) -maxdepth 1 -type f | \
+	sed s,$(static-prefix),, | $(gen-asmap) s,^/fonts/,, FONTS >$@
 
 clean-y += clean-fonts
 
 .PHONY: clean-fonts
 
 clean-fonts:
-	rm -f $(fonts-y) $(fonts-readme-y) $(fonts-asmap-y)
+	rm -f $(fonts-y) $(fonts-asmap-y)

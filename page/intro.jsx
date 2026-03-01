@@ -32,7 +32,7 @@ function BirthdayLabel()
 	const birth_str = time_to_str(birth, 'hr')
 
 RETURN_JSX_BEGIN
-<Label src='AS_CAKE_SVG'>{ birth_str }</Label>
+<Label src='IMAGES_GOOGLE_CAKE_SVG'>{ birth_str }</Label>
 RETURN_JSX_END
 }
 
@@ -56,7 +56,7 @@ function ClockLabel()
 	}, [])
 
 RETURN_JSX_BEGIN
-<Label src='AS_SCHEDULE_SVG'>
+<Label src='IMAGES_GOOGLE_SCHEDULE_SVG'>
   <span>{ now.hr }:{ now.m } </span>
   <span class='text-zinc-500'>(UTC { now.offset })</span>
 </Label>
@@ -68,7 +68,7 @@ function Identity()
 
 RETURN_JSX_BEGIN
 <div class='flex items-center gap-x-10'>
-  <img src='AS_AVATAR_SQUARE_JPG' draggable={ false }
+  <img src='IMAGES_AVATAR_SQUARE_JPG' draggable={ false }
        class='w-20 rounded-full shadow-md select-none'/>
   <div>
     <p class='text-2xl font-bold'>
@@ -95,10 +95,10 @@ function Status()
 RETURN_JSX_BEGIN
 <div class='space-y-5'>
   <BirthdayLabel/>
-  <Label src='AS_MIC_SVG'>Chinese / English / Japanese</Label>
-  <Label src='AS_LOCATION_ON_SVG'>Chiba Chuo</Label>
+  <Label src='IMAGES_GOOGLE_MIC_SVG'>Chinese / English / Japanese</Label>
+  <Label src='IMAGES_GOOGLE_LOCATION_ON_SVG'>Chiba Chuo</Label>
   <ClockLabel/>
-  <Label src='AS_MAIL_SVG'>
+  <Label src='IMAGES_GOOGLE_MAIL_SVG'>
     <LinkExtern href='mailto:barroit@linux.com' class='text-indigo-700'>
       <ExternMark>
       { mobile ? (
@@ -109,7 +109,7 @@ RETURN_JSX_BEGIN
       </ExternMark>
     </LinkExtern>
   </Label>
-  <Label src='AS_SMS_SVG'>
+  <Label src='IMAGES_GOOGLE_SMS_SVG'>
     <LinkExtern href='https://x.com/barro1t' class='text-indigo-700'>
       <ExternMark>
       { mobile ? (
@@ -129,7 +129,7 @@ function Song()
 
 RETURN_JSX_BEGIN
 <div class='flex items-center'>
-  <img src='AS_METEOR_JPEG' draggable={ false }
+  <img src='IMAGES_DIVELA_METEOR_JPEG' draggable={ false }
        class='-mx-1 h-8 rounded-md shadow-sm'/>
   <div class='ml-4 select-text'>
     <p class='font-bold'>METEOR</p>
@@ -172,17 +172,17 @@ function Toolkit()
 
 RETURN_JSX_BEGIN
 <div class='flex justify-between items-center opacity-80'>
-  <img src='AS_SHUFFLE_SVG' draggable={ false } class='h-4'/>
+  <img src='IMAGES_GOOGLE_SHUFFLE_SVG' draggable={ false } class='h-4'/>
   <div class='flex items-center gap-x-5'>
-    <img src='AS_SKIP_PREVIOUS_SVG' draggable={ false } class='h-6'/>
+    <img src='IMAGES_GOOGLE_SKIP_PREVIOUS_SVG' draggable={ false } class='h-6'/>
     <LinkExtern href='https://youtu.be/2kZVEUGLgy4?t=121'
                 class='p-1 rounded-full transition
                        ACTIVE(scale-80) HOT(bg-zinc-400) HOT(drop-shadow-sm)'>
-      <img src='AS_PLAY_ARROW_SVG' draggable={ false } class='h-8'/>
+      <img src='IMAGES_GOOGLE_PLAY_ARROW_SVG' draggable={ false } class='h-8'/>
     </LinkExtern>
-    <img src='AS_SKIP_NEXT_SVG' draggable={ false } class='h-6'/>
+    <img src='IMAGES_GOOGLE_SKIP_NEXT_SVG' draggable={ false } class='h-6'/>
   </div>
-  <img src='AS_REPEAT_ONE_SVG' draggable={ false } class='h-4'/>
+  <img src='IMAGES_GOOGLE_REPEAT_ONE_SVG' draggable={ false } class='h-4'/>
 </div>
 RETURN_JSX_END
 }

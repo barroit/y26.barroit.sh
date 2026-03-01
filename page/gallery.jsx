@@ -241,7 +241,7 @@ RETURN_JSX_BEGIN
   <button onclick={ open } class='group relative size-full outline-none'>
     <Preview { ...{ src, set_visible } }/>
     <PreviewMask>
-      <SVGIcon src='AS_OPEN_IN_FULL_SVG'
+      <SVGIcon src='IMAGES_GOOGLE_OPEN_IN_FULL_SVG'
                class='m-auto p-2 bg-gray-200 opacity-0 transition
                       GROUP_HOT(opacity-100) *:size-6 *:bg-gray-700'/>
     </PreviewMask>
@@ -287,7 +287,7 @@ function LoopControl({ loop, set_loop, year_idx, photo_knob, ...props })
 		APPEND_CLASS(props, '*:bg-black')
 
 RETURN_JSX_BEGIN
-<Control src='AS_AUTOPLAY_SVG' onclick={ disable_fn } { ...props }/>
+<Control src='IMAGES_GOOGLE_AUTOPLAY_SVG' onclick={ disable_fn } { ...props }/>
 RETURN_JSX_END
 }
 
@@ -305,14 +305,14 @@ function OpenControl({ dialog, video })
 RETURN_JSX_BEGIN
 <>
   <div inert={ video } class='hidden pointer-coarse:flex'>
-    <Control src='AS_OPEN_IN_FULL_SVG' { ...props }/>
+    <Control src='IMAGES_GOOGLE_OPEN_IN_FULL_SVG' { ...props }/>
   </div>
   <div class='pointer-coarse:hidden flex gap-x-8
               [&_*_*]:size-6 [&_*_*]:bg-rin-orange/70'>
-    <SVGIcon src='AS_2020_CLOVER_SVG'/>
-    <SVGIcon src='AS_2021_FLOWER_SVG'/>
-    <SVGIcon src='AS_2022_PENTAGRAM_SVG'/>
-    <SVGIcon src='AS_2025_OCTAGRAM_SVG'/>
+    <SVGIcon src='IMAGES_2020_CLOVER_SVG'/>
+    <SVGIcon src='IMAGES_2021_FLOWER_SVG'/>
+    <SVGIcon src='IMAGES_2022_PENTAGRAM_SVG'/>
+    <SVGIcon src='IMAGES_2025_OCTAGRAM_SVG'/>
   </div>
 </>
 RETURN_JSX_END
@@ -355,7 +355,8 @@ function ExplandControl({ year_idx, set_visible, set_pos_tab, set_loop })
 
 RETURN_JSX_BEGIN
 <div class='flex items-center'>
-  <Control src='AS_EXPAND_ALL_SVG' class='*:bg-black' onclick={ open }/>
+  <Control src='IMAGES_GOOGLE_EXPAND_ALL_SVG'
+           class='*:bg-black' onclick={ open }/>
   <dialog ref={ dialog } onclick={ close }
           class='m-auto max-w-xl max-h-none h-screen md:h-[95vh] bg-miku
                  md:border-4 border-luka-pink md:mask-fade-edge [--span:4px]'>
@@ -490,22 +491,13 @@ RETURN_JSX_BEGIN
 RETURN_JSX_END
 }
 
-divert(-1)
-
-define(DEF_CACHED_STATE, [[dnl
-const [ $1, set_$1 ] = useCachedState(init_$1, 'photo_$1')
-]])
-
-define(CANVAS_ARROW_HEAD,
-       size-3 rounded-full border-3 border-miku-pink select-none)
-
-divert(0)dnl
-dnl
 export default function Gallery()
 {
-	DEF_CACHED_STATE(year_idx)dnl
-	DEF_CACHED_STATE(pos_tab)dnl
-	DEF_CACHED_STATE(loop)dnl
+	const [ year_idx, set_year_idx ] = useCachedState(init_year_idx,
+							  'photo_year_idx')
+	const [ pos_tab, set_pos_tab ] = useCachedState(init_pos_tab,
+							'photo_pos_tab')
+	const [ loop, set_loop ] = useCachedState(init_loop, 'photo_loop')
 
 	const [ visible, set_visible ] = useState(1)
 	const photo_knob = useRef()
@@ -528,7 +520,8 @@ RETURN_JSX_BEGIN
   </div>
   <div>
     <Bar class='mx-auto h-15' vertical/>
-    <div class='mx-auto -translate-y-0.5 CANVAS_ARROW_HEAD'></div>
+    <div class='mx-auto -translate-y-0.5 size-3
+                rounded-full border-3 border-miku-pink select-none'></div>
     <Bar class='mt-5 mx-5 md:mx-10'/>
   </div>
   <div class='mt-15 lg:mt-20 px-10 w-fit select-none'>
@@ -553,7 +546,8 @@ RETURN_JSX_BEGIN
   </div>
   <div>
     <Bar class='mx-5 md:mx-10'/>
-    <div class='mx-auto mt-5 translate-y-0.5 CANVAS_ARROW_HEAD'></div>
+    <div class='mx-auto mt-5 translate-y-0.5 size-3
+                rounded-full border-3 border-miku-pink select-none'></div>
     <Bar class='mx-auto h-15' vertical/>
   </div>
   <PhotoKnob { ...{ year_idx, pos, loop, set_loop, set_pos_tab, photo_knob } }/>

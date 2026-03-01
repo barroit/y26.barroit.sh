@@ -13,10 +13,10 @@ deploy-ready-y += $(page-y)
 $(resume-y): $(resume-in)
 	$(parse-resume) <$< >$@
 
-$(page-m4-y): $(m4-prefix)/%: % $(image-asmap-y) $(lib-m4-y) \
+$(page-m4-y): $(m4-prefix)/%: % $(images-asmap-y) $(lib-m4-y) \
 			      $(jsx-helper-y) $(resume-y) $(photos-map-y)
 	mkdir -p $(@D)
-	$(m4) $(photos-asmap-y) $(image-asmap-y) $(jsx-helper-y) $< >$@
+	$(m4) $(photos-asmap-y) $(images-asmap-y) $(jsx-helper-y) $< >$@
 
 $(page-y)1: $(page-m4-y) | $(prefix)
 	$(esbuild) --jsx-import-source=preact --jsx=automatic \

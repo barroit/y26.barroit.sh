@@ -15,7 +15,7 @@
 	--pastel-green: oklch(0.9755 0.0090 148.5);
 	--pastel-blue: oklch(0.9765 0.0115 255.0);
 
-	--shift-star: url(AS_SHIFT_STAR_PNG);
+	--shift-star: url(IMAGES_SHIFT_STAR_PNG);
 }
 
 @theme {

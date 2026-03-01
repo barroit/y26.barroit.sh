@@ -26,7 +26,7 @@ wrangler ?= wrangler
 gen-asmap    := ./scripts/gen-asmap.sh
 lan-ip       := ./scripts/lan-ip.py
 ln-unique    := ./scripts/ln-unique.sh
-map-asmap    := ./scripts/map-asmap.py
+map-photos   := ./scripts/map-photos.py
 parse-resume := ./scripts/parse-resume.py
 
 prefix := build
@@ -88,7 +88,8 @@ $(terser-y): %1-terser: %1
 	$(terser) <$< >$@
 
 $(asmap-y): $(asmap-in)
-	$(gen-asmap) $@ $(static-prefix) $(static-prefix)
+	ls $(static-prefix)/index-* | grep -E '\.(css|js)$$' | \
+	sed s,$(static-prefix),, | $(gen-asmap) s,/,, AS >$@
 
 deploy-ready: $(deploy-ready-y)
 

@@ -1,5 +1,5 @@
-LICENSES
-========
+CREDIT
+======
 
 All files in this directory contain derived works from the MV
 "ダイダイダイダイキライ". Original creators are:

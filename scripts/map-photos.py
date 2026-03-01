@@ -4,8 +4,8 @@
 # Copyright 2026 Jiamu Sun <barroit@linux.com>
 #
 
+import re
 import sys
-
 def print_no_lf(*args):
 	print(*args, end = '')
 
@@ -25,6 +25,9 @@ for line in sys.stdin:
 
 	year_col = var.split('_', 2)
 	year = f'20{year_col[1][1:]}'
+
+	if not re.search(r'^Y\d{2}$', year_col[1]):
+		continue
 
 	if prev_year != year:
 		if not first_year:

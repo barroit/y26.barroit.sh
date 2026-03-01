@@ -164,7 +164,7 @@ RETURN_JSX_BEGIN
     <Masthead/>
   </div>
   <div class='xl:row-span-2'>
-    <img src='AS_MIKU_NT_PNG' draggable={ false }
+    <img src='IMAGES_PIAPRO_MIKU_NT_PNG' draggable={ false }
          class='drop-shadow-[0_4px_4px_#0000003f] select-none'/>
   </div>
   <div class='md:row-start-2 justify-self-center md:self-center

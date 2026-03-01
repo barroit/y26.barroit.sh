@@ -5,7 +5,7 @@
 
 @font-face {
 	font-family: 'JetBrains Mono';
-	src: url('AS_JETBRAINSMONO_REGULAR_WOFF2') format('woff2');
+	src: url('FONTS_JB_JETBRAINSMONO_REGULAR_WOFF2') format('woff2');
 	font-weight: 400;
 	font-style: normal;
 	font-display: swap;
@@ -13,7 +13,7 @@
 
 @font-face {
 	font-family: 'JetBrains Mono';
-	src: url('AS_JETBRAINSMONO_BOLD_WOFF2') format('woff2');
+	src: url('FONTS_JB_JETBRAINSMONO_BOLD_WOFF2') format('woff2');
 	font-weight: 700;
 	font-style: normal;
 	font-display: swap;
@@ -21,7 +21,7 @@
 
 @font-face {
 	font-family: 'JetBrains Mono';
-	src: url('AS_JETBRAINSMONO_ITALIC_WOFF2') format('woff2');
+	src: url('FONTS_JB_JETBRAINSMONO_ITALIC_WOFF2') format('woff2');
 	font-weight: 400;
 	font-style: italic;
 	font-display: swap;
@@ -29,7 +29,7 @@
 
 @font-face {
 	font-family: 'JetBrains Mono';
-	src: url('AS_JETBRAINSMONO_BOLDITALIC_WOFF2') format('woff2');
+	src: url('FONTS_JB_JETBRAINSMONO_BOLDITALIC_WOFF2') format('woff2');
 	font-weight: 700;
 	font-style: italic;
 	font-display: swap;
@@ -37,10 +37,10 @@
 
 @font-face {
 	font-family: 'x14y20pxScoreDozer';
-	src: url('AS_X14Y20PXSCOREDOZER_TTF') format('truetype');
+	src: url('FONTS_X0Y0PX_X14Y20PXSCOREDOZER_TTF') format('truetype');
 }
 
 @font-face {
 	font-family: 'x16y32pxGridGazer';
-	src: url('AS_X16Y32PXGRIDGAZER_TTF') format('truetype');
+	src: url('FONTS_X0Y0PX_X16Y32PXGRIDGAZER_TTF') format('truetype');
 }

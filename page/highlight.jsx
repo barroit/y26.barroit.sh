@@ -120,7 +120,7 @@ function Head({ url, name, desc })
 
 RETURN_JSX_BEGIN
 <div>
-  <LinkLabel icon='AS_BOOK_2_SVG'
+  <LinkLabel icon='IMAGES_GOOGLE_BOOK_2_SVG'
              class='gap-x-1 text-xl font-bold' { ...{ url, name } }/>
   <div class='mt-1 flex'>
     <Bar color='ml-1.5 bg-zinc-300' vertical/>
@@ -152,9 +152,9 @@ function History({ commits, lines })
 
 RETURN_JSX_BEGIN
 <>
-  <Label icon='AS_COMMIT_SVG'
+  <Label icon='IMAGES_GOOGLE_COMMIT_SVG'
          prefix={ commits } pad={ commits_pad } suffix='commits'/>
-  <Label icon='AS_CODE_SVG'
+  <Label icon='IMAGES_GOOGLE_CODE_SVG'
          prefix={ lines } pad={ lines_pad } suffix='lines'/>
 </>
 RETURN_JSX_END
@@ -165,8 +165,8 @@ function FakeHistory()
 
 RETURN_JSX_BEGIN
 <>
-  <BusyLabel icon='AS_COMMIT_SVG' class='gap-x-3'/>
-  <BusyLabel icon='AS_CODE_SVG' class='gap-x-3'/>
+  <BusyLabel icon='IMAGES_GOOGLE_COMMIT_SVG' class='gap-x-3'/>
+  <BusyLabel icon='IMAGES_GOOGLE_CODE_SVG' class='gap-x-3'/>
 </>
 RETURN_JSX_END
 }
@@ -176,10 +176,10 @@ function DeadHistory()
 
 RETURN_JSX_BEGIN
 <>
-  <IconLabelFrame icon='AS_CLOUD_OFF_SVG' class='gap-x-3'>
+  <IconLabelFrame icon='IMAGES_GOOGLE_CLOUD_OFF_SVG' class='gap-x-3'>
     <p>commit's offline</p>
   </IconLabelFrame>
-  <IconLabelFrame icon='AS_CLOUD_OFF_SVG' class='gap-x-3'>
+  <IconLabelFrame icon='IMAGES_GOOGLE_CLOUD_OFF_SVG' class='gap-x-3'>
     <p>line's offline</p>
   </IconLabelFrame>
 </>
@@ -195,7 +195,7 @@ function Past({ since })
 	const past = `${time}${dt}`
 
 RETURN_JSX_BEGIN
-<Label icon='AS_UPDATE_SVG' prefix={ past } suffix='ago'/>
+<Label icon='IMAGES_GOOGLE_UPDATE_SVG' prefix={ past } suffix='ago'/>
 RETURN_JSX_END
 }
 
@@ -209,7 +209,7 @@ function Docs({ url, ...props })
 		name = name.slice(0, name.length - 1)
 
 RETURN_JSX_BEGIN
-<LinkLabel icon='AS_LINK_2_SVG' { ...{ url, name, ...props } }/>
+<LinkLabel icon='IMAGES_GOOGLE_LINK_2_SVG' { ...{ url, name, ...props } }/>
 RETURN_JSX_END
 }
 
@@ -233,7 +233,7 @@ function Topic({ list, ...props })
 	const tags = list.map(fmt_tag, list.length)
 
 RETURN_JSX_BEGIN
-<IconLabelFrame icon='AS_SELL_SVG' { ...props }>
+<IconLabelFrame icon='IMAGES_GOOGLE_SELL_SVG' { ...props }>
   <div>
     { tags }
   </div>
@@ -328,11 +328,13 @@ function CardControl({ to_left, to_right, ...props })
 RETURN_JSX_BEGIN
 <div { ...props }>
   <button onclick={ to_left }>
-    <img src='AS_CHEVRON_BACKWARD_SVG' class='mx-auto size-8 select-none'/>
+    <img src='IMAGES_GOOGLE_CHEVRON_BACKWARD_SVG'
+         class='mx-auto size-8 select-none'/>
   </button>
   <Bar vertical/>
   <button onclick={ to_right }>
-    <img src='AS_CHEVRON_FORWARD_SVG' class='mx-auto size-8 select-none'/>
+    <img src='IMAGES_GOOGLE_CHEVRON_FORWARD_SVG'
+         class='mx-auto size-8 select-none'/>
   </button>
 </div>
 RETURN_JSX_END
@@ -381,7 +383,7 @@ RETURN_JSX_BEGIN
       <CardBtn onclick={ to_left } class='w-xl HOT(-translate-2)'>
         <Card inert { ...pinned[left] } class='masking'/>
         <CardMask>
-          <CardMaskIcon src='AS_KEYBOARD_ARROW_UP_SVG'/>
+          <CardMaskIcon src='IMAGES_GOOGLE_KEYBOARD_ARROW_UP_SVG'/>
         </CardMask>
       </CardBtn>
     </CardBtnBox>
@@ -395,7 +397,7 @@ RETURN_JSX_BEGIN
       <CardBtn onclick={ to_right } class='w-xl HOT(translate-2)'>
         <Card inert { ...pinned[right] } class='masking'/>
         <CardMask>
-          <CardMaskIcon src='AS_KEYBOARD_ARROW_DOWN_SVG'/>
+          <CardMaskIcon src='IMAGES_GOOGLE_KEYBOARD_ARROW_DOWN_SVG'/>
         </CardMask>
       </CardBtn>
     </CardBtnBox>
@@ -412,7 +414,7 @@ function FakeHead()
 
 RETURN_JSX_BEGIN
 <div>
-  <BusyLabel icon='AS_BOOK_2_SVG' class='gap-x-1 text-xl font-bold'/>
+  <BusyLabel icon='IMAGES_GOOGLE_BOOK_2_SVG' class='gap-x-1 text-xl font-bold'/>
   <div class='mt-1 flex'>
     <Bar color='ml-1.5 bg-zinc-300' vertical/>
     <BusyBar class='ml-2.5'/>
@@ -434,9 +436,10 @@ RETURN_JSX_BEGIN
       <FakeHistory/>
     </div>
     <div class='invisible md:hidden'>39</div>
-    <BusyLabel icon='AS_UPDATE_SVG' class='gap-x-3'/>
-    <BusyLabel icon='AS_LINK_2_SVG' class='col-span-2 md:col-span-1 gap-x-3'/>
-    <BusyLabel icon='AS_SELL_SVG' class='col-span-2 gap-x-3'/>
+    <BusyLabel icon='IMAGES_GOOGLE_UPDATE_SVG' class='gap-x-3'/>
+    <BusyLabel icon='IMAGES_GOOGLE_LINK_2_SVG'
+               class='col-span-2 md:col-span-1 gap-x-3'/>
+    <BusyLabel icon='IMAGES_GOOGLE_SELL_SVG' class='col-span-2 gap-x-3'/>
     <BusyBar class='mt-2'/>
   </div>
 </div>
