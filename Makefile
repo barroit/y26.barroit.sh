@@ -73,6 +73,8 @@ include build_tool/html.mak
 
 include build_tool/headers.mak
 
+include build_tool/licenses.mak
+
 $(prefix-y):
 	mkdir -p $@
 
