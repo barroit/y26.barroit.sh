@@ -25,6 +25,13 @@ divert(0)dnl
 
   SECURITY_HEADER
 
+/LICENSES/*
+  Cache-Control: public, max-age=31536000, immutable
+
+  SECURITY_HEADER
+
+  Content-Type: text/plain; charset=utf-8
+
 /*
   Cache-Control: public, max-age=31536000, immutable
 

@@ -68,7 +68,7 @@ function Identity()
 
 RETURN_JSX_BEGIN
 <div class='flex items-center gap-x-10'>
-  <img src='IMAGES_AVATAR_SQUARE_JPG' draggable={ false }
+  <img src='IMAGES_BARROIT_AVATAR_SQUARE_JPG' draggable={ false }
        class='w-20 rounded-full shadow-md select-none'/>
   <div>
     <p class='text-2xl font-bold'>

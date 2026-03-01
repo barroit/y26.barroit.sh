@@ -2,9 +2,12 @@
 
 $(eval $(call def-target,page,index.jsx,index.js,page/*.jsx))
 
-page-generic-m4-y := $(filter-out %/gallery.jsx %/log.jsx, $(page-m4-y))
+page-generic-filter-out := %/gallery.jsx %/log.jsx %/credit.jsx
+page-generic-m4-y := $(filter-out $(page-generic-filter-out),$(page-m4-y))
+
 page-photos-m4-y  := $(filter %/gallery.jsx, $(page-m4-y))
 page-resume-m4-y  := $(filter %/log.jsx, $(page-m4-y))
+page-credit-m4-y  := $(filter %/credit.jsx, $(page-m4-y))
 
 page-m4-prefix := $(m4-prefix)/page
 
@@ -35,6 +38,14 @@ $(page-photos-m4-y): $(m4-prefix)/%: % $(photos-asmap-y) $(images-asmap-y) \
 				     $(photos-map-y) | $(page-m4-prefix)
 	$(m4) $(photos-asmap-y) $(images-asmap-y) \
 	      $(jsx-helper-y) $(photos-map-y) $< >$@
+
+$(page-credit-m4-y): $(m4-prefix)/%: % $(fonts-asmap-y) $(images-asmap-y) \
+				     $(photos-asmap-y) $(jsx-helper-y) \
+				     $(notice-map-y) $(license-map-y) \
+				     $(lib-m4-y) | $(page-m4-prefix)
+	$(m4) $(fonts-asmap-y) $(images-asmap-y) \
+	      $(photos-asmap-y) $(jsx-helper-y) \
+	      $(notice-map-y) $(license-map-y) $< >$@
 
 $(page-generic-m4-y): $(m4-prefix)/%: % $(images-asmap-y) $(jsx-helper-y) \
 				      $(lib-m4-y) | $(page-m4-prefix)

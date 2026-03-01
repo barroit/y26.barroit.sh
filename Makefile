@@ -61,6 +61,10 @@ include build_tool/images.mak
 
 include build_tool/fonts.mak
 
+include build_tool/notice.mak
+
+include build_tool/license.mak
+
 include build_tool/lib.mak
 
 include build_tool/page.mak
@@ -72,8 +76,6 @@ include build_tool/css.mak
 include build_tool/html.mak
 
 include build_tool/headers.mak
-
-include build_tool/licenses.mak
 
 $(prefix-y):
 	mkdir -p $@

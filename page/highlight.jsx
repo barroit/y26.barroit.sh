@@ -123,7 +123,7 @@ RETURN_JSX_BEGIN
   <LinkLabel icon='IMAGES_GOOGLE_BOOK_2_SVG'
              class='gap-x-1 text-xl font-bold' { ...{ url, name } }/>
   <div class='mt-1 flex'>
-    <Bar color='ml-1.5 bg-zinc-300' vertical/>
+    <Bar class='ml-1.5' color='bg-zinc-300' vertical/>
     <p class='ml-2.5 text-zinc-600'>{ desc }</p>
   </div>
 </div>

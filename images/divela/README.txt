@@ -1,4 +1,4 @@
-Credit
+CREDIT
 ======
 
 All files in this directory are used as visual references. All rights remain

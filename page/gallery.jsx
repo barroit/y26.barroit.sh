@@ -310,10 +310,10 @@ RETURN_JSX_BEGIN
   </div>
   <div class='pointer-coarse:hidden flex gap-x-8
               [&_*_*]:size-6 [&_*_*]:bg-rin-orange/70'>
-    <SVGIcon src='IMAGES_2020_CLOVER_SVG'/>
-    <SVGIcon src='IMAGES_2021_FLOWER_SVG'/>
-    <SVGIcon src='IMAGES_2022_PENTAGRAM_SVG'/>
-    <SVGIcon src='IMAGES_2025_OCTAGRAM_SVG'/>
+    <SVGIcon src='IMAGES_BARROIT_2020_CLOVER_SVG'/>
+    <SVGIcon src='IMAGES_BARROIT_2021_FLOWER_SVG'/>
+    <SVGIcon src='IMAGES_BARROIT_2022_PENTAGRAM_SVG'/>
+    <SVGIcon src='IMAGES_BARROIT_2025_OCTAGRAM_SVG'/>
   </div>
 </>
 RETURN_JSX_END
@@ -536,7 +536,7 @@ RETURN_JSX_BEGIN
   </div>
   <div>
     <div class='mx-auto mb-10 mt-15 lg:mt-20 p-1 lg:p-2
-                max-w-xs lg:max-w-none lg:w-lg
+                max-w-55 lg:max-w-none lg:w-lg
                 flex items-center justify-between
                 rounded-full bg-zinc-200/50 shadow-sm'>
       <LoopControl loop={ loop && visible }
