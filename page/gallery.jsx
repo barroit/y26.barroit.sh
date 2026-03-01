@@ -212,7 +212,7 @@ function Showcase({ dialog, children, ...props })
 
 RETURN_JSX_BEGIN
 <dialog ref={ dialog } { ...props }
-        class='p-10 max-w-none max-h-none w-screen h-screen open:flex
+        class='p-10 max-w-none max-h-none w-screen h-[100dvh] open:flex
                bg-miku [--direction:to_bottom_right] select-none
                *:max-h-full *:m-auto *:object-contain *:drop-shadow-lg
                *:border-4 *:border-luka-pink *:mask-fade-edge *:[--span:4px]'>
@@ -359,7 +359,7 @@ RETURN_JSX_BEGIN
   <Control src='IMAGES_GOOGLE_EXPAND_ALL_SVG'
            class='*:bg-black' onclick={ open }/>
   <dialog ref={ dialog } onclick={ close } { ...{ onclose } }
-          class='m-auto max-w-xl max-h-none h-screen md:h-[95vh] bg-miku
+          class='m-auto max-w-xl max-h-none h-[100dvh] md:h-[95dvh] bg-miku
                  md:border-4 border-luka-pink md:mask-fade-edge [--span:4px]'>
     <div data-idx={ year_idx }
          class='p-1 grid grid-cols-3 gap-[1px] overflow-auto'>
