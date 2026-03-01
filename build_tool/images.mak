@@ -21,8 +21,13 @@ $(images-asmap-y): $(images-y)
 	sed s,$(static-prefix),, | $(gen-asmap) s,^/images/,, IMAGES >$@
 
 clean-y += clean-images
+distclean-y += distclean-images
 
-.PHONY: clean-images
+.PHONY: clean-images distclean-images
 
 clean-images:
-	rm -f $(images-y) $(images-asmap-y)
+	rm -f $(images-asmap-y)
+
+distclean-images:
+	find $(images-prefix) $(static-images-prefix) \
+	     -exec rm {} + 2>/dev/null || true

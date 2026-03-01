@@ -43,8 +43,10 @@ ifneq ($(minimize),)
 	minimize := -terser
 endif
 
-onchange-in :=
 clean-y :=
+distclean-y :=
+
+onchange-in :=
 deploy-ready-y :=
 
 prefix-y := $(m4-prefix) $(static-prefix)
@@ -69,7 +71,7 @@ include build_tool/css.mak
 
 include build_tool/html.mak
 
-include build_tool/rule.mak
+include build_tool/headers.mak
 
 $(prefix-y):
 	mkdir -p $@
@@ -84,13 +86,8 @@ deploy-ready: $(deploy-ready-y)
 .PHONY: clean distclean
 
 clean: $(clean-y)
-	test -d $(static-prefix) && \
-	find $(static-prefix) -type f -exec rm {} + || true
 
-distclean: clean
-	test -d node_modules && find node_modules -exec rm -rf {} + || true
-	test -d .wrangler && find .wrangler -exec rm -rf {} + || true
-	test -d build && find build -exec rm -rf {} + || true
+distclean: clean $(distclean-y)
 
 .PHONY: hot-build host hot-dev
 

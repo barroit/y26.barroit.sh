@@ -9,8 +9,8 @@ onchange-in += index.css styles/*.css
 $(css-y)1: $(css-in) $(page-m4-y) $(lib-m4-y) | $(prefix)
 	$(tailwindcss) --cwd $(m4-prefix) --input $< >$@
 
-$(css-m4-y): $(m4-prefix)/%: $(fonts-asmap-y) $(images-asmap-y) $(prefix)/%1
-	mkdir -p $(@D)
+$(css-m4-y): $(m4-prefix)/%: $(fonts-asmap-y) $(images-asmap-y) $(prefix)/%1 | \
+			     $(m4-prefix)
 	$(m4) $^ >$@
 
 $(css-y): $(css-m4-y) | $(static-prefix)
@@ -23,5 +23,4 @@ clean-y += clean-css
 .PHONY: clean-css
 
 clean-css:
-	rm -f $(css-m4-y)
-	rm -f $(css-y)*
+	rm -f $(css-m4-y) $(css-y)* $(static-prefix)/index-*.css

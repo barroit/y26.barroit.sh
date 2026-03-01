@@ -21,8 +21,13 @@ $(fonts-asmap-y): $(fonts-y)
 	sed s,$(static-prefix),, | $(gen-asmap) s,^/fonts/,, FONTS >$@
 
 clean-y += clean-fonts
+distclean-y += distclean-fonts
 
-.PHONY: clean-fonts
+.PHONY: clean-fonts distclean-fonts
 
 clean-fonts:
-	rm -f $(fonts-y) $(fonts-asmap-y)
+	rm -f $(fonts-asmap-y)
+
+distclean-fonts:
+	find $(fonts-prefix) $(static-fonts-prefix) \
+	     -exec rm {} + 2>/dev/null || true

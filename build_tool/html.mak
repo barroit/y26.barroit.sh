@@ -22,4 +22,5 @@ clean-y += clean-html
 .PHONY: clean-html
 
 clean-html:
-	rm -f $(html-y) $(html-m4-y) $(index-asmap-y)
+	rm -f $(html-y) $(html-m4-y) $(index-asmap-y) \
+	      $(static-prefix)/index.html

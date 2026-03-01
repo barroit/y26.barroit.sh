@@ -51,10 +51,13 @@ $(photos-asmap-y): $(photos-avif-y) $(photos-avif-thumb-y) \
 	sed s,$(static-prefix),, | $(gen-asmap) s,^/photos/,, PHOTOS >$@
 
 clean-y += clean-photos
+distclean-y += distclean-photos
 
-.PHONY: clean-photos
+.PHONY: clean-photos distclean-photos
 
 clean-photos:
-	test -d $(prefix)/photos && \
-	find $(prefix)/photos -type f -exec rm {} + || true
 	rm -f $(photos-asmap-y)
+
+distclean-photos:
+	find $(photos-prefix) $(static-photos-prefix) \
+	     -exec rm {} + 2>/dev/null || true

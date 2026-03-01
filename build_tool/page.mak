@@ -53,4 +53,5 @@ clean-y += clean-page
 .PHONY: clean-page
 
 clean-page:
-	rm -f $(page-m4-y) $(page-y)* $(resume-y)
+	rm -f $(resume-y) $(photos-map-y) $(page-m4-y) $(page-y)* \
+	      $(static-prefix)/index-*.js
