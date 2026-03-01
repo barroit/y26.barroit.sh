@@ -9,9 +9,9 @@ deploy-ready-y += $(headers-y)
 $(headers-y): $(headers-in) | $(static-prefix)
 	m4 $${DEV:+-DDEV} $< >$@
 
-distclean-y += distclean-headers
+clean-y += clean-headers
 
-.PHONY: distclean-headers
+.PHONY: clean-headers
 
-distclean-headers:
+clean-headers:
 	rm -f $(headers-y)
