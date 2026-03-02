@@ -142,7 +142,22 @@ RETURN_JSX_BEGIN
 RETURN_JSX_END
 }
 
-function Preview({ poster, set_visible, ...props })
+async function img_onload(node, set_busy)
+{
+	try {
+		await node.current.decode()
+	} finally {
+		set_busy(0)
+	}
+}
+
+function video_onload(set_busy)
+{
+	console.log(11)
+	set_busy(0)
+}
+
+function Preview({ src, poster, set_visible, busy, set_busy, ...props })
 {
 	const node = useRef()
 
@@ -161,15 +176,52 @@ function Preview({ poster, set_visible, ...props })
 		return () => observer.disconnect()
 	}, [])
 
-	APPEND_CLASS(props, 'max-h-full border-4 border-miku-pink/50 \
-			     rounded-md [--span:4px] mask-fade-edge')
+	APPEND_CLASS(props, 'max-h-full rounded-md transition delay-100 \
+			     border-miku-pink/50 [--span:4px]')
 
-RETURN_JSX_BEGIN !poster ? (
-<img ref={ node } { ...props } decoding='async' draggable={ 0 }/>
+	/*
+	 * Don't render border on iPadOS/iOS, their video controls is wider than
+	 * the video dimension.
+	 */
+	if (poster)
+		APPEND_CLASS(props, 'xl:border-4 xl:mask-fade-edge')
+	else
+		APPEND_CLASS(props, 'border-4 mask-fade-edge')
+
+	if (busy)
+		APPEND_CLASS(props, 'brightness-39')
+
+	const onload = img_onload.bind(undefined, node, set_busy)
+	const onloadedmetadata = video_onload.bind(undefined, set_busy)
+	const src_fb = src.replace(/webm$/, 'mp4')
+
+RETURN_JSX_BEGIN
+<>
+{ !poster ? (
+  <img ref={ node } { ...{ ...props, src, onload } }
+       decoding='async' draggable={ 0 }/>
 ) : (
-<video ref={ node } controls preload='metadata'
-       { ...{ ...props, poster } }></video>
-) RETURN_JSX_END
+  <video ref={ node } controls preload='metadata'
+         { ...{ ...props, poster, onloadedmetadata } }>
+    <source { ...{ src } } type='video/webm'/>
+    <source src={ src_fb } type='video/mp4'/>
+  </video>
+) }
+{ !poster ? (
+  <div class='absolute inset-0 flex'>
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'
+         fill='none' stroke='currentColor' stroke-width='2'
+         class='m-auto size-24 opacity-0 data-busy:opacity-100
+                text-zinc-300 animate-spin transition delay-100'
+         data-busy={ busy ? '' : undefined }>
+      <circle cx='12' cy='12' r='9' opacity='0.39'/>
+      <circle cx='12' cy='12' r='9'
+              stroke-dasharray='14 57' stroke-linecap='round'/>
+    </svg>
+  </div>
+) : undefined }
+</>
+RETURN_JSX_END
 }
 
 function PreviewMask({ children })
@@ -221,17 +273,17 @@ RETURN_JSX_BEGIN
 RETURN_JSX_END
 }
 
-function Video({ src, poster, set_visible })
+function Video({ src, poster, set_visible, set_busy })
 {
 
 RETURN_JSX_BEGIN
-<div>
-  <Preview { ...{ src, poster, set_visible } } class='size-full'/>
+<div class='relative'>
+  <Preview { ...{ src, poster, set_visible, set_busy } } class='size-full'/>
 </div>
 RETURN_JSX_END
 }
 
-function Photo({ src, dialog, set_visible })
+function Photo({ src, dialog, set_visible, busy, set_busy })
 {
 	const open = dialog_show.bind(undefined, dialog, set_visible, 0)
 	const close = dialog_hide.bind(undefined, dialog)
@@ -240,7 +292,7 @@ function Photo({ src, dialog, set_visible })
 RETURN_JSX_BEGIN
 <div>
   <button onclick={ open } class='group relative size-full outline-none'>
-    <Preview { ...{ src, set_visible } }/>
+    <Preview { ...{ src, set_visible, busy, set_busy } }/>
     <PreviewMask>
       <SVGIcon src='IMAGES_GOOGLE_OPEN_IN_FULL_SVG'
                class='m-auto p-2 bg-gray-200 opacity-0 transition
@@ -276,8 +328,8 @@ function LoopControl({ loop, set_loop, year_idx, photo_knob, ...props })
 		if (!loop)
 			return
 
-		const btn = LAST_CHILD_OF(photo_knob.current)
-		const timer = setInterval(() => btn.click(), 3939)
+		const on_timer = () => LAST_CHILD_OF(photo_knob.current).click()
+		const timer = setInterval(on_timer, 3939)
 
 		return () => clearInterval(timer)
 	}, [ year_idx, loop ])
@@ -392,17 +444,17 @@ RETURN_JSX_END
 
 function Thumbnail({ src, onclick, children, ...props })
 {
-	APPEND_CLASS(props, 'relative aspect-video transition duration-100 \
+	APPEND_CLASS(props, 'relative aspect-video rounded-md \
+			     transition duration-100 \
 			     GROUP_HOT(-translate-y-2) \
 			     GROUP_ACTIVE(translate-0) \
 			     GROUP_ACTIVE(scale-90, pointer-coarse:)')
 
 RETURN_JSX_BEGIN
-<button { ...{ onclick } } class='group outline-none'>
+<button { ...{ onclick } } class='group size-full outline-none'>
   <div { ...props }>
     <img { ...{ src } } decoding='async' draggable={ 0 }
-         class='size-full object-cover rounded-md
-                border-2 border-rin-orange [--span:2px] mask-fade-edge'/>
+         class='size-full object-cover'/>
     { children }
   </div>
 </button>
@@ -422,7 +474,8 @@ RETURN_JSX_BEGIN
 RETURN_JSX_END
 }
 
-function on_thumb_click(new_pos, year_idx, set_loop, set_pos_tab, event)
+function on_thumb_click(new_pos, year_idx, set_loop,
+			set_pos_tab, set_busy, event)
 {
 	const map_fn = (val, idx) => idx != year_idx ? val : new_pos
 	const bump_pos_tab_fn = prev => [ ...prev ].map(map_fn)
@@ -430,6 +483,7 @@ function on_thumb_click(new_pos, year_idx, set_loop, set_pos_tab, event)
 	if (event.isTrusted)
 		set_loop(0)
 
+	set_busy(1)
 	set_pos_tab(bump_pos_tab_fn)
 }
 
@@ -443,7 +497,8 @@ define(PHOTO_ARROW, [[__PHOTO_ARROW($1, $2, substr($2, 0, 1))]])
 
 divert(0)dnl
 dnl
-function PhotoKnob({ year_idx, pos, loop, set_loop, set_pos_tab, photo_knob })
+function PhotoKnob({ year_idx, pos, loop, set_loop,
+		     set_pos_tab, photo_knob, busy, set_busy })
 {
 	const photos = photos_map[year_idx]
 	const idx = pos - 1
@@ -452,41 +507,47 @@ function PhotoKnob({ year_idx, pos, loop, set_loop, set_pos_tab, photo_knob })
 	const l_pos = (idx + len - 1) % len + 1
 	const r_pos = (idx + 1) % len + 1
 
-	const args = [ year_idx, set_loop, set_pos_tab ]
+	const args = [ year_idx, set_loop, set_pos_tab, set_busy ]
 	const l_args = [ undefined, l_pos, ...args ]
 	const r_args = [ undefined, r_pos, ...args ]
 
 	const l_fn = on_thumb_click.bind(...l_args)
 	const r_fn = on_thumb_click.bind(...r_args)
 
-	const style = 'h-8 lg:h-16 GROUP_HOT(scale-120)'
-	const l_style = {}
-	const r_style = {}
+	const l_props = {}
+	const m_props = {}
+	const r_props = {}
+	const lr_style = 'h-8 lg:h-16 border-2 border-rin-orange \
+			  GROUP_HOT(scale-120) *:rounded-sm *:brightness-39'
 
-	APPEND_CLASS(l_style, style)
-	APPEND_CLASS(l_style, 'origin-bottom-right PHOTO_ARROW(before, left) \
+	APPEND_CLASS(l_props, lr_style)
+	APPEND_CLASS(l_props, 'origin-bottom-right PHOTO_ARROW(before, left) \
 			       GROUP_HOT(-translate-x-2)')
 
-	APPEND_CLASS(r_style, style)
-	APPEND_CLASS(r_style, 'origin-bottom-left PHOTO_ARROW(after, right) \
+	APPEND_CLASS(r_props, lr_style)
+	APPEND_CLASS(r_props, 'origin-bottom-left PHOTO_ARROW(after, right) \
 			       GROUP_HOT(translate-x-2)')
 
+	APPEND_CLASS(m_props, 'size-full ring-2 ring-rin-orange *:rounded-md')
+
 	if (loop)
-		APPEND_CLASS(r_style, 'translate-x-1 -translate-y-1 scale-110')
+		APPEND_CLASS(r_props, 'translate-x-1 -translate-y-1 scale-110')
+
+	if (!busy) {
+		l_props.onclick = l_fn
+		r_props.onclick = r_fn
+	}
 
 RETURN_JSX_BEGIN
 <div ref={ photo_knob } class='w-fit flex items-end gap-x-2 select-none'>
-  <Thumbnail src={ photos[l_pos][1] } onclick={ l_fn } { ...l_style }>
-    <link inert rel='prefetch' href={ photos[l_pos][0] } onclick={ () => {} }
-          class='block absolute inset-0 m-[2px] bg-zinc-800/70'/>
+  <Thumbnail src={ photos[l_pos][1] } { ...l_props }>
+    <link rel='prefetch' href={ photos[l_pos][0] } as='image'/>
   </Thumbnail>
-  <div inert class='h-12 lg:h-24 **:size-full'>
-    <Thumbnail src={ photos[pos][1] }></Thumbnail>
+  <div inert class='h-12 lg:h-24'>
+    <Thumbnail src={ photos[pos][1] } { ...m_props }/>
   </div>
-  <Thumbnail src={ photos[r_pos][1] }
-             onclick={ r_fn } { ...r_style }>
-    <link inert rel='prefetch' href={ photos[l_pos][0] } onclick={ () => {} }
-          class='block absolute inset-0 m-[2px] bg-zinc-800/70'/>
+  <Thumbnail src={ photos[r_pos][1] } { ...r_props }>
+    <link rel='prefetch' href={ photos[l_pos][0] } as='image'/>
   </Thumbnail>
 </div>
 RETURN_JSX_END
@@ -501,6 +562,8 @@ export default function Gallery()
 	const [ loop, set_loop ] = useCachedState(init_loop, 'photo_loop')
 
 	const [ visible, set_visible ] = useState(1)
+	const [ busy, set_busy ] = useState(1)
+
 	const photo_knob = useRef()
 	const dialog = useRef()
 
@@ -526,11 +589,12 @@ RETURN_JSX_BEGIN
     <Bar class='mt-5 mx-5 md:mx-10'/>
   </div>
   <div class='mt-15 lg:mt-20 px-10 w-fit select-none'>
-    <div class='drop-shadow-lg *:h-60 lg:*:h-120'>
+    <div class='relative drop-shadow-lg *:h-60 lg:*:h-120'>
     { !video ? (
-      <Photo src={ photo[0] } { ...{ dialog, set_visible } }/>
+      <Photo src={ photo[0] } { ...{ dialog, set_visible, busy, set_busy } }/>
     ) : (
-      <Video src={ photo[0] } poster={ photo[1] } { ...{ set_visible } }/>
+      <Video src={ photo[0] } poster={ photo[1] }
+             { ...{ set_visible, set_busy } }/>
     ) }
     </div>
   </div>
@@ -551,7 +615,8 @@ RETURN_JSX_BEGIN
                 rounded-full border-3 border-miku-pink select-none'></div>
     <Bar class='mx-auto h-15' vertical/>
   </div>
-  <PhotoKnob { ...{ year_idx, pos, loop, set_loop, set_pos_tab, photo_knob } }/>
+  <PhotoKnob { ...{ year_idx, pos, loop, set_loop,
+                    set_pos_tab, photo_knob, busy, set_busy } }/>
 </section>
 RETURN_JSX_END
 }

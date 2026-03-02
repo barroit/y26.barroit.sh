@@ -14,28 +14,39 @@ photos-avif-y := $(patsubst %.jpeg,%.avif,$(filter %.jpeg,$(photos-y)))
 photos-avif-thumb-y := $(patsubst %.avif,%_xthumb.avif,$(photos-avif-y))
 
 photos-webm-y := $(patsubst %.mov,%.webm,$(filter %.mov,$(photos-y)))
+photos-webm-fb-y := $(patsubst %.webm,%.mp4,$(photos-webm-y))
 photos-webm-thumb-y := $(patsubst %.webm,%_xthumb.avif,$(photos-webm-y))
 
 photos-misc-y := $(filter-out %.mov %.jpeg %.bak,$(photos-y))
 
-$(photos-avif-y): $(prefix)/%.avif: \
-		  %.jpeg | $(photos-prefix) $(static-photos-prefix)
+$(photos-avif-y): $(prefix)/%.avif: %.jpeg | \
+		  $(photos-prefix) $(static-photos-prefix)
 	$(magick) $< -auto-orient -strip -quality 60 $@
 	$(ln-unique) $@ $(subst $(prefix),$(static-prefix),$(@D))
 
-$(photos-avif-thumb-y): $(prefix)/%_xthumb.avif: \
-			%.jpeg | $(photos-prefix) $(static-photos-prefix)
+$(photos-avif-thumb-y): $(prefix)/%_xthumb.avif: %.jpeg | \
+			$(photos-prefix) $(static-photos-prefix)
 	$(magick) $< -auto-orient -strip -resize 390x -quality 39 $@
 	$(ln-unique) $@ $(subst $(prefix),$(static-prefix),$(@D))
 
-$(photos-webm-y): $(prefix)/%.webm: \
-		  %.mov | $(photos-prefix) $(static-photos-prefix)
+$(photos-webm-y): $(prefix)/%.webm: %.mov | \
+		  $(photos-prefix) $(static-photos-prefix)
 	$(ffmpeg) -y -i $< -c:v av1_nvenc \
 		  -preset p7 -cq 30 -b:v 0 -c:a libopus $@
 	$(ln-unique) $@ $(subst $(prefix),$(static-prefix),$(@D))
 
-$(photos-webm-thumb-y): $(prefix)/%_xthumb.avif: \
-			%.mov | $(photos-prefix) $(static-photos-prefix)
+$(photos-webm-fb-y): $(prefix)/%.mp4: %.mov $(prefix)/%.webm | \
+		     $(photos-prefix) $(static-photos-prefix)
+	$(ffmpeg) -y -i $< -c:v hevc_nvenc -preset p7 -cq 28 \
+		  -pix_fmt p010le -profile:v main10 -tag:v hvc1 \
+		  -c:a aac -b:a 192k -movflags +faststart $@
+	rm -f $(subst $(prefix),$(static-prefix),$(basename $@))-*.mp4
+	ln $@ $$(printf $(subst $(prefix), \
+				$(static-prefix),$(basename $@))-*.webm | \
+		 sed s/webm$$/mp4/)
+
+$(photos-webm-thumb-y): $(prefix)/%_xthumb.avif: %.mov | \
+			$(photos-prefix) $(static-photos-prefix)
 	$(magick) $<[0] -auto-orient -strip -resize 390x -quality 39 $@
 	$(ln-unique) $@ $(subst $(prefix),$(static-prefix),$(@D))
 
@@ -46,8 +57,9 @@ $(photos-misc-y): $(prefix)/%: % | $(photos-prefix) $(static-photos-prefix)
 photos-asmap-y := $(prefix)/photos_asmap.m4
 
 $(photos-asmap-y): $(photos-avif-y) $(photos-avif-thumb-y) \
-		   $(photos-webm-y) $(photos-webm-thumb-y) $(photos-misc-y)
-	find $(static-photos-prefix) -maxdepth 1 -type f | \
+		   $(photos-webm-y) $(photos-webm-thumb-y) \
+		   $(photos-webm-fb-y) $(photos-misc-y)
+	find $(static-photos-prefix) -maxdepth 1 -type f ! -name '*.mp4' | \
 	sed s,$(static-prefix),, | $(gen-asmap) s,^/photos/,, PHOTOS >$@
 
 clean-y += clean-photos
