@@ -18,9 +18,5 @@
          "pattern": "y26.barroit.sh",
          "custom_domain": true,
       },
-      {
-         "pattern": "barroit.sh",
-         "custom_domain": true,
-      },
    ],
 }
