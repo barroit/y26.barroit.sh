@@ -93,14 +93,21 @@ clean: $(clean-y)
 
 distclean: clean $(distclean-y)
 
-.PHONY: hot-build host hot-dev
+.PHONY: hot-build hot-host hot-dev host deploy
 
 hot-build: deploy-ready
 	$(onchange) $(patsubst %,'%',$(onchange-in)) -- $(MAKE) deploy-ready
 
-host:
+hot-host:
 	cd $(static-prefix) && \
 	$(wrangler) dev --live-reload --ip=$(shell $(lan-ip))
 
 hot-dev: deploy-ready
-	$(concurrently) '$(MAKE) hot-build' '$(MAKE) host'
+	$(concurrently) '$(MAKE) hot-build' '$(MAKE) hot-host'
+
+host:
+	cd $(static-prefix) && $(wrangler) dev --ip=$(shell $(lan-ip))
+
+deploy:
+	cd $(static-prefix) && $(wrangler) deploy
+	$(wrangler) secret bulk .dev.vars
