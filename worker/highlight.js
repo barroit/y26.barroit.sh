@@ -16,7 +16,7 @@ query {
             homepageUrl
             primaryLanguage { color name }
             pushedAt
-            repositoryTopics(first: 3) {
+            repositoryTopics(first: 6) {
               nodes {
                 topic { name }
               }
