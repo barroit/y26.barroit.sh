@@ -13,7 +13,7 @@ import Shell from '../lib/shell.jsx'
 
 const nav_urls = [
 	[ 'GitHub', 'https://github.com/barroit' ],
-	[ 'Blog',   'https://crap.barroit.sh'    ],
+	[ 'Blog',   'https://blog.barroit.sh'    ],
 ]
 
 const page_anchors = [
