@@ -99,12 +99,12 @@ RETURN_JSX_BEGIN
   <Label src='IMAGES_GOOGLE_LOCATION_ON_SVG'>Chiba Chuo</Label>
   <ClockLabel/>
   <Label src='IMAGES_GOOGLE_MAIL_SVG'>
-    <LinkExtern href='mailto:barroit@linux.com' class='text-indigo-700'>
+    <LinkExtern href='mailto:39@barroit.sh' class='text-indigo-700'>
       <ExternMark>
       { mobile ? (
-        <span>barroit@linux.com</span>
+        <span>39@barroit.sh</span>
       ) : (
-        <Flick>barroit@linux.com</Flick>
+        <Flick>39@barroit.sh</Flick>
       ) }
       </ExternMark>
     </LinkExtern>
