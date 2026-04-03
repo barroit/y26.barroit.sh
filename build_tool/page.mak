@@ -55,7 +55,7 @@ $(page-y)1: $(page-m4-y) | $(prefix)
 	$(esbuild) --jsx-import-source=preact --jsx=automatic \
 		   --sourcemap=inline --outfile=$@ $<
 
-$(page-y): %: %1$(minimize) | $(static-prefix)
+$(page-y): %: %1$(MINIMIZE) | $(static-prefix)
 	cp $< $@
 	$(ln-unique) $@ $(static-prefix)
 

@@ -39,8 +39,8 @@ define def-target
 	$1-y    := $$(prefix)/$3
 endef
 
-ifneq ($(minimize),)
-	minimize := -terser
+ifneq ($(MINIMIZE),)
+	MINIMIZE := -terser
 endif
 
 clean-y :=
