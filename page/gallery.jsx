@@ -153,7 +153,6 @@ async function img_onload(node, set_busy)
 
 function video_onload(set_busy)
 {
-	console.log(11)
 	set_busy(0)
 }
 
@@ -193,7 +192,7 @@ function Preview({ src, poster, set_visible, busy, set_busy, ...props })
 
 	const onload = img_onload.bind(undefined, node, set_busy)
 	const onloadedmetadata = video_onload.bind(undefined, set_busy)
-	const src_fb = src.replace(/webm$/, 'mp4')
+	const src_webm = src.replace(/mp4$/, 'webm')
 
 RETURN_JSX_BEGIN
 <>
@@ -203,8 +202,8 @@ RETURN_JSX_BEGIN
 ) : (
   <video ref={ node } controls preload='metadata'
          { ...{ ...props, poster, onloadedmetadata } }>
-    <source { ...{ src } } type='video/webm'/>
-    <source src={ src_fb } type='video/mp4'/>
+    <source src={ src_webm } type='video/webm'/>
+    <source { ...{ src } } type='video/mp4'/>
   </video>
 ) }
 { !poster ? (
@@ -461,19 +460,6 @@ RETURN_JSX_BEGIN
 RETURN_JSX_END
 }
 
-function Prefetch({ src, ...props })
-{
-	const ref = useRef()
-
-	useEffect(() => {fetch(src); console.log(src)}, [])
-
-	props.ref = ref
-
-RETURN_JSX_BEGIN
-<div { ...props }></div>
-RETURN_JSX_END
-}
-
 function on_thumb_click(new_pos, year_idx, set_loop,
 			set_pos_tab, set_busy, event)
 {
@@ -571,7 +557,7 @@ export default function Gallery()
 	const media = media_map[year_idx]
 
 	const photo = media[pos]
-	const video = +photo[0].endsWith('.webm')
+	const video = +photo[0].endsWith('.mp4')
 
 RETURN_JSX_BEGIN
 <section id='gallery'

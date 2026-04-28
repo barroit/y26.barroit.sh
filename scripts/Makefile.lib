@@ -1,0 +1,11 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+onchange-src += lib/**/*
+
+lib-src != find lib -name '*.jsx' -or -name '*.js'
+lib-helper := $(wildcard lib/*.m4)
+lib-m4 := $(addprefix $(objtree)/m4/,$(lib-src))
+
+clean += $(lib-m4)
+
+$(lib-m4): $(objtree)/images_asmap.m4 $(lib-helper)

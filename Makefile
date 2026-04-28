@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 m4 ?= m4
-m4 := printf 'changequote([[, ]])' | $(m4) - -Uformat
+m4 := printf 'changequote([[, ]])' | $(m4) $${DEV:+-DDEV} -Uformat -
 
 esbuild ?= esbuild
 esbuild += --bundle --format=esm
@@ -21,92 +21,106 @@ ffmpeg += -v error
 onchange ?= onchange
 concurrently ?= concurrently
 wrangler ?= wrangler
+caddy ?= caddy
 
-gen-asmap    := ./scripts/gen-asmap.sh
 lan-ip       := ./scripts/lan-ip.py
 ln-unique    := ./scripts/ln-unique.sh
-map-media    := ./scripts/map-media.py
-parse-resume := ./scripts/parse-resume.py
+map-asset    := ./scripts/map-asset.sh
+map-license  := ./scripts/map-license.sh
+map-notice   := ./scripts/map-notice.sh
 
-prefix := build
-m4-prefix := $(prefix)/m4
-static-prefix := $(prefix)/static
-
-define def-target
-	$1-glob := $2 $4
-	$1-in   := $$(wildcard $$($1-glob))
-	$1-m4-y := $$(addprefix $$(m4-prefix)/,$$($1-in))
-	$1-y    := $$(prefix)/$3
-endef
+objtree := build
+static := $(objtree)/static
 
 ifneq ($(MINIMIZE),)
-	MINIMIZE := -terser
+	MINIMIZE := -min
 endif
 
-clean-y :=
-distclean-y :=
+clean :=
+distclean :=
 
-onchange-in :=
+onchange-src :=
 deploy-ready-y :=
-
-prefix-y := $(m4-prefix) $(static-prefix)
 
 .PHONY: deploy-ready
 
 deploy-ready:
 
-include build_tool/media.mak
+include scripts/Makefile.media
 
-include build_tool/images.mak
+include scripts/Makefile.images
 
-include build_tool/fonts.mak
+include scripts/Makefile.fonts
 
-include build_tool/notice.mak
+include scripts/Makefile.notice
 
-include build_tool/license.mak
+include scripts/Makefile.license
 
-include build_tool/lib.mak
+include scripts/Makefile.lib
 
-include build_tool/page.mak
+include scripts/Makefile.page
 
-include build_tool/worker.mak
+include scripts/Makefile.script
 
-include build_tool/css.mak
+include scripts/Makefile.style
 
-include build_tool/html.mak
+include scripts/Makefile.asset
 
-include build_tool/headers.mak
+include scripts/Makefile.html
 
-$(prefix-y):
-	mkdir -p $@
+include scripts/Makefile.headers
 
-terser-y := $(addsuffix 1-terser,$(terser-in))
+include scripts/Makefile.worker
 
-$(terser-y): %1-terser: %1
-	$(terser) <$< >$@
+$(static)/%.stamp: %
+	mkdir -p $(@D)
+	$(ln-unique) $< $(@D)
+	touch $@
+
+%_asmap.m4: %_asmap.sed
+	printf '%s\n' \
+	       $(addsuffix -*,$(basename $(basename $(filter-out $<,$^)))) | \
+	sed s,$(static),, | sort | uniq | $(map-asset) $$(cat $<) >$@
+
+$(objtree)/m4/%: %
+	mkdir -p $(@D)
+	$(m4) $(filter-out $<,$^) $< >$@
 
 deploy-ready: $(deploy-ready-y)
 
 .PHONY: clean distclean
 
-clean: $(clean-y)
+clean:
+	rm -f $(clean)
 
-distclean: clean $(distclean-y)
+distclean: clean
+	rm -f $(distclean)
 
-.PHONY: hot-build hot-host hot-dev host deploy
+.PHONY: hot-build hot-proxy hot-host hot-dev host deploy
 
 hot-build: deploy-ready
-	$(onchange) $(patsubst %,'%',$(onchange-in)) -- $(MAKE) deploy-ready
+	$(onchange) $(patsubst %,'%',$(onchange-src)) -- $(MAKE) deploy-ready
 
 hot-host:
-	$(wrangler) dev --live-reload --ip=$(shell $(lan-ip))
+	$(wrangler) dev --live-reload --ip=127.0.0.1 --port=3901
+
+hot-proxy:
+	$(caddy) reverse-proxy --from http://$$($(lan-ip)):3939 \
+			       --to 127.0.0.1:3901 \
+			       --header-up "Host: 127.0.0.1:3901" \
+			       --header-up "Origin: http://127.0.0.1:3901"
 
 hot-dev: deploy-ready
-	$(concurrently) '$(MAKE) hot-build' '$(MAKE) hot-host'
+	$(concurrently) '$(MAKE) hot-build' \
+			'$(MAKE) hot-host' '$(MAKE) hot-proxy'
 
 host:
-	$(wrangler) dev --ip=$(shell $(lan-ip))
+	$(wrangler) dev --ip=$$($(lan-ip)) --port=3939
 
-deploy:
+$(static)/.assetsignore:
+	mkdir -p $(@D)
+	printf '%s\n' '*.stamp' >$@
+
+deploy: deploy-ready $(static)/.assetsignore
 	$(wrangler) deploy
 	$(wrangler) secret bulk .dev.vars

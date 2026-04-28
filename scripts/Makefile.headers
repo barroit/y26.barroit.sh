@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+onchange-src += _headers
+deploy-ready-y += $(static)/_headers
+
+$(static)/_headers: $(objtree)/m4/_headers
+	mkdir -p $(@D)
+	cp $< $@
+
+$(objtree)/m4/_headers:

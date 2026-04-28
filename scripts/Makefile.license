@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+license-src := $(wildcard LICENSES/*)
+license-y := $(addprefix $(static)/,$(license-src))
+
+onchange-src += LICENSES/*
+
+$(objtree)/license_map.m4: $(license-y)
+	printf '/%s\n' $^ | sed s,/$(static),, | $(map-license) >$@
+
+$(license-y): $(static)/%: %
+	mkdir -p $(@D)
+	cp $< $@

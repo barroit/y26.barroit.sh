@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+$(static)/$(objtree)/index.js.stamp:
+
+$(objtree)/index.js: %: %1$(MINIMIZE)
+	cp $< $@
+
+$(objtree)/index.js1-min: %-min: %
+	$(terser) >$@ <$<
+
+$(objtree)/index.js1: $(page-m4) $(lib-m4)
+	$(esbuild) --jsx-import-source=preact --jsx=automatic \
+		   --sourcemap=inline --outfile=$@ $<

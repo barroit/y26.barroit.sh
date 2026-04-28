@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+$(objtree)/indexes_asmap.m4: $(static)/$(objtree)/index.js.stamp \
+			     $(static)/$(objtree)/index.css.stamp
+
+$(objtree)/indexes_asmap.sed:
+	mkdir -p $(@D)
+	printf '%s\n' s,^,AS, >$@

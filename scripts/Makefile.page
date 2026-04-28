@@ -1,0 +1,26 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+onchange-src += index.jsx page/*.jsx
+
+page-src := index.jsx $(wildcard page/*.jsx)
+page-m4 := $(addprefix $(objtree)/m4/,$(page-src))
+
+$(page-m4): $(lib-helper) $(objtree)/images_asmap.m4
+
+$(objtree)/m4/page/credit.jsx: $(objtree)/fonts_asmap.m4 \
+			       $(objtree)/media_asmap.m4 \
+			       $(objtree)/notice_map.m4 \
+			       $(objtree)/license_map.m4
+
+$(objtree)/m4/page/log.jsx: $(objtree)/resume.js
+
+$(objtree)/m4/page/gallery.jsx: $(objtree)/media.js
+
+$(objtree)/resume.js: page/resume
+	./scripts/parse-resume.py <$< >$@
+
+$(objtree)/media.js: $(objtree)/media_asmap.m4
+	trap 'rm -f $(objtree)/.tmp-$$$$' EXIT && \
+	printf 'dumpdef\n' >$(objtree)/.tmp-$$$$ && \
+	$(m4) $< $(objtree)/.tmp-$$$$ 2>&1 | awk '/^MEDIA_/ && !/\.webm$$/' | \
+	sort -t_ -k2,2 -k3,3n -k4,4n | ./scripts/map-media.py media_map >$@

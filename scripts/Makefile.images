@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+image-src != find images -type f -not -name '*.aseprite'
+image-y := $(addsuffix .stamp,$(addprefix $(static)/,$(image-src)))
+
+onchange-src += images/**/*
+
+$(objtree)/images_asmap.m4: $(image-y)
+
+$(objtree)/images_asmap.sed:
+	mkdir -p $(@D)
+	printf '%s\n' s,^/images,IMAGES, >$@

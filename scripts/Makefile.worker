@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+worker-src := $(wildcard worker/*.js)
+worker-helper := $(wildcard worker/*.m4)
+worker-m4 := $(addprefix $(objtree)/m4/,$(worker-src))
+
+onchange-src += worker/*
+deploy-ready-y += $(objtree)/worker.js
+
+$(objtree)/worker.js: %: %1$(MINIMIZE)
+	cp $< $@
+
+$(objtree)/worker.js1-min: %-min: %
+	$(terser) >$@ <$<
+
+$(objtree)/worker.js1: $(worker-m4)
+	$(esbuild) --sourcemap=inline --outfile=$@ $<
+
+$(worker-m4): $(worker-helper)

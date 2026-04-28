@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+font-src != find fonts -type f
+font-y := $(addsuffix .stamp,$(addprefix $(static)/,$(font-src)))
+
+onchange-src += fonts/**/*
+
+$(objtree)/fonts_asmap.m4: $(font-y)
+
+$(objtree)/fonts_asmap.sed:
+	mkdir -p $(@D)
+	printf '%s\n' s,^/fonts,FONTS, >$@

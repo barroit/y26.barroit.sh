@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+media-jpeg != find media -name '*.jpeg' | \
+	      sed 's/\(.*\)\.jpeg/\1.avif \1_thumb.avif/'
+media-mov != find media -name '*.mov' | \
+	     sed 's/\(.*\)\.mov/\1.mp4 \1_xthumb.avif/'
+media-readme != find media -name 'README.txt'
+
+media-src := $(media-readme) $(media-jpeg) $(media-mov)
+media-y := $(addsuffix .stamp,$(addprefix $(static)/,$(media-src)))
+
+onchange-src += media/**/*
+
+$(objtree)/media_asmap.m4: $(media-y)
+
+$(objtree)/media_asmap.sed:
+	mkdir -p $(@D)
+	printf '%s\n' s,^/media,MEDIA, >$@
+
+%.avif: %.jpeg
+	$(magick) $< -auto-orient -strip -quality 60 $@
+
+%_thumb.avif: %.jpeg
+	$(magick) $< -auto-orient -strip -resize 390x -quality 39 $@
+
+%.webm: %.mov
+	$(ffmpeg) -y -i $< -c:v av1_nvenc \
+		  -preset p7 -cq 30 -b:v 0 -c:a libopus $@
+
+%.mp4: %.mov
+	$(ffmpeg) -y -i $< -c:v hevc_nvenc -preset p7 -cq 28 \
+		  -pix_fmt p010le -profile:v main10 -tag:v hvc1 \
+		  -c:a aac -b:a 192k -movflags +faststart $@
+
+$(static)/%.mp4.stamp: %.mp4 $(static)/%.webm.stamp
+	rm -f $(basename $(basename $@))-*.mp4
+	ln $*.mp4 \
+	   $$(printf $(basename $(basename $@))-*.webm | sed s/webm\$$/mp4/)
+	touch $@
+
+%_xthumb.avif: %.mov
+	$(magick) $<[0] -auto-orient -strip -resize 390x -quality 39 $@
