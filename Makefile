@@ -25,7 +25,7 @@ wrangler ?= wrangler
 gen-asmap    := ./scripts/gen-asmap.sh
 lan-ip       := ./scripts/lan-ip.py
 ln-unique    := ./scripts/ln-unique.sh
-map-photos   := ./scripts/map-photos.py
+map-media    := ./scripts/map-media.py
 parse-resume := ./scripts/parse-resume.py
 
 prefix := build
@@ -55,7 +55,7 @@ prefix-y := $(m4-prefix) $(static-prefix)
 
 deploy-ready:
 
-include build_tool/photos.mak
+include build_tool/media.mak
 
 include build_tool/images.mak
 

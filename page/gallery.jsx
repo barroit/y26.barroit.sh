@@ -9,11 +9,11 @@ import useCachedState from '../lib/state.js'
 import Bar from '../lib/bar.jsx'
 import SVGIcon from '../lib/svg.jsx'
 
-const year_offset = photos_map[0][0]
-const year_tab = photos_map.map(([ year ]) => year)
+const year_offset = media_map[0][0]
+const year_tab = media_map.map(([ year ]) => year)
 
-for (const photos of photos_map)
-	photos[0] = undefined
+for (const media of media_map)
+	media[0] = undefined
 
 function init_year_idx()
 {
@@ -48,13 +48,13 @@ function restore_pos_tab()
 	if (!Array.isArray(arr))
 		return
 
-	if (arr.length != photos_map.length)
+	if (arr.length != media_map.length)
 		return
 
 	let idx
 
 	for (idx = 0; idx < arr.length; idx++)
-		arr[idx] = Math.min(arr[idx], photos_map[idx].length - 1)
+		arr[idx] = Math.min(arr[idx], media_map[idx].length - 1)
 
 	return arr
 }
@@ -66,7 +66,7 @@ function init_pos_tab()
 	if (cache)
 		return cache
 
-	const arr = new Array(photos_map.length)
+	const arr = new Array(media_map.length)
 
 	arr.fill(1)
 	return arr
@@ -396,14 +396,14 @@ function ExplandControl({ year_idx, set_visible, set_pos_tab, set_loop })
 
 	const jump = on_img_click.bind(undefined, dialog, set_pos_tab, set_loop)
 
-	let photos = photos_map[year_idx]
-	const pad_size = (3 - (photos.length - 1) % 3) % 3
+	let media = media_map[year_idx]
+	const pad_size = (3 - (media.length - 1) % 3) % 3
 
 	if (pad_size) {
 		const pad = new Array(pad_size)
 
 		pad.fill(0)
-		photos = [ ...photos, ...pad ]
+		media = [ ...media, ...pad ]
 	}
 
 RETURN_JSX_BEGIN
@@ -415,7 +415,7 @@ RETURN_JSX_BEGIN
                  md:border-4 border-luka-pink md:mask-fade-edge [--span:4px]'>
     <div data-idx={ year_idx }
          class='p-1 grid grid-cols-3 gap-[1px] overflow-auto'>
-    { photos.map((url, idx) => url == 0 ? (
+    { media.map((url, idx) => url == 0 ? (
       <div></div>
     ) : !url ? undefined : (
       <button onclick={ jump }
@@ -500,9 +500,9 @@ dnl
 function PhotoKnob({ year_idx, pos, loop, set_loop,
 		     set_pos_tab, photo_knob, busy, set_busy })
 {
-	const photos = photos_map[year_idx]
+	const media = media_map[year_idx]
 	const idx = pos - 1
-	const len = (photos.length - 1)
+	const len = (media.length - 1)
 
 	const l_pos = (idx + len - 1) % len + 1
 	const r_pos = (idx + 1) % len + 1
@@ -540,14 +540,14 @@ function PhotoKnob({ year_idx, pos, loop, set_loop,
 
 RETURN_JSX_BEGIN
 <div ref={ photo_knob } class='w-fit flex items-end gap-x-2 select-none'>
-  <Thumbnail src={ photos[l_pos][1] } { ...l_props }>
-    <link rel='prefetch' href={ photos[l_pos][0] } as='image'/>
+  <Thumbnail src={ media[l_pos][1] } { ...l_props }>
+    <link rel='prefetch' href={ media[l_pos][0] } as='image'/>
   </Thumbnail>
   <div inert class='h-12 lg:h-24'>
-    <Thumbnail src={ photos[pos][1] } { ...m_props }/>
+    <Thumbnail src={ media[pos][1] } { ...m_props }/>
   </div>
-  <Thumbnail src={ photos[r_pos][1] } { ...r_props }>
-    <link rel='prefetch' href={ photos[l_pos][0] } as='image'/>
+  <Thumbnail src={ media[r_pos][1] } { ...r_props }>
+    <link rel='prefetch' href={ media[l_pos][0] } as='image'/>
   </Thumbnail>
 </div>
 RETURN_JSX_END
@@ -568,9 +568,9 @@ export default function Gallery()
 	const dialog = useRef()
 
 	const pos = pos_tab[year_idx]
-	const photos = photos_map[year_idx]
+	const media = media_map[year_idx]
 
-	const photo = photos[pos]
+	const photo = media[pos]
 	const video = +photo[0].endsWith('.webm')
 
 RETURN_JSX_BEGIN
