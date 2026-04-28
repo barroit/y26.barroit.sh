@@ -40,7 +40,7 @@ clean :=
 distclean :=
 
 onchange-src :=
-deploy-ready-y :=
+deploy-ready :=
 
 .PHONY: deploy-ready
 
@@ -86,15 +86,17 @@ $(objtree)/m4/%: %
 	mkdir -p $(@D)
 	$(m4) $(filter-out $<,$^) $< >$@
 
-deploy-ready: $(deploy-ready-y)
+deploy-ready: $(deploy-ready)
 
 .PHONY: clean distclean
 
 clean:
-	rm -f $(clean)
+	find build -type f \
+	     ! \( -name '*.avif*' -o -name '*.mp4*' -o -name '*.webm*' \) \
+	     -exec rm {} +
 
-distclean: clean
-	rm -f $(distclean)
+distclean:
+	rm -f build
 
 .PHONY: hot-build hot-proxy hot-host hot-dev host deploy
 

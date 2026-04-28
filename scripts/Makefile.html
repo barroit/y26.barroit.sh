@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 onchange-src += index.html
-deploy-ready-y += $(static)/index.html
+deploy-ready += $(static)/index.html
 
 $(static)/index.html: $(objtree)/m4/index.html
 	cp $< $@

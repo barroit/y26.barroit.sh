@@ -5,7 +5,7 @@ worker-helper := $(wildcard worker/*.m4)
 worker-m4 := $(addprefix $(objtree)/m4/,$(worker-src))
 
 onchange-src += worker/*
-deploy-ready-y += $(objtree)/worker.js
+deploy-ready += $(objtree)/worker.js
 
 $(objtree)/worker.js: %: %1$(MINIMIZE)
 	cp $< $@
